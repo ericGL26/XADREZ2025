@@ -1,0 +1,39 @@
+body {
+  background-color: gray;
+}
+
+
+.tabuleiro {
+  display: flex;
+  height: 600px;
+  width: 900px;
+  background-color: rgb(99, 97, 97);
+  flex-direction: column;
+}
+
+.quadrado {
+  display: flex;
+  height: 75px;
+  width: 100px;
+  align-items: center;
+  justify-content: center;
+}
+
+.branca {
+  background-color: white;
+}
+
+.preta {
+  background-color: rgb(98, 197, 98);
+}
+
+.linhatabuleiro {
+  display: flex;
+  height: 80px;
+  background-color: rgb(75, 46, 46);
+}
+
+.peao {
+  height: 60px;
+  width: 60;
+}
