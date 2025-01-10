@@ -36,7 +36,9 @@ function ColocarPecasTabuleiro(){
       var casasUltimoNumero = casas.id.slice(1)
 
       if(casasUltimoNumero == 2||casasUltimoNumero == 7){
-        casas.innerHTML += `<img src="peao.png" class="peca">`
+        casas.innerHTML += `<img id="peao${alfabeto[y]}${x+1}" class="peca">`
+        const peca = document.getElementById(`peao${alfabeto[y]}${x+1}`)
+        peca.setAttribute("src", 'peao.png')
       }else if(casasUltimoNumero == 1){
         casas.innerHTML += `<img id="${pecasXadrez[y]}${alfabeto[y]}${x+1}" class="peca">`
         const peca = document.getElementById(`${pecasXadrez[y]}${alfabeto[y]}${x+1}`)
@@ -54,9 +56,9 @@ var armazenarJogada = []
 function MovimentarPecas(localizacaoclick){
   if(armazenarJogada.length == 0){
     var pecaCasaSelecionada = localizacaoclick.querySelector('img')
-    var CasaSelecionada = armazenarJogada.push(pecaCasaSelecionada.id)
+    armazenarJogada.push(pecaCasaSelecionada.id)
   }else{
-    var CasaSelecionada = armazenarJogada.push(localizacaoclick.id)
+    armazenarJogada.push(localizacaoclick.id)
   }
   if(armazenarJogada.length == 2){
     var casaRemoverPeca = document.getElementById(armazenarJogada[0].slice(-2))
@@ -65,9 +67,9 @@ function MovimentarPecas(localizacaoclick){
 
     var casaAdicionarPeca = document.getElementById(armazenarJogada[1])
     var pecaAdicionar = armazenarJogada[0].slice(0, -2)
-    casaAdicionarPeca.innerHTML += `<img src="${pecaAdicionar + '.png'}" class="peca" >`
+    casaAdicionarPeca.innerHTML += `<img id="${pecaAdicionar + casaAdicionarPeca.id}" src="${pecaAdicionar + '.png'}" class="peca" >`
+    console.log('Teste', pecaAdicionar + casaAdicionarPeca.id)
     armazenarJogada = []
-    console.log('Teste', pecaAdicionar + '.png')
   }
 }
 
