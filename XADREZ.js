@@ -15,6 +15,7 @@ function GerarTabuleiro() {
     }
 
     for(var j = 0; j < 8; j++){
+      //casas
       if(cor == "branca"){
         var casaclicada = `${alfabeto[j]}${i-1}`
         linha.innerHTML += `<button onclick="MovimentarPecas(${casaclicada})" id="${alfabeto[j]}${i-1}" class="quadrado ${cor}">${alfabeto[j]}${i-1}</button>`;
@@ -49,11 +50,18 @@ function ColocarPecasTabuleiro(){
   }
 }
 
+var armazenarJogada = []
 function MovimentarPecas(localizacaoclick){
-  var butaoTESTE = document.getElementById(localizacaoclick.id)
-  const VerificarExistenciaPeca = butaoTESTE.querySelector('img')
-  console.log('EAEJULIASASAS', VerificarExistenciaPeca)
-  butaoTESTE.style.color = "orange"
+  if(armazenarJogada.length == 0){
+    var pecaCasaSelecionada = localizacaoclick.querySelector('img')
+    var CasaSelecionada = armazenarJogada.push([localizacaoclick.id] + pecaCasaSelecionada.id)
+  }else{
+    var CasaSelecionada = armazenarJogada.push([localizacaoclick.id])
+  }
+  if(armazenarJogada.length == 2){
+    var casaRemoverPeca = document.getElementById('c3')
+    console.log('TESTE', localizacaoclick)
+  }
 }
 
 GerarTabuleiro()
