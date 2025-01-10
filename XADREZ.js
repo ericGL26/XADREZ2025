@@ -54,13 +54,20 @@ var armazenarJogada = []
 function MovimentarPecas(localizacaoclick){
   if(armazenarJogada.length == 0){
     var pecaCasaSelecionada = localizacaoclick.querySelector('img')
-    var CasaSelecionada = armazenarJogada.push([localizacaoclick.id] + pecaCasaSelecionada.id)
+    var CasaSelecionada = armazenarJogada.push(pecaCasaSelecionada.id)
   }else{
-    var CasaSelecionada = armazenarJogada.push([localizacaoclick.id])
+    var CasaSelecionada = armazenarJogada.push(localizacaoclick.id)
   }
   if(armazenarJogada.length == 2){
-    var casaRemoverPeca = document.getElementById('c3')
-    console.log('TESTE', localizacaoclick)
+    var casaRemoverPeca = document.getElementById(armazenarJogada[0].slice(-2))
+    var pecaRemover = casaRemoverPeca.querySelector('img')
+    pecaRemover.removeAttribute('src')
+
+    var casaAdicionarPeca = document.getElementById(armazenarJogada[1])
+    var pecaAdicionar = armazenarJogada[0].slice(0, -2)
+    casaAdicionarPeca.innerHTML += `<img src="${pecaAdicionar + '.png'}" class="peca" >`
+    armazenarJogada = []
+    console.log('Teste', pecaAdicionar + '.png')
   }
 }
 
