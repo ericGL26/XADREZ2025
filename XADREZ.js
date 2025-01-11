@@ -18,11 +18,11 @@ function GerarTabuleiro() {
       //casas
       if(cor == "branca"){
         var casaclicada = `${alfabeto[j]}${i-1}`
-        linha.innerHTML += `<button onclick="MovimentarPecas(${casaclicada})" id="${alfabeto[j]}${i-1}" class="quadrado ${cor}">${alfabeto[j]}${i-1}</button>`;
+        linha.innerHTML += `<button onclick="JogadaSelecionada(${casaclicada})" id="${alfabeto[j]}${i-1}" class="quadrado ${cor}">${alfabeto[j]}${i-1}</button>`;
         cor = "preta"
       }else if(cor == "preta"){
         var casaclicada = `${alfabeto[j]}${i-1}`
-        linha.innerHTML += `<button onclick="MovimentarPecas(${casaclicada})" id="${alfabeto[j]}${i-1}" class="quadrado ${cor}">${alfabeto[j]}${i-1} </button>`;
+        linha.innerHTML += `<button onclick="JogadaSelecionada(${casaclicada})" id="${alfabeto[j]}${i-1}" class="quadrado ${cor}">${alfabeto[j]}${i-1} </button>`;
         cor = "branca"
       }
     }
@@ -52,15 +52,42 @@ function ColocarPecasTabuleiro(){
   }
 }
 
+function ValidarJogadaPeao(){
+  var casaAtual = armazenarJogada[0].slice(-2)
+  var proximaCasa = armazenarJogada[1]
+  var casaAtualNumero = parseInt(casaAtual.slice(1))
+  var proximaCasaNumero = parseInt(proximaCasa.slice(1))
+  if(proximaCasaNumero != casaAtualNumero + 1){
+    console.log('errado')
+  }
+  console.log('teste', casaAtualNumero, proximaCasaNumero)
+  
+  return 'JogadaPossivel'
+}
+
 var armazenarJogada = []
-function MovimentarPecas(localizacaoclick){
-  if(armazenarJogada.length == 0){
+function JogadaSelecionada(localizacaoclick){
+if(armazenarJogada.length == 0){
     var pecaCasaSelecionada = localizacaoclick.querySelector('img')
     armazenarJogada.push(pecaCasaSelecionada.id)
   }else{
     armazenarJogada.push(localizacaoclick.id)
   }
   if(armazenarJogada.length == 2){
+    var pecaEscolhida = armazenarJogada[0].slice(0, -2)
+
+    if(pecaEscolhida == 'peao' && ValidarJogadaPeao(armazenarJogada) == 'JogadaPossivel'){
+      MovimentarPecas(armazenarJogada)
+    }else{
+      armazenarJogada = []
+    }
+
+    
+
+  }
+}
+
+function MovimentarPecas(){
     var casaRemoverPeca = document.getElementById(armazenarJogada[0].slice(-2))
     var pecaRemover = casaRemoverPeca.querySelector('img')
     pecaRemover.removeAttribute('src')
@@ -68,9 +95,7 @@ function MovimentarPecas(localizacaoclick){
     var casaAdicionarPeca = document.getElementById(armazenarJogada[1])
     var pecaAdicionar = armazenarJogada[0].slice(0, -2)
     casaAdicionarPeca.innerHTML += `<img id="${pecaAdicionar + casaAdicionarPeca.id}" src="${pecaAdicionar + '.png'}" class="peca" >`
-    console.log('Teste', pecaAdicionar + casaAdicionarPeca.id)
     armazenarJogada = []
-  }
 }
 
 GerarTabuleiro()
