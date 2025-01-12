@@ -52,16 +52,34 @@ function ColocarPecasTabuleiro(){
   }
 }
 
-function ValidarJogadaPeao(){
+function ValidarJogadapeao(){
   var casaAtual = armazenarJogada[0].slice(-2)
   var proximaCasa = armazenarJogada[1]
   var casaAtualNumero = parseInt(casaAtual.slice(1))
   var proximaCasaNumero = parseInt(proximaCasa.slice(1))
   if(proximaCasaNumero != casaAtualNumero + 1){
-    console.log('errado')
+    return 'JogadaImpossivel'
   }
-  console.log('teste', casaAtualNumero, proximaCasaNumero)
-  
+  return 'JogadaPossivel'
+}
+
+function ValidarJogadatorre(){
+  return 'JogadaPossivel'
+}
+
+function ValidarJogadacavalo(){
+  return 'JogadaPossivel'
+}
+
+function ValidarJogadabispo(){
+  return 'JogadaPossivel'
+}
+
+function ValidarJogadarainha(){
+  return 'JogadaPossivel'
+}
+
+function ValidarJogadarei(){
   return 'JogadaPossivel'
 }
 
@@ -73,16 +91,17 @@ if(armazenarJogada.length == 0){
   }else{
     armazenarJogada.push(localizacaoclick.id)
   }
+
   if(armazenarJogada.length == 2){
     var pecaEscolhida = armazenarJogada[0].slice(0, -2)
 
-    if(pecaEscolhida == 'peao' && ValidarJogadaPeao(armazenarJogada) == 'JogadaPossivel'){
+    var chamarValidacao = 'ValidarJogada' + pecaEscolhida + '()'
+    if(eval(chamarValidacao) == 'JogadaPossivel'){
       MovimentarPecas(armazenarJogada)
     }else{
+      console.log('Jogada Impossivel')
       armazenarJogada = []
     }
-
-    
 
   }
 }
