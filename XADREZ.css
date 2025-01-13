@@ -37,3 +37,11 @@ body {
   height: 60px;
   width: 60;
 }
+
+.pecabranca{
+ filter: invert(100%);
+}
+
+.pecapreta {
+ filter: invert(0%)
+}

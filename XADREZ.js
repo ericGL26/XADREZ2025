@@ -35,18 +35,33 @@ function ColocarPecasTabuleiro(){
       var casas = document.getElementById(`${alfabeto[y]}${x+1}`)
       var casasUltimoNumero = casas.id.slice(1)
 
-      if(casasUltimoNumero == 2||casasUltimoNumero == 7){
-        casas.innerHTML += `<img id="peao${alfabeto[y]}${x+1}" class="peca">`
+      if(casasUltimoNumero == 2){
+        const corpeca = "pecabranca"
+        casas.innerHTML += `<img id="peao${alfabeto[y]}${x+1}" class="peca ${corpeca}">`
         const peca = document.getElementById(`peao${alfabeto[y]}${x+1}`)
         peca.setAttribute("src", 'peao.png')
-      }else if(casasUltimoNumero == 1){
-        casas.innerHTML += `<img id="${pecasXadrez[y]}${alfabeto[y]}${x+1}" class="peca">`
-        const peca = document.getElementById(`${pecasXadrez[y]}${alfabeto[y]}${x+1}`)
-        peca.setAttribute("src", pecasXadrez[y] + '.png')
-      }else if(casasUltimoNumero == 8) {
-        casas.innerHTML += `<img id="${pecasXadrez[y]}${alfabeto[y]}${x+1}" class="peca">`
+        peca.setAttribute("corPeca", 'branca')
+      }
+      else if(casasUltimoNumero == 7){
+        const corpeca = "pecapreta"
+        casas.innerHTML += `<img id="peao${alfabeto[y]}${x+1}" class="peca ${corpeca}">`
+        const peca = document.getElementById(`peao${alfabeto[y]}${x+1}`)
+        peca.setAttribute("src", 'peao.png')
+        peca.setAttribute("corPeca", 'preta')
+      }
+      else if(casasUltimoNumero == 1){
+        const corpeca = "pecabranca"
+        casas.innerHTML += `<img id="${pecasXadrez[y]}${alfabeto[y]}${x+1}" class="peca ${corpeca}">`
         var peca = document.getElementById(`${pecasXadrez[y]}${alfabeto[y]}${x+1}`)
         peca.setAttribute("src", pecasXadrez[y] + '.png')
+        peca.setAttribute("corPeca", 'branca')
+      }
+      else if(casasUltimoNumero == 8) {
+        var corpeca = "pecapreta"
+        casas.innerHTML += `<img id="${pecasXadrez[y]}${alfabeto[y]}${x+1}" class="peca ${corpeca}">`
+        var peca = document.getElementById(`${pecasXadrez[y]}${alfabeto[y]}${x+1}`)
+        peca.setAttribute("src", pecasXadrez[y] + '.png')
+        peca.setAttribute('corPeca', 'preta')
       }
     }
   }
@@ -108,12 +123,15 @@ if(armazenarJogada.length == 0){
 
 function MovimentarPecas(){
     var casaRemoverPeca = document.getElementById(armazenarJogada[0].slice(-2))
+    console.log('casaREMOVERPECA', casaRemoverPeca)
     var pecaRemover = casaRemoverPeca.querySelector('img')
     pecaRemover.removeAttribute('src')
 
     var casaAdicionarPeca = document.getElementById(armazenarJogada[1])
     var pecaAdicionar = armazenarJogada[0].slice(0, -2)
-    casaAdicionarPeca.innerHTML += `<img id="${pecaAdicionar + casaAdicionarPeca.id}" src="${pecaAdicionar + '.png'}" class="peca" >`
+    casaAdicionarPeca.innerHTML += `<img id="${pecaAdicionar + casaAdicionarPeca.id}" class="peca" >`
+    var novaPeca = document.getElementById(pecaAdicionar + casaAdicionarPeca.id)
+    novaPeca.setAttribute('src', pecaAdicionar + '.png')
     armazenarJogada = []
 }
 
