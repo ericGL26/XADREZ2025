@@ -1,16 +1,6 @@
 const tabuleiro = document.getElementById("tabuleiro");
 
 const alfabeto = ["a", "b", "c", "d", "e", "f", "g", "h"];
-const pecasXadrez = [
-  "torre",
-  "cavalo",
-  "bispo",
-  "rainha",
-  "rei",
-  "bispo",
-  "cavalo",
-  "torre",
-];
 
 //Alterações E-du
 const posicao_inicial_pecas = {
@@ -55,11 +45,10 @@ function ColocarPecasTabuleiro() {
   for (const [key, value] of Object.entries(posicao_inicial_pecas)) {
     const casa = document.getElementById(`${key}`);
     const last_digito = key.slice(1);
-    console.log(last_digito);
     casa.innerHTML += `
         <img id=${value + key} src=${value + ".png"} class="peca ${
-      last_digito == 1 || last_digito == 2 ? "pecabranca" : "pecapreta"
-    }"  />
+      last_digito == 1 || last_digito == 2 ? "pecabranca"  : "pecapreta"
+    }" name="${last_digito == 1 || last_digito == 2 ? "pecabranca" : "pecapreta"}" />
     `;
   }
 }
@@ -98,51 +87,19 @@ function GerarTabuleiro() {
   }
 }
 
-// function ColocarPecasTabuleiro() {
-//   for (var y = 0; y < 8; y++) {
-//     for (var x = 0; x < 8; x++) {
-//       var casas = document.getElementById(`${alfabeto[y]}${x + 1}`);
-//       var casasUltimoNumero = casas.id.slice(1);
-//       var corpeca = "";
-//       var tipopeca = "";
-
-//       if (casasUltimoNumero == 2) {
-//         tipopeca = `peao${alfabeto[y]}${x + 1}`;
-//         corpeca = "pecabranca";
-//       } else if (casasUltimoNumero == 7) {
-//         tipopeca = `peao${alfabeto[y]}${x + 1}`;
-//         corpeca = "pecapreta";
-//       } else if (casasUltimoNumero == 1) {
-//         tipopeca = `${pecasXadrez[y]}${alfabeto[y]}${x + 1}`;
-//         corpeca = "pecabranca";
-//       } else if (casasUltimoNumero == 8) {
-//         tipopeca = `${pecasXadrez[y]}${alfabeto[y]}${x + 1}`;
-//         corpeca = "pecapreta";
-//       }
-
-//       casas.innerHTML += `<img id=${pecasXadrez[y]}${alfabeto[y]}${
-//         x + 1
-//       } class="peca ${corpeca}">`;
-//       var peca = document.getElementById(
-//         `${pecasXadrez[y]}${alfabeto[y]}${x + 1}`
-//       );
-//       peca.setAttribute("src", pecasXadrez[y] + ".png");
-
-//       var TESTE = document.getElementById("cavalob1");
-//       console.log("cavalob1", TESTE);
-//     }
-//   }
-// }
-
 function ValidarJogadapeao() {
-  var casaAtual = armazenarJogada[0].slice(-2);
-  var proximaCasa = armazenarJogada[1];
-  var casaAtualNumero = parseInt(casaAtual.slice(1));
-  var proximaCasaNumero = parseInt(proximaCasa.slice(1));
-  if (proximaCasaNumero != casaAtualNumero + 1) {
-    return "JogadaImpossivel";
+  const peca = document.getElementById(armazenarJogada[0])
+  const corPeca = peca.name
+  const casaAtual = armazenarJogada[0].slice(-2)
+  const casaAdicionarPeca = armazenarJogada[1]
+  if(corPeca == 'pecabranca' && casaAdicionarPeca.slice(-1) == parseInt(casaAtual.slice(-1)) + 1){
+    console.log('TESTEFUNCIONOU')
   }
-  return "JogadaPossivel";
+
+  if(corPeca == 'pecapreta'){
+    
+  }
+  return 'JogadaPossivel'
 }
 
 function ValidarJogadatorre() {
