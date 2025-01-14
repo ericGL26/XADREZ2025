@@ -96,8 +96,8 @@ function ValidarJogadapeao() {
     console.log('TESTEFUNCIONOU')
   }
 
-  if(corPeca == 'pecapreta'){
-    
+  if(corPeca == 'pecapreta' && casaAdicionarPeca.slice(-1) == parseInt(casaAtual.slice(-1)) - 1){
+    console.log('TESTEFUNCIONOU2')
   }
   return 'JogadaPossivel'
 }
