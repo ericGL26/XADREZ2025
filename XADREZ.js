@@ -132,7 +132,13 @@ function JogadaSelecionada(localizacaoclick) {
     armazenarJogada.push(localizacaoclick.id);
   }
 
+
   if (armazenarJogada.length == 2) {
+    const casaproximajogada = document.getElementById(armazenarJogada[1])
+    const Verificarexistenciadepecanacasa = casaproximajogada.querySelector('img')
+    var timePeca = Verificarexistenciadepecanacasa.name
+    console.log('timepeca', timePeca)
+
     var pecaEscolhida = armazenarJogada[0].slice(0, -2);
     var chamarValidacao = "ValidarJogada" + pecaEscolhida + "()";
     if (eval(chamarValidacao) == "JogadaPossivel") {
@@ -150,7 +156,7 @@ function MovimentarPecas() {
   pecaRemover.remove()
 
   var casaAdicionarPeca = document.getElementById(armazenarJogada[1])
-  casaAdicionarPeca.innerHTML += `<img id="${pecaRemover.id.slice(0, -2) + casaRemoverPeca.id}" src="${pecaRemover.src}" class="peca ${pecaRemover.name}">`
+  casaAdicionarPeca.innerHTML += `<img id="${pecaRemover.id.slice(0, -2) + casaAdicionarPeca.id}" src="${ pecaRemover.id.slice(0, -2) + '.png'}" class="peca ${pecaRemover.name}" name="${pecaRemover.name}">`
   armazenarJogada = []
   
 }
