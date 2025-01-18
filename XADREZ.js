@@ -1,6 +1,7 @@
 const tabuleiro = document.getElementById("tabuleiro");
 
-const alfabeto = ["a", "b", "c", "d", "e", "f", "g", "h"];
+const alfabeto = 
+{1: "a", 2: "b", 3: "c", 4: "d", 5: "e", 6: "f", 7: "g", 8: "h"};
 
 //Alterações E-du
 const posicao_inicial_pecas = {
@@ -68,7 +69,7 @@ function GerarTabuleiro() {
       cor = "branca";
     }
 
-    for (var j = 0; j < 8; j++) {
+    for (var j = 1; j < 9; j++) {
       //casas
       if (cor == "branca") {
         var casaclicada = `${alfabeto[j]}${i - 1}`;
@@ -88,19 +89,7 @@ function GerarTabuleiro() {
 }
 
 function ValidarJogadapeao() {
-  const peca = document.getElementById(armazenarJogada[0])
-  const corPeca = peca.name
-  const casaAtual = armazenarJogada[0].slice(-2)
-  const casaAdicionarPeca = armazenarJogada[1]
-  if(corPeca == 'pecabranca' && casaAdicionarPeca.slice(-1) == parseInt(casaAtual.slice(-1)) + 1){
-    console.log('TESTEFUNCIONOU')
-    return 'JogadaPossivel'
-  }
-
-  if(corPeca == 'pecapreta' && casaAdicionarPeca.slice(-1) == parseInt(casaAtual.slice(-1)) - 1){
-    console.log('TESTEFUNCIONOU2')
-    return 'JogadaPossivel'
-  }
+  return 'JogadaPossivel'
 }
 
 function ValidarJogadatorre() {
@@ -108,6 +97,18 @@ function ValidarJogadatorre() {
 }
 
 function ValidarJogadacavalo() {
+  const casaAtual = armazenarJogada[0].slice(-2)
+  const numerocasa = parseInt(armazenarJogada[0].slice(-1))
+  const eixo_x = {a: 1, b: 2, c:3, d:4, e:5, f:6, g:7, h:8}
+  const eixo_y = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+  var eixo_x_casaatual_numero = eixo_x[casaAtual.slice(0, -1)]
+  for(var w = 0; w < 8; w++){
+    var subircasa = numerocasa + 2
+    var movimentar_lado = eixo_x_casaatual_numero + 1
+    console.log('TESTE', subircasa, movimentar_lado)    
+  }
+
+
   return "JogadaPossivel";
 }
 
@@ -134,11 +135,6 @@ function JogadaSelecionada(localizacaoclick) {
 
 
   if (armazenarJogada.length == 2) {
-    const casaproximajogada = document.getElementById(armazenarJogada[1])
-    const Verificarexistenciadepecanacasa = casaproximajogada.querySelector('img')
-    var timePeca = Verificarexistenciadepecanacasa.name
-    console.log('timepeca', timePeca)
-
     var pecaEscolhida = armazenarJogada[0].slice(0, -2);
     var chamarValidacao = "ValidarJogada" + pecaEscolhida + "()";
     if (eval(chamarValidacao) == "JogadaPossivel") {
