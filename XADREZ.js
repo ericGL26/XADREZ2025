@@ -96,12 +96,14 @@ function ValidarJogadatorre() {
   return "JogadaPossivel";
 }
 
-function ValidarJogadacavalo() {
+function ValidarJogadacavalo(localizacaoclick) {
+  //dessa parte
   const casaAtual = armazenarJogada[0].slice(-2)
   const numerocasa = parseInt(armazenarJogada[0].slice(-1))
   const eixo_x = {a: 1, b: 2, c:3, d:4, e:5, f:6, g:7, h:8}
   const eixo_y = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
   var eixo_x_casaatual_numero = eixo_x[casaAtual.slice(0, -1)]
+  //ate essa pode talvez definir como global ja vao ser usadas em todas as funcoes
 
     var subir_casa = numerocasa + 2
     var descer_casa = numerocasa - 2
@@ -112,10 +114,13 @@ function ValidarJogadacavalo() {
     var movimentar_lado_esquerdo = eixo_x_casaatual_numero - 1
     
 
+    
+  //converter posicao selecionada em array de numeros
+  var letra_localizacaoclick = localizacaoclick.id.slice(0, 1)
+  var converterParaNumero = eixo_x[letra_localizacaoclick]
+  var PosicaoSelecionadaNumero = [converterParaNumero, localizacaoclick.id.slice(-1)]
 
-  
-
-    console.log('TESTE', subir_casa, movimentar_lado_direita)
+  console.log('TESTE', PosicaoSelecionadaNumero)
 
   return "JogadaPossivel";
 }
@@ -144,7 +149,7 @@ function JogadaSelecionada(localizacaoclick) {
 
   if (armazenarJogada.length == 2) {
     var pecaEscolhida = armazenarJogada[0].slice(0, -2);
-    var chamarValidacao = "ValidarJogada" + pecaEscolhida + "()";
+    var chamarValidacao = "ValidarJogada" + pecaEscolhida + "(localizacaoclick)";
     if (eval(chamarValidacao) == "JogadaPossivel") {
       MovimentarPecas(armazenarJogada);
     } else {
@@ -169,4 +174,3 @@ ColocarPecasTabuleiro();
 
 //estou organizando o xadrez como se estivesse jogando com peças brancas
 //atributo
-//pausa
