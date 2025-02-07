@@ -99,11 +99,9 @@ function ValidarJogadatorre() {
 }
 
 function ValidarJogadacavalo(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {
-  //converter posicao selecionada em array de numeros
   var letra_localizacaoclick = localizacaoclick.id.slice(0, 1)
   var converterParaNumero = eixo_x[letra_localizacaoclick]
   var PosicaoSelecionadaEmNumero = [converterParaNumero, parseInt(localizacaoclick.id.slice(-1)) ]
-
 
     var subir_casa = numerocasa + 2
     var descer_casa = numerocasa - 2
@@ -133,7 +131,18 @@ function ValidarJogadacavalo(localizacaoclick, casaAtual, numerocasa, eixo_x_cas
   return "JogadaImpossivel";
 }
 
-function ValidarJogadabispo() {
+function ValidarJogadabispo(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {
+  const posicaoAtualEmNumero = [eixo_x[casaAtual.slice(0, 1)], numerocasa]
+  const proximaPosicaoEmNumero = [eixo_x[localizacaoclick.id.slice(0, 1)], parseInt(localizacaoclick.id.slice(1))]
+
+
+  console.log('OsDoisJuntos', posicaoAtualEmNumero, proximaPosicaoEmNumero)
+  const v1 = posicaoAtualEmNumero[0] - proximaPosicaoEmNumero[0]
+  const v2 = posicaoAtualEmNumero[1] - proximaPosicaoEmNumero[1]
+  const result = v1 == v2 ? true : false
+  console.log('result', result)
+  //console.log('PosicaoAtualBispo', PosicaoAtualEmNumero)
+  //console.log('ProximaPosicaoBispo', ProximaPosicaoEmNumero)
   return "JogadaPossivel";
 }
 
