@@ -136,18 +136,28 @@ function ValidarJogadabispo(localizacaoclick, casaAtual, numerocasa, eixo_x_casa
   const proximaPosicaoEmNumero = [eixo_x[localizacaoclick.id.slice(0, 1)], parseInt(localizacaoclick.id.slice(1))]
 
 
-  console.log('OsDoisJuntos', posicaoAtualEmNumero, proximaPosicaoEmNumero)
-  const v1 = posicaoAtualEmNumero[0] - proximaPosicaoEmNumero[0]
-  const v2 = posicaoAtualEmNumero[1] - proximaPosicaoEmNumero[1]
+  const v1 = Math.abs(posicaoAtualEmNumero[0] - proximaPosicaoEmNumero[0])
+  const v2 = Math.abs(posicaoAtualEmNumero[1] - proximaPosicaoEmNumero[1])
   const result = v1 == v2 ? true : false
-  console.log('result', result)
-  //console.log('PosicaoAtualBispo', PosicaoAtualEmNumero)
-  //console.log('ProximaPosicaoBispo', ProximaPosicaoEmNumero)
+ if(result == false){
+  return 'JogadaImpossivel'
+ }else{
   return "JogadaPossivel";
+ }
 }
 
-function ValidarJogadarainha() {
-  return "JogadaPossivel";
+function ValidarJogadarainha(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {
+  const proximaPosicaoEmNumeroRainha = [eixo_x[localizacaoclick.id.slice(0, 1)], parseInt(localizacaoclick.id.slice(1))]
+  const posicaoAtualEmNumeroRainha = [eixo_x[casaAtual.slice(0, 1)], numerocasa]
+
+  const colunaIgual = Math.abs(posicaoAtualEmNumeroRainha[0]) == Math.abs(proximaPosicaoEmNumeroRainha[0])
+  const linhaIgual = Math.abs(posicaoAtualEmNumeroRainha[1]) == Math.abs(proximaPosicaoEmNumeroRainha[1])
+
+  const v1 = Math.abs(posicaoAtualEmNumeroRainha[0] - proximaPosicaoEmNumeroRainha[0])
+  const v2 = Math.abs(posicaoAtualEmNumeroRainha[1] - proximaPosicaoEmNumeroRainha[1])
+
+  return (colunaIgual == true || linhaIgual == true || v1 == v2) ? 'JogadaPossivel' : 'JogadaImpossivel'
+
 }
 
 function ValidarJogadarei() {
