@@ -105,24 +105,40 @@ function ValidarJogadacavalo(localizacaoclick) {
   var eixo_x_casaatual_numero = eixo_x[casaAtual.slice(0, -1)]
   //ate essa pode talvez definir como global ja vao ser usadas em todas as funcoes
 
+  //converter posicao selecionada em array de numeros
+  var letra_localizacaoclick = localizacaoclick.id.slice(0, 1)
+  var converterParaNumero = eixo_x[letra_localizacaoclick]
+  var PosicaoSelecionadaEmNumero = [converterParaNumero, parseInt(localizacaoclick.id.slice(-1)) ]
+
+
     var subir_casa = numerocasa + 2
     var descer_casa = numerocasa - 2
+    var subir_lado = numerocasa + 1
+    var descer_lado = numerocasa - 1
     var horizontal_esquerda = eixo_x_casaatual_numero - 2
     var horizontal_direita = eixo_x_casaatual_numero + 2
     
     var movimentar_lado_direita = eixo_x_casaatual_numero + 1
     var movimentar_lado_esquerdo = eixo_x_casaatual_numero - 1
     
-
-    
-  //converter posicao selecionada em array de numeros
-  var letra_localizacaoclick = localizacaoclick.id.slice(0, 1)
-  var converterParaNumero = eixo_x[letra_localizacaoclick]
-  var PosicaoSelecionadaNumero = [converterParaNumero, localizacaoclick.id.slice(-1)]
-
-  console.log('TESTE', PosicaoSelecionadaNumero)
-
-  return "JogadaPossivel";
+    var JogadasPossiveis = [
+        [horizontal_direita, subir_lado],
+        [horizontal_direita, descer_lado],
+        [horizontal_esquerda, subir_lado],
+        [horizontal_esquerda, descer_lado],
+        [movimentar_lado_direita, subir_casa],
+        [movimentar_lado_direita, descer_casa],
+        [movimentar_lado_esquerdo, subir_casa],
+        [movimentar_lado_esquerdo, descer_casa]
+  ];
+    console.log('JogadasPossivels', JogadasPossiveis)
+    console.log('PosicaoClick', PosicaoSelecionadaEmNumero)
+  for (var q = 0; q < 8; q++){
+    if(JSON.stringify(JogadasPossiveis[q]) == JSON.stringify(PosicaoSelecionadaEmNumero)){
+      return 'JogadaPossivel'
+    }
+  }
+  return "JogadaImpossivel";
 }
 
 function ValidarJogadabispo() {
