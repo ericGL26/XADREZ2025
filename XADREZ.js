@@ -90,7 +90,12 @@ function GerarTabuleiro() {
   }
 }
 
-function ValidarJogadapeao() {
+function ValidarJogadapeao(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {
+  const proximaPosicaoEmNumeroPeao = [eixo_x[localizacaoclick.id.slice(0, 1)], parseInt(localizacaoclick.id.slice(1))]
+  const posicaoAtualEmNumeroPeao = [eixo_x[casaAtual.slice(0, 1)], numerocasa]
+  
+  console.log('proximaposicaoPeao', proximaPosicaoEmNumeroPeao)
+  console.log('posicaoatualemnumeropeao', posicaoAtualEmNumeroPeao)
   return 'JogadaPossivel'
 }
 
