@@ -94,8 +94,14 @@ function ValidarJogadapeao() {
   return 'JogadaPossivel'
 }
 
-function ValidarJogadatorre() {
-  return "JogadaPossivel";
+function ValidarJogadatorre(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {
+  const proximaPosicaoEmNumeroTorre = [eixo_x[localizacaoclick.id.slice(0, 1)], parseInt(localizacaoclick.id.slice(1))]
+  const posicaoAtualEmNumeroTorre = [eixo_x[casaAtual.slice(0, 1)], numerocasa]
+  
+  const colunaIgual = Math.abs(posicaoAtualEmNumeroTorre[0]) == Math.abs(proximaPosicaoEmNumeroTorre[0])
+  const linhaIgual = Math.abs(posicaoAtualEmNumeroTorre[1]) == Math.abs(proximaPosicaoEmNumeroTorre[1])
+  return (colunaIgual == true || linhaIgual == true) ? 'JogadaPossivel' : 'JogadaImpossivel'
+
 }
 
 function ValidarJogadacavalo(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {
@@ -160,8 +166,31 @@ function ValidarJogadarainha(localizacaoclick, casaAtual, numerocasa, eixo_x_cas
 
 }
 
-function ValidarJogadarei() {
-  return "JogadaPossivel";
+function ValidarJogadarei(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {
+  const proximaPosicaoEmNumeroRei = [eixo_x[localizacaoclick.id.slice(0, 1)], parseInt(localizacaoclick.id.slice(1))]
+  const posicaoAtualEmNumeroRei = [eixo_x[casaAtual.slice(0, 1)], numerocasa]
+  //pensando em uma grade 3 por 3 começando pelo canto superior esquerdo
+  var PossibilidadesJogada = [
+    [Math.abs(posicaoAtualEmNumeroRei[0]) - 1, Math.abs(posicaoAtualEmNumeroRei[1]) + 1],
+    [Math.abs(posicaoAtualEmNumeroRei[0]), Math.abs(posicaoAtualEmNumeroRei[1]) + 1],
+    [Math.abs(posicaoAtualEmNumeroRei[0]) + 1, Math.abs(posicaoAtualEmNumeroRei[1]) + 1],
+
+    [Math.abs(posicaoAtualEmNumeroRei[0]) - 1, Math.abs(posicaoAtualEmNumeroRei[1])],
+    [Math.abs(posicaoAtualEmNumeroRei[0]) + 1, Math.abs(posicaoAtualEmNumeroRei[1])],
+
+    [Math.abs(posicaoAtualEmNumeroRei[0]) - 1, Math.abs(posicaoAtualEmNumeroRei[1]) - 1],
+    [Math.abs(posicaoAtualEmNumeroRei[0]), Math.abs(posicaoAtualEmNumeroRei[1]) - 1],
+    [Math.abs(posicaoAtualEmNumeroRei[0]) + 1, Math.abs(posicaoAtualEmNumeroRei[1]) - 1],
+  ]
+  console.log('proximaposicaoemnuemrorei', proximaPosicaoEmNumeroRei)
+
+  for (var v = 0; v < 8; v++){
+    console.log('posibilidadejogadav', PossibilidadesJogada[v])
+    if(PossibilidadesJogada[v] == proximaPosicaoEmNumeroRei){
+      return 'JogadaPossivel'
+    }
+  }
+  return 'JogadaImpossivel'
 }
 
 var armazenarJogada = [];
