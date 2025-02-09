@@ -51,7 +51,7 @@ function ColocarPecasTabuleiro() {
     casa.innerHTML += `
         <img id=${value + key} src=${value + ".png"} class="peca ${
       last_digito == 1 || last_digito == 2 ? "pecabranca"  : "pecapreta"
-    }" name="${last_digito == 1 || last_digito == 2 ? "pecabranca" : "pecapreta"}" />
+    }" name="${last_digito == 1 || last_digito == 2 ? "pecabranca" : "pecapreta"}", primeiraJogada="true"/>
     `;
   }
 }
@@ -90,10 +90,19 @@ function GerarTabuleiro() {
   }
 }
 
-function ValidarJogadapeao(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {
+function ValidarJogadapeao(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero, peaoSelecionado) {
   const proximaPosicaoEmNumeroPeao = [eixo_x[localizacaoclick.id.slice(0, 1)], parseInt(localizacaoclick.id.slice(1))]
   const posicaoAtualEmNumeroPeao = [eixo_x[casaAtual.slice(0, 1)], numerocasa]
-  
+  const peao = document.getElementById(peaoSelecionado)
+  const peaoPrimeiraJogada = peao.getAttribute('primeiraJogada')
+
+  if(peaoPrimeiraJogada == true){
+    const MovimentarCima = posicaoAtualEmNumeroPeao
+  }else if(peaoPrimeiraJogada == false){
+
+  }
+  console.log('Peao', peaoPrimeiraJogada)
+
   console.log('proximaposicaoPeao', proximaPosicaoEmNumeroPeao)
   console.log('posicaoatualemnumeropeao', posicaoAtualEmNumeroPeao)
   return 'JogadaPossivel'
@@ -212,9 +221,9 @@ function JogadaSelecionada(localizacaoclick) {
     const casaAtual = armazenarJogada[0].slice(-2)
     const numerocasa = parseInt(armazenarJogada[0].slice(-1))
     var eixo_x_casaatual_numero = eixo_x[casaAtual.slice(0, -1)]
-
     var pecaEscolhida = armazenarJogada[0].slice(0, -2);
-    var chamarValidacao = "ValidarJogada" + pecaEscolhida + "(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero)";
+    var peaoSelecionado = armazenarJogada[0]
+    var chamarValidacao = "ValidarJogada" + pecaEscolhida + "(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero, peaoSelecionado)";
     if (eval(chamarValidacao) == "JogadaPossivel") {
       MovimentarPecas(armazenarJogada);
     } else {
