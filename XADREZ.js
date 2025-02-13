@@ -99,6 +99,7 @@ function ValidarJogadapeao(localizacaoclick, casaAtual, numerocasa, eixo_x_casaa
   if(peaoPrimeiraJogada == 'true'){
     const MovimentarCimaUmaCasa = posicaoAtualEmNumeroPeao[1] + 1
     const MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] + 2
+    peao.setAttribute('primeiraJogada', false)
     return (MovimentarCimaUmaCasa == proximaPosicaoEmNumeroPeao[1] && posicaoAtualEmNumeroPeao[0] == proximaPosicaoEmNumeroPeao[0] || MovimentarCimaDuasCasa == proximaPosicaoEmNumeroPeao[1] && posicaoAtualEmNumeroPeao[0] == proximaPosicaoEmNumeroPeao[0]) ? 'JogadaPossivel' : 'JogadaImpossivel'
   }else if(peaoPrimeiraJogada == 'false'){
     const MovimentarCimaUmaCasa = posicaoAtualEmNumeroPeao[1] + 1
@@ -239,6 +240,7 @@ function MovimentarPecas() {
 
   var casaAdicionarPeca = document.getElementById(armazenarJogada[1])
   casaAdicionarPeca.innerHTML += `<img id="${pecaRemover.id.slice(0, -2) + casaAdicionarPeca.id}" src="${ pecaRemover.id.slice(0, -2) + '.png'}" class="peca ${pecaRemover.name}" name="${pecaRemover.name}" primeiraJogada=${pecaRemover.getAttribute('primeiraJogada')}>`
+  console.log('pecaRemover', pecaRemover.getAttribute('primeiraJogada'))
   armazenarJogada = []
   
 }
