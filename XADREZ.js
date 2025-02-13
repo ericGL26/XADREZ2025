@@ -97,15 +97,13 @@ function ValidarJogadapeao(localizacaoclick, casaAtual, numerocasa, eixo_x_casaa
   var peaoPrimeiraJogada = peao.getAttribute('primeiraJogada')
 
   if(peaoPrimeiraJogada == 'true'){
-    console.log('esta caindo no true', posicaoAtualEmNumeroPeao[1])
     const MovimentarCimaUmaCasa = posicaoAtualEmNumeroPeao[1] + 1
     const MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] + 2
-    peao.setAttribute('primeiraJogada', 'false')
     return (MovimentarCimaUmaCasa == proximaPosicaoEmNumeroPeao[1] && posicaoAtualEmNumeroPeao[0] == proximaPosicaoEmNumeroPeao[0] || MovimentarCimaDuasCasa == proximaPosicaoEmNumeroPeao[1] && posicaoAtualEmNumeroPeao[0] == proximaPosicaoEmNumeroPeao[0]) ? 'JogadaPossivel' : 'JogadaImpossivel'
   }else if(peaoPrimeiraJogada == 'false'){
-    console.log('Esta caindo no false')
     const MovimentarCimaUmaCasa = posicaoAtualEmNumeroPeao[1] + 1
-    return (MovimentarCimaUmaCasa == proximaPosicaoEmNumeroPeao[1]) ? 'JogadaPossivel' : 'JogadaImpossivel'
+    const ColunaAtual = posicaoAtualEmNumeroPeao[0]
+    return (MovimentarCimaUmaCasa == proximaPosicaoEmNumeroPeao[1] && ColunaAtual == proximaPosicaoEmNumeroPeao[0]) ? 'JogadaPossivel' : 'JogadaImpossivel'
   }
 }
 
