@@ -84,7 +84,7 @@ function GerarTabuleiro() {
         var casaclicada = `${alfabeto[j]}${i - 1}`;
         linha.innerHTML += `<button onclick="JogadaSelecionada(${casaclicada})" id="${
           alfabeto[j]
-        }${i - 1}" class="quadrado ${cor}">${alfabeto[j]}${i - 1} text="oiii" </button>`;
+        }${i - 1}" class="quadrado ${cor}">${alfabeto[j]}${i - 1} </button>`;
         cor = "branca";
       }
     }
@@ -230,7 +230,6 @@ function JogadaSelecionada(localizacaoclick) {
   }
 
   if (armazenarJogada.length == 2) {
-
     const casaAtual = armazenarJogada[0].slice(-2)
     const numerocasa = parseInt(armazenarJogada[0].slice(-1))
     var eixo_x_casaatual_numero = eixo_x[casaAtual.slice(0, -1)]
@@ -238,8 +237,15 @@ function JogadaSelecionada(localizacaoclick) {
     var peaoSelecionado = armazenarJogada[0]
     var chamarValidacao = "ValidarJogada" + pecaEscolhida + "(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero, peaoSelecionado)";
     if (eval(chamarValidacao) == "JogadaPossivel") {
+      var buscarpecaDentroCasa = document.getElementById(casaAtual)
+      var adicionarAtributoPecaDentroProximaCasa = document.getElementById(armazenarJogada[1])
+      const pecaDentro = buscarpecaDentroCasa.getAttribute('pecaDentro')
+
+      CapturarPeca(casaAtual, localizacaoclick, armazenarJogada)
       MovimentarPecas(armazenarJogada);
-      CapturarPeca(casaAtual, localizacaoclick)
+
+      adicionarAtributoPecaDentroProximaCasa.setAttribute('pecaDentro', pecaDentro)
+      buscarpecaDentroCasa.removeAttribute('pecadentro')
     } else {
       console.log("Jogada Impossivel");
       armazenarJogada = [];
@@ -258,13 +264,9 @@ function MovimentarPecas() {
   armazenarJogada = []
 }
 
-function CapturarPeca(casaAtual, localizacaoclick) {
-  var JogadaSelecionada = localizacaoclick
-  var atributo = localizacaoclick.getAttribute('pecaDentro')
-  console.log('casa', casa)
-  console.log('atributo', atributo)
-  
-  //console.log('casaatualelocalizacaoclick', casaAtual, localizacaoclick)
+function CapturarPeca(casaAtual, localizacaoclick, armazenarJogada) {
+  //const proximaCasa = document.get
+  console.log('proximacasa1', localizacaoclick)
 }
 
 function ValidarCapturaPeca(){}
