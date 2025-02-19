@@ -1,3 +1,5 @@
+var armazenarJogada = [];
+
 const tabuleiro = document.getElementById("tabuleiro");
 
 const alfabeto = 
@@ -97,7 +99,6 @@ function ValidarJogadapeao(localizacaoclick, casaAtual, numerocasa, eixo_x_casaa
   const peao = document.getElementById(peaoSelecionado)
   var peaoPrimeiraJogada = peao.getAttribute('primeiraJogada')
   var corPeao = peao.name
-  console.log('corPeao', corPeao)
 
   if(peaoPrimeiraJogada == 'true' && corPeao == 'pecabranca'){
     const MovimentarCimaUmaCasa = posicaoAtualEmNumeroPeao[1] + 1
@@ -209,10 +210,8 @@ function ValidarJogadarei(localizacaoclick, casaAtual, numerocasa, eixo_x_casaat
     [Math.abs(posicaoAtualEmNumeroRei[0]), Math.abs(posicaoAtualEmNumeroRei[1]) - 1],
     [Math.abs(posicaoAtualEmNumeroRei[0]) + 1, Math.abs(posicaoAtualEmNumeroRei[1]) - 1],
   ]
-  console.log('proximaposicaoemnuemrorei', proximaPosicaoEmNumeroRei)
 
   for (var v = 0; v < 8; v++){
-    console.log('posibilidadejogadav', PossibilidadesJogada[v])
     if(JSON.stringify(PossibilidadesJogada[v]) == JSON.stringify(proximaPosicaoEmNumeroRei)){
       return 'JogadaPossivel'
     }
@@ -220,7 +219,7 @@ function ValidarJogadarei(localizacaoclick, casaAtual, numerocasa, eixo_x_casaat
   return 'JogadaImpossivel'
 }
 
-var armazenarJogada = [];
+
 function JogadaSelecionada(localizacaoclick) {
   if (armazenarJogada.length == 0) {
     var pecaCasaSelecionada = localizacaoclick.querySelector("img");
@@ -242,7 +241,7 @@ function JogadaSelecionada(localizacaoclick) {
       const pecaDentro = buscarpecaDentroCasa.getAttribute('pecaDentro')
 
       CapturarPeca(casaAtual, localizacaoclick, armazenarJogada)
-      MovimentarPecas(armazenarJogada);
+      MovimentarPecas();
 
       adicionarAtributoPecaDentroProximaCasa.setAttribute('pecaDentro', pecaDentro)
       buscarpecaDentroCasa.removeAttribute('pecadentro')
@@ -259,14 +258,18 @@ function MovimentarPecas() {
   pecaRemover.remove()
 
   var casaAdicionarPeca = document.getElementById(armazenarJogada[1])
+    console.log("asdad", casaAdicionarPeca)
+    const imageRm = casaAdicionarPeca.querySelector('img');
+    console.log("image a ser removida", imageRm)
+    if(imageRm){
+      imageRm.remove()
+    }
   casaAdicionarPeca.innerHTML += `<img id="${pecaRemover.id.slice(0, -2) + casaAdicionarPeca.id}" src="${ pecaRemover.id.slice(0, -2) + '.png'}" class="peca ${pecaRemover.name}" name="${pecaRemover.name}" primeiraJogada=${pecaRemover.getAttribute('primeiraJogada')}>`
-  console.log('pecaRemover', pecaRemover.getAttribute('primeiraJogada'))
   armazenarJogada = []
 }
 
 function CapturarPeca(casaAtual, localizacaoclick, armazenarJogada) {
-  //const proximaCasa = document.get
-  console.log('proximacasa1', localizacaoclick)
+  
 }
 
 function ValidarCapturaPeca(){}
