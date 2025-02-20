@@ -79,7 +79,6 @@ function ValidarJogadabispo(localizacaoclick, casaAtual, numerocasa, eixo_x_casa
   const posicaoAtualEmNumero = [eixo_x[casaAtual.slice(0, 1)], numerocasa]
   const proximaPosicaoEmNumero = [eixo_x[localizacaoclick.id.slice(0, 1)], parseInt(localizacaoclick.id.slice(1))]
 
-
   const v1 = Math.abs(posicaoAtualEmNumero[0] - proximaPosicaoEmNumero[0])
   const v2 = Math.abs(posicaoAtualEmNumero[1] - proximaPosicaoEmNumero[1])
   const result = v1 == v2 ? true : false
