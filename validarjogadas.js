@@ -10,26 +10,22 @@ function ValidarJogadapeao(localizacaoclick, casaAtual, numerocasa, eixo_x_casaa
   var peaoPrimeiraJogada = peao.getAttribute('primeiraJogada')
   var corPeao = peao.name
 
-  if(peaoPrimeiraJogada == 'true' && corPeao == 'pecabranca'){
-    const MovimentarCimaUmaCasa = posicaoAtualEmNumeroPeao[1] + 1
-    const MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] + 2
+  var MovimentarCimaUmaCasa = posicaoAtualEmNumeroPeao[1] + 1
+  var MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] + 2
+  const ColunaAtual = posicaoAtualEmNumeroPeao[0]
+
+  var MovimentarCimaUmaCasa = posicaoAtualEmNumeroPeao[1] + 1
+  var MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] + 2
+
+  MovimentacaoDeAcordoCorPrimeiraJogada = (corPeao == "pecabranca") ? (MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] + 2) : (MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] - 2)
+  MovimentacaoDeAcordoCor = (corPeao == "pecabranca") ? (MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] + 1) : (MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] - 1)
+
+  if(peaoPrimeiraJogada == 'true'){
     peao.setAttribute('primeiraJogada', false)
-    return (MovimentarCimaUmaCasa == proximaPosicaoEmNumeroPeao[1] && posicaoAtualEmNumeroPeao[0] == proximaPosicaoEmNumeroPeao[0] || MovimentarCimaDuasCasa == proximaPosicaoEmNumeroPeao[1] && posicaoAtualEmNumeroPeao[0] == proximaPosicaoEmNumeroPeao[0]) ? 'JogadaPossivel' : 'JogadaImpossivel'
-  }else if(peaoPrimeiraJogada == 'false'&& corPeao == 'pecabranca'){
-    const MovimentarCimaUmaCasa = posicaoAtualEmNumeroPeao[1] + 1
-    const ColunaAtual = posicaoAtualEmNumeroPeao[0]
-    return (MovimentarCimaUmaCasa == proximaPosicaoEmNumeroPeao[1] && ColunaAtual == proximaPosicaoEmNumeroPeao[0]) ? 'JogadaPossivel' : 'JogadaImpossivel'
-  }else if(peaoPrimeiraJogada == 'true' && corPeao == 'pecapreta'){
-    const MovimentarCimaUmaCasa = posicaoAtualEmNumeroPeao[1] - 1
-    const MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] - 2
-    peao.setAttribute('primeiraJogada', false)
-    return (MovimentarCimaUmaCasa == proximaPosicaoEmNumeroPeao[1] && posicaoAtualEmNumeroPeao[0] == proximaPosicaoEmNumeroPeao[0] || MovimentarCimaDuasCasa == proximaPosicaoEmNumeroPeao[1] && posicaoAtualEmNumeroPeao[0] == proximaPosicaoEmNumeroPeao[0]) ? 'JogadaPossivel' : 'JogadaImpossivel'
-  }else if(peaoPrimeiraJogada == 'false' && corPeao == 'pecapreta') {
-    const MovimentarCimaUmaCasa = posicaoAtualEmNumeroPeao[1] - 1
-    const ColunaAtual = posicaoAtualEmNumeroPeao[0]
-    return (MovimentarCimaUmaCasa == proximaPosicaoEmNumeroPeao[1] && ColunaAtual == proximaPosicaoEmNumeroPeao[0]) ? 'JogadaPossivel' : 'JogadaImpossivel'
+    return (MovimentarCimaUmaCasa == proximaPosicaoEmNumeroPeao[1] || MovimentarCimaDuasCasa == proximaPosicaoEmNumeroPeao[1] && ColunaAtual == proximaPosicaoEmNumeroPeao[0]) ? 'JogadaPossivel' : 'JogadaImpossivel'
+  }else{
+    return (MovimentarCimaUmaCasa == proximaPosicaoEmNumeroPeao[1] || posicaoAtualEmNumeroPeao[0] == proximaPosicaoEmNumeroPeao[0] || MovimentarCimaDuasCasa == proximaPosicaoEmNumeroPeao[1] && posicaoAtualEmNumeroPeao[0] == proximaPosicaoEmNumeroPeao[0]) ? 'JogadaPossivel' : 'JogadaImpossivel'
   }
-  
 }
 
 function ValidarJogadatorre(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {
