@@ -1,4 +1,3 @@
-
 var alfabeto = {1: "a", 2: "b", 3: "c", 4: "d", 5: "e", 6: "f", 7: "g", 8: "h"};
 var eixo_x = {a: 1, b: 2, c:3, d:4, e:5, f:6, g:7, h:8}
 const eixo_y = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
@@ -10,22 +9,26 @@ function ValidarJogadapeao(localizacaoclick, casaAtual, numerocasa, eixo_x_casaa
   var peaoPrimeiraJogada = peao.getAttribute('primeiraJogada')
   var corPeao = peao.name
 
-  var MovimentarCimaUmaCasa = posicaoAtualEmNumeroPeao[1] + 1
-  var MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] + 2
-  const ColunaAtual = posicaoAtualEmNumeroPeao[0]
+  console.log('posicaoatualemnumeropeao', posicaoAtualEmNumeroPeao)
+  var direcao = corPeao == 'pecabranca' ? 1 : -1;
+  var moverUmaCasa = posicaoAtualEmNumeroPeao[1] + direcao;
+  var moverDuasCasas = posicaoAtualEmNumeroPeao[1] + (2 * direcao);
+  var mesmaColuna = posicaoAtualEmNumeroPeao[0] == proximaPosicaoEmNumeroPeao[0];
 
-  var MovimentarCimaUmaCasa = posicaoAtualEmNumeroPeao[1] + 1
-  var MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] + 2
-
-  MovimentacaoDeAcordoCorPrimeiraJogada = (corPeao == "pecabranca") ? (MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] + 2) : (MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] - 2)
-  MovimentacaoDeAcordoCor = (corPeao == "pecabranca") ? (MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] + 1) : (MovimentarCimaDuasCasa = posicaoAtualEmNumeroPeao[1] - 1)
-
-  if(peaoPrimeiraJogada == 'true'){
-    peao.setAttribute('primeiraJogada', false)
-    return (MovimentarCimaUmaCasa == proximaPosicaoEmNumeroPeao[1] || MovimentarCimaDuasCasa == proximaPosicaoEmNumeroPeao[1] && ColunaAtual == proximaPosicaoEmNumeroPeao[0]) ? 'JogadaPossivel' : 'JogadaImpossivel'
-  }else{
-    return (MovimentarCimaUmaCasa == proximaPosicaoEmNumeroPeao[1] || posicaoAtualEmNumeroPeao[0] == proximaPosicaoEmNumeroPeao[0] || MovimentarCimaDuasCasa == proximaPosicaoEmNumeroPeao[1] && posicaoAtualEmNumeroPeao[0] == proximaPosicaoEmNumeroPeao[0]) ? 'JogadaPossivel' : 'JogadaImpossivel'
+  console.log('aqui', peaoPrimeiraJogada)
+  if (peaoPrimeiraJogada) {
+    peao.setAttribute('primeiraJogada', false);
+    return (mesmaColuna && (moverUmaCasa == proximaPosicaoEmNumeroPeao[1] || moverDuasCasas == proximaPosicaoEmNumeroPeao[1])) 
+    ? 'JogadaPossivel' 
+    : 'JogadaImpossivel';
   }
+  if(peaoPrimeiraJogada == 'false') {
+    console.log('esta cainda aqui dentro')
+    return (mesmaColuna && moverUmaCasa == proximaPosicaoEmNumeroPeao[1]) 
+    ? 'JogadaPossivel' 
+    : 'JogadaImpossivel';
+  }
+
 }
 
 function ValidarJogadatorre(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {
@@ -74,6 +77,7 @@ function ValidarJogadacavalo(localizacaoclick, casaAtual, numerocasa, eixo_x_cas
 function ValidarJogadabispo(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {
   const posicaoAtualEmNumero = [eixo_x[casaAtual.slice(0, 1)], numerocasa]
   const proximaPosicaoEmNumero = [eixo_x[localizacaoclick.id.slice(0, 1)], parseInt(localizacaoclick.id.slice(1))]
+
 
   const v1 = Math.abs(posicaoAtualEmNumero[0] - proximaPosicaoEmNumero[0])
   const v2 = Math.abs(posicaoAtualEmNumero[1] - proximaPosicaoEmNumero[1])
