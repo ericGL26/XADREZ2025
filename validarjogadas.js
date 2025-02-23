@@ -15,8 +15,7 @@ function ValidarJogadapeao(localizacaoclick, casaAtual, numerocasa, eixo_x_casaa
   var moverDuasCasas = posicaoAtualEmNumeroPeao[1] + (2 * direcao);
   var mesmaColuna = posicaoAtualEmNumeroPeao[0] == proximaPosicaoEmNumeroPeao[0];
 
-  console.log('aqui', peaoPrimeiraJogada)
-  if (peaoPrimeiraJogada) {
+  if (peaoPrimeiraJogada == 'true') {
     peao.setAttribute('primeiraJogada', false);
     return (mesmaColuna && (moverUmaCasa == proximaPosicaoEmNumeroPeao[1] || moverDuasCasas == proximaPosicaoEmNumeroPeao[1])) 
     ? 'JogadaPossivel' 
