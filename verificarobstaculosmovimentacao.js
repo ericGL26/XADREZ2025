@@ -29,7 +29,10 @@ function VerificarObstaculosTorre(proximaPosicaoEmNumeroTorre, posicaoAtualEmNum
 
   for (let x = 0; x < casasEntrePontosFormatoPadrao.length; x++){
     var buscarcasas = document.getElementById(casasEntrePontosFormatoPadrao[x])
-    console.log('buscarcasas', buscarcasas)
+    var pecadentro = buscarcasas.getAttribute('pecaDentro')
+    if(pecadentro != null){
+      return true
+    }
   }
   console.log('casaentrepontosformatopadrao', casasEntrePontosFormatoPadrao)
   return false
