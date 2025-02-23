@@ -51,3 +51,7 @@ function chamarValidacaoMovimentacao(localizacaoclick) {
     armazenarJogada = [];
   }
 }
+
+function verificarObstaculosMovimentacao() {
+  
+}

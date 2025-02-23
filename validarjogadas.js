@@ -9,7 +9,6 @@ function ValidarJogadapeao(localizacaoclick, casaAtual, numerocasa, eixo_x_casaa
   var peaoPrimeiraJogada = peao.getAttribute('primeiraJogada')
   var corPeao = peao.name
 
-  console.log('posicaoatualemnumeropeao', posicaoAtualEmNumeroPeao)
   var direcao = corPeao == 'pecabranca' ? 1 : -1;
   var moverUmaCasa = posicaoAtualEmNumeroPeao[1] + direcao;
   var moverDuasCasas = posicaoAtualEmNumeroPeao[1] + (2 * direcao);
@@ -36,8 +35,7 @@ function ValidarJogadatorre(localizacaoclick, casaAtual, numerocasa, eixo_x_casa
   
   const colunaIgual = Math.abs(posicaoAtualEmNumeroTorre[0]) == Math.abs(proximaPosicaoEmNumeroTorre[0])
   const linhaIgual = Math.abs(posicaoAtualEmNumeroTorre[1]) == Math.abs(proximaPosicaoEmNumeroTorre[1])
-  return (colunaIgual == true || linhaIgual == true) ? 'JogadaPossivel' : 'JogadaImpossivel'
-
+  return ((colunaIgual == true || linhaIgual == true) && VerificarObstaculosTorre(proximaPosicaoEmNumeroTorre, posicaoAtualEmNumeroTorre) == false) ? 'JogadaPossivel' : 'JogadaImpossivel'
 }
 
 function ValidarJogadacavalo(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {
