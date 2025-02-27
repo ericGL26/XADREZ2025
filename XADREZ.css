@@ -20,7 +20,8 @@ body {
 }
 
 .branca {
-  background-color: rgb(179, 174, 174);
+  /*background-color: rgb(179, 174, 174);*/
+  background-color: rgb(145, 145, 145);
 }
 
 .preta {
@@ -39,7 +40,7 @@ body {
 }
 
 .pecabranca{
- filter: invert(100%);
+ filter: invert(80%);
 }
 
 .pecapreta {

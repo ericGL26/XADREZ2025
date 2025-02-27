@@ -72,18 +72,18 @@ function ValidarJogadacavalo(localizacaoclick, casaAtual, numerocasa, eixo_x_cas
 }
 
 function ValidarJogadabispo(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {
-  const posicaoAtualEmNumero = [eixo_x[casaAtual.slice(0, 1)], numerocasa]
-  const proximaPosicaoEmNumero = [eixo_x[localizacaoclick.id.slice(0, 1)], parseInt(localizacaoclick.id.slice(1))]
+  const posicaoAtualEmNumeroBispo = [eixo_x[casaAtual.slice(0, 1)], numerocasa]
+  const proximaPosicaoEmNumeroBispo = [eixo_x[localizacaoclick.id.slice(0, 1)], parseInt(localizacaoclick.id.slice(1))]
 
 
-  const v1 = Math.abs(posicaoAtualEmNumero[0] - proximaPosicaoEmNumero[0])
-  const v2 = Math.abs(posicaoAtualEmNumero[1] - proximaPosicaoEmNumero[1])
+  const v1 = Math.abs(posicaoAtualEmNumeroBispo[0] - proximaPosicaoEmNumeroBispo[0])
+  const v2 = Math.abs(posicaoAtualEmNumeroBispo[1] - proximaPosicaoEmNumeroBispo[1])
   const result = v1 == v2 ? true : false
- if(result == false){
-  return 'JogadaImpossivel'
- }else{
-  return "JogadaPossivel";
- }
+  if(result == false || VerificarObstaculosBispo(proximaPosicaoEmNumeroBispo, posicaoAtualEmNumeroBispo) == true){
+    return 'JogadaImpossivel'
+  }else{
+    return "JogadaPossivel";
+  }
 }
 
 function ValidarJogadarainha(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {

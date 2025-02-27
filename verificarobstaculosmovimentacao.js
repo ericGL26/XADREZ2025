@@ -1,7 +1,7 @@
 var eixo_y_2 = {1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e', 6: 'f', 7: 'g', 8: 'h'}
 
 function VerificarObstaculosTorre(proximaPosicaoEmNumeroTorre, posicaoAtualEmNumeroTorre){
-  var casasEntrePontos = []
+  let casasEntrePontos = []
   let [x1, y1] = posicaoAtualEmNumeroTorre
   let [x2, y2] = proximaPosicaoEmNumeroTorre
 
@@ -35,5 +35,26 @@ function VerificarObstaculosTorre(proximaPosicaoEmNumeroTorre, posicaoAtualEmNum
     }
   }
   console.log('casaentrepontosformatopadrao', casasEntrePontosFormatoPadrao)
+  return false
+}
+
+function VerificarObstaculosBispo(proximaPosicaoEmNumeroBispo, posicaoAtualEmNumeroBispo){
+  let [x1, y1] = posicaoAtualEmNumeroBispo
+  let [x2, y2] = proximaPosicaoEmNumeroBispo
+  let casasEntrePontos = []
+
+  let quantidadeDeCasasDiagonal = (y2 - y1) -1
+  let diagonalSubindo = (y2 > y1) ? true : false
+  
+  //identifica a direcao do movimento
+  let direcaoMovimentoDiagonal = ''
+  let IdentificarDirecaoMovimentoDiagonal = 
+      (x2 < x1 && y2 > y1) ? direcaoMovimentoDiagonal = "movimentoDiagonalSuperiorEsquerdo"
+    : (x2 > x1 && y2 > y1) ? direcaoMovimentoDiagonal = "movimentoDiagonalSuperiorDireta"
+    : (x2 < x1 && y2 < y1) ? direcaoMovimentoDiagonal = "movimentoDiagonalInferiorEsquerdo"
+    : (x2 > x1 && y2 < y1) ? direcaoMovimentoDiagonal = "movimentoDiagonalInferiorDireita" : "JogadaImpossivel"
+
+
+  console.log('quantidadeDecasasDiagonal', IdentificarDirecaoMovimentoDiagonal)
   return false
 }
