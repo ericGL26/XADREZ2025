@@ -43,7 +43,7 @@ function VerificarObstaculosBispo(proximaPosicaoEmNumeroBispo, posicaoAtualEmNum
   let [x2, y2] = proximaPosicaoEmNumeroBispo
   let casasEntrePontos = []
 
-  let quantidadeDeCasasDiagonal = (y2 - y1) -1
+  let quantidadeDeCasasDiagonal = (y2 - y1)
   let diagonalSubindo = (y2 > y1) ? true : false
   
   //identifica a direcao do movimento
@@ -55,6 +55,27 @@ function VerificarObstaculosBispo(proximaPosicaoEmNumeroBispo, posicaoAtualEmNum
     : (x2 > x1 && y2 < y1) ? direcaoMovimentoDiagonal = "movimentoDiagonalInferiorDireita" : "JogadaImpossivel"
 
 
-  console.log('quantidadeDecasasDiagonal', IdentificarDirecaoMovimentoDiagonal)
+
+  if(IdentificarDirecaoMovimentoDiagonal == "movimentoDiagonalSuperiorEsquerdo"){
+    for(let x = 1; x < quantidadeDeCasasDiagonal; x++){
+      casasEntrePontos.push([posicaoAtualEmNumeroBispo[0] - x, posicaoAtualEmNumeroBispo[1] + x])
+    }
+  }else if (IdentificarDirecaoMovimentoDiagonal == "movimentoDiagonalSuperiorDireta"){
+    for(let x = 1; x < quantidadeDeCasasDiagonal; x++){
+      casasEntrePontos.push([posicaoAtualEmNumeroBispo[0] + x, posicaoAtualEmNumeroBispo[1] + x])
+    }
+  } else if(IdentificarDirecaoMovimentoDiagonal == "movimentoDiagonalInferiorEsquerdo"){
+    for(let x = 1; x < quantidadeDeCasasDiagonal; x++){
+      console.log('x', x)
+      casasEntrePontos.push([posicaoAtualEmNumeroBispo[0] - x, posicaoAtualEmNumeroBispo[1] - x])
+    }
+  }else if(IdentificarDirecaoMovimentoDiagonal == "movimentoDiagonalInferiorDireita"){
+    for(let x = 1; x < quantidadeDeCasasDiagonal; x++){
+      casasEntrePontos.push([posicaoAtualEmNumeroBispo[0] + x, posicaoAtualEmNumeroBispo[1] - x])
+    }
+  }
+
+  console.log('casaentreOSPONTOS', casasEntrePontos)
+
   return false
 }
