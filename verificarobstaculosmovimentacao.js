@@ -43,48 +43,20 @@ function VerificarObstaculosBispo(proximaPosicaoEmNumeroBispo, posicaoAtualEmNum
   let [x2, y2] = proximaPosicaoEmNumeroBispo
   let casasEntrePontos = []
 
-  let quantidadeDeCasasDiagonal = Math.abs((y2 - y1))
-  let diagonalSubindo = (y2 > y1) ? true : false
-  
-  //identifica a direcao do movimento
-  let direcaoMovimentoDiagonal = ''
-  let IdentificarDirecaoMovimentoDiagonal = 
-      (x2 < x1 && y2 > y1) ? direcaoMovimentoDiagonal = "movimentoDiagonalSuperiorEsquerdo"
-    : (x2 > x1 && y2 > y1) ? direcaoMovimentoDiagonal = "movimentoDiagonalSuperiorDireta"
-    : (x2 < x1 && y2 < y1) ? direcaoMovimentoDiagonal = "movimentoDiagonalInferiorEsquerdo"
-    : (x2 > x1 && y2 < y1) ? direcaoMovimentoDiagonal = "movimentoDiagonalInferiorDireita" : "JogadaImpossivel"
+  //direcao movimento
+  let direcaoX = (x2 > x1) ? 1 : -1
+  let direcaoY = (y2 > y1) ? 1 : -1
 
-
-
-  if(IdentificarDirecaoMovimentoDiagonal == "movimentoDiagonalSuperiorEsquerdo"){
-    for(let x = 1; x < quantidadeDeCasasDiagonal; x++){
-      casasEntrePontos.push([posicaoAtualEmNumeroBispo[0] - x, posicaoAtualEmNumeroBispo[1] + x])
-    }
-  }else if (IdentificarDirecaoMovimentoDiagonal == "movimentoDiagonalSuperiorDireta"){
-    for(let x = 1; x < quantidadeDeCasasDiagonal; x++){
-      casasEntrePontos.push([posicaoAtualEmNumeroBispo[0] + x, posicaoAtualEmNumeroBispo[1] + x])
-    }
-  } else if(IdentificarDirecaoMovimentoDiagonal == "movimentoDiagonalInferiorEsquerdo"){
-    for(let x = 1; x < quantidadeDeCasasDiagonal; x++){
-      casasEntrePontos.push([posicaoAtualEmNumeroBispo[0] - x, posicaoAtualEmNumeroBispo[1] - x])
-    }
-  }else if(IdentificarDirecaoMovimentoDiagonal == "movimentoDiagonalInferiorDireita"){
-    for(let x = 1; x < quantidadeDeCasasDiagonal; x++){
-      casasEntrePontos.push([posicaoAtualEmNumeroBispo[0] + x, posicaoAtualEmNumeroBispo[1] - x])
-    }
-  }
-
+  //calcular casas em que o bispo passa
+  for (let i = 1; i < Math.abs(y2 - y1); i++){
+    var casa = [x1 + i * direcaoX, y1 + i * direcaoY];
+    casasEntrePontos.push(casa)
+}
   for(let x = 0; x < casasEntrePontos.length; x++){
-    var casasEntrePontosFormatoPadrao = [eixo_y_2[casasEntrePontos[x][0]] + casasEntrePontos[x][1]]
-    let buscarCasasEntrePontos = document.getElementById(casasEntrePontosFormatoPadrao)
-    if(buscarCasasEntrePontos.getAttribute('pecadentro')){
-      return true
-    }else {
-      return false
+    let idCasa = eixo_y_2[casasEntrePontos[x][0]] + casasEntrePontos[x][1];
+    let buscarcasa = document.getElementById(idCasa);
+    if (buscarcasa.getAttribute('pecadentro')) {
+      return true;
     }
   }
-
-  console.log('casaentreOSPONTOS', casasEntrePontos)
-
-  return false
 }
