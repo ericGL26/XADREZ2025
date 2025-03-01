@@ -87,16 +87,15 @@ function ValidarJogadabispo(localizacaoclick, casaAtual, numerocasa, eixo_x_casa
 }
 
 function ValidarJogadarainha(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {
-  const proximaPosicaoEmNumeroRainha = [eixo_x[localizacaoclick.id.slice(0, 1)], parseInt(localizacaoclick.id.slice(1))]
-  const posicaoAtualEmNumeroRainha = [eixo_x[casaAtual.slice(0, 1)], numerocasa]
+  var proximaPosicaoEmNumeroRainha = [eixo_x[localizacaoclick.id.slice(0, 1)], parseInt(localizacaoclick.id.slice(1))]
+  var posicaoAtualEmNumeroRainha = [eixo_x[casaAtual.slice(0, 1)], numerocasa]
 
   const colunaIgual = Math.abs(posicaoAtualEmNumeroRainha[0]) == Math.abs(proximaPosicaoEmNumeroRainha[0])
   const linhaIgual = Math.abs(posicaoAtualEmNumeroRainha[1]) == Math.abs(proximaPosicaoEmNumeroRainha[1])
 
   const v1 = Math.abs(posicaoAtualEmNumeroRainha[0] - proximaPosicaoEmNumeroRainha[0])
   const v2 = Math.abs(posicaoAtualEmNumeroRainha[1] - proximaPosicaoEmNumeroRainha[1])
-
-  return (colunaIgual == true || linhaIgual == true || v1 == v2) ? 'JogadaPossivel' : 'JogadaImpossivel'
+  return ((colunaIgual == true || linhaIgual == true || v1 == v2 ) && VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmNumeroRainha) == false) ? 'JogadaPossivel' : 'JogadaImpossivel'
 
 }
 
