@@ -43,7 +43,7 @@ function VerificarObstaculosBispo(proximaPosicaoEmNumeroBispo, posicaoAtualEmNum
   let [x2, y2] = proximaPosicaoEmNumeroBispo
   let casasEntrePontos = []
 
-  let quantidadeDeCasasDiagonal = (y2 - y1)
+  let quantidadeDeCasasDiagonal = Math.abs((y2 - y1))
   let diagonalSubindo = (y2 > y1) ? true : false
   
   //identifica a direcao do movimento
@@ -66,12 +66,21 @@ function VerificarObstaculosBispo(proximaPosicaoEmNumeroBispo, posicaoAtualEmNum
     }
   } else if(IdentificarDirecaoMovimentoDiagonal == "movimentoDiagonalInferiorEsquerdo"){
     for(let x = 1; x < quantidadeDeCasasDiagonal; x++){
-      console.log('x', x)
       casasEntrePontos.push([posicaoAtualEmNumeroBispo[0] - x, posicaoAtualEmNumeroBispo[1] - x])
     }
   }else if(IdentificarDirecaoMovimentoDiagonal == "movimentoDiagonalInferiorDireita"){
     for(let x = 1; x < quantidadeDeCasasDiagonal; x++){
       casasEntrePontos.push([posicaoAtualEmNumeroBispo[0] + x, posicaoAtualEmNumeroBispo[1] - x])
+    }
+  }
+
+  for(let x = 0; x < casasEntrePontos.length; x++){
+    var casasEntrePontosFormatoPadrao = [eixo_y_2[casasEntrePontos[x][0]] + casasEntrePontos[x][1]]
+    let buscarCasasEntrePontos = document.getElementById(casasEntrePontosFormatoPadrao)
+    if(buscarCasasEntrePontos.getAttribute('pecadentro')){
+      return true
+    }else {
+      return false
     }
   }
 
