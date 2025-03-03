@@ -62,15 +62,15 @@ function VerificarObstaculosBispo(proximaPosicaoEmNumeroBispo, posicaoAtualEmNum
 }
 
 function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmNumeroRainha){
-  let casasEntrePontos = []
-  console.log('oxi', posicaoAtualEmNumeroRainha)
   let [x1, y1] = posicaoAtualEmNumeroRainha
   let [x2, y2] = proximaPosicaoEmNumeroRainha
 
-  let direcaoX = (x2 > x1) ? 1 : -1
-  let direcaoY = (y2 > y1)? 1 : -1
-  
-  //calcular casas que a rainha passa
+  var direcao = (x1 != x2 && y1 == y2) ? direcao = "horizontal"
+  : (x1 == x2 && y1 != y2) ? direcao = "vertical"
+  : (x2 > x1 && y1 != y2) ? direcao = "diagonalDireita"
+  : (x2 < x1 && y1 != y2) ? direcao = "diagonalEsquerda" : "MOVIMENTO-INVALIDO"
+
+  console.log('DIRECAO', direcao)
 
   return false
 }
