@@ -1,6 +1,6 @@
 var eixo_y_2 = {1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e', 6: 'f', 7: 'g', 8: 'h'}
 
-function VerificarObstaculosTorre(proximaPosicaoEmNumeroTorre, posicaoAtualEmNumeroTorre){
+function VerificarObstaculosTorre(proximaPosicaoEmNumeroTorre, posicaoAtualEmNumeroTorre, localizacaoclick){
   let casasEntrePontos = []
   let [x1, y1] = posicaoAtualEmNumeroTorre
   let [x2, y2] = proximaPosicaoEmNumeroTorre
@@ -27,6 +27,10 @@ function VerificarObstaculosTorre(proximaPosicaoEmNumeroTorre, posicaoAtualEmNum
     casasEntrePontosFormatoPadrao.push([eixo_y_2[casasEntrePontos[x][0]] + casasEntrePontos[x][1]])
   }
 
+  let buscarPecaAtual = document.getElementById(casaEntrePontos[0])
+  let corPecaAtual = (buscarPecaAtual.querySelector('img')).name
+  let corPecaSeCapturar = (localizacaoclick.querySelector('img'))?.name || "semPeca" 
+
   for (let x = 0; x < casasEntrePontosFormatoPadrao.length; x++){
     var buscarcasas = document.getElementById(casasEntrePontosFormatoPadrao[x])
     var pecadentro = buscarcasas.getAttribute('pecaDentro')
@@ -38,7 +42,7 @@ function VerificarObstaculosTorre(proximaPosicaoEmNumeroTorre, posicaoAtualEmNum
   return false
 }
 
-function VerificarObstaculosBispo(proximaPosicaoEmNumeroBispo, posicaoAtualEmNumeroBispo){
+function VerificarObstaculosBispo(proximaPosicaoEmNumeroBispo, posicaoAtualEmNumeroBispo, localizacaoclick){
   let [x1, y1] = posicaoAtualEmNumeroBispo
   let [x2, y2] = proximaPosicaoEmNumeroBispo
   let casasEntrePontos = []
@@ -61,7 +65,7 @@ function VerificarObstaculosBispo(proximaPosicaoEmNumeroBispo, posicaoAtualEmNum
   }
 }
 
-function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmNumeroRainha){
+function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmNumeroRainha, localizacaoclick){
   let [x1, y1] = posicaoAtualEmNumeroRainha
   let [x2, y2] = proximaPosicaoEmNumeroRainha
 
@@ -106,13 +110,20 @@ function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmN
     }    
   }
 
+  let buscarPecaAtual = document.getElementById(casaEntrePontos[0])
+  let corPecaAtual = (buscarPecaAtual.querySelector('img')).name
+  let corPecaSeCapturar = (localizacaoclick.querySelector('img'))?.name || "semPeca" 
+
   var casaEntrePontosSemCasaInicial = casaEntrePontos.slice(1)
   for(let u = 0; u < casaEntrePontosSemCasaInicial.length; u++){
     const buscarCasas = document.getElementById(casaEntrePontosSemCasaInicial[u])
-    if(buscarCasas.getAttribute('pecadentro')){
+    if(buscarCasas.getAttribute('pecadentro') || corPecaAtual == corPecaSeCapturar){
       return true
     }
   }
   return false
 }
 
+function VerificarObstaculosRei(proximaPosicaoEmNumeroRei, posicaoAtualEmNumeroRei, localizacaoclick){
+  return false
+}

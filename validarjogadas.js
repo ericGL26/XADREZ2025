@@ -34,7 +34,7 @@ function ValidarJogadatorre(localizacaoclick, casaAtual, numerocasa, eixo_x_casa
   
   const colunaIgual = Math.abs(posicaoAtualEmNumeroTorre[0]) == Math.abs(proximaPosicaoEmNumeroTorre[0])
   const linhaIgual = Math.abs(posicaoAtualEmNumeroTorre[1]) == Math.abs(proximaPosicaoEmNumeroTorre[1])
-  return ((colunaIgual == true || linhaIgual == true) && VerificarObstaculosTorre(proximaPosicaoEmNumeroTorre, posicaoAtualEmNumeroTorre) == false) ? 'JogadaPossivel' : 'JogadaImpossivel'
+  return ((colunaIgual == true || linhaIgual == true) && VerificarObstaculosTorre(proximaPosicaoEmNumeroTorre, posicaoAtualEmNumeroTorre, localizacaoclick) == false) ? 'JogadaPossivel' : 'JogadaImpossivel'
 }
 
 function ValidarJogadacavalo(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero) {
@@ -94,7 +94,7 @@ function ValidarJogadarainha(localizacaoclick, casaAtual, numerocasa, eixo_x_cas
 
   const v1 = Math.abs(posicaoAtualEmNumeroRainha[0] - proximaPosicaoEmNumeroRainha[0])
   const v2 = Math.abs(posicaoAtualEmNumeroRainha[1] - proximaPosicaoEmNumeroRainha[1])
-  return ((colunaIgual == true || linhaIgual == true || v1 == v2 ) && VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmNumeroRainha) == false) ? 'JogadaPossivel' : 'JogadaImpossivel'
+  return ((colunaIgual == true || linhaIgual == true || v1 == v2 ) && VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmNumeroRainha, localizacaoclick) == false) ? 'JogadaPossivel' : 'JogadaImpossivel'
 
 }
 
@@ -116,7 +116,7 @@ function ValidarJogadarei(localizacaoclick, casaAtual, numerocasa, eixo_x_casaat
   ]
 
   for (var v = 0; v < 8; v++){
-    if(JSON.stringify(PossibilidadesJogada[v]) == JSON.stringify(proximaPosicaoEmNumeroRei)){
+    if(JSON.stringify(PossibilidadesJogada[v]) == JSON.stringify(proximaPosicaoEmNumeroRei) && VerificarObstaculosRei(proximaPosicaoEmNumeroRei, posicaoAtualEmNumeroRei) == false){
       return 'JogadaPossivel'
     }
   }
