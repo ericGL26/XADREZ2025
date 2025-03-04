@@ -70,7 +70,34 @@ function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmN
   : (x2 > x1 && y1 != y2) ? direcao = "diagonalDireita"
   : (x2 < x1 && y1 != y2) ? direcao = "diagonalEsquerda" : "MOVIMENTO-INVALIDO"
 
-  console.log('DIRECAO', direcao)
+  console.log('direcao', direcao)
+
+  if(direcao == "horizontal"){
+    let passo = x2 > x1 ? 1 : -1
+    for(let i = x1; i != x2; i += passo){
+      console.log('testandocasafor', x, y)
+    }
+  }
+
+  if(direcao == "vertical"){
+    let passo = y2 > y1 ? 1 : -1
+    for(let i = y1; i != y2; i += passo){
+      console.log('testandocasaforvertical')
+    }
+  }
+
+  if(direcao == "diagonalDireita" || direcao == "diagonalEsquerda"){
+    let passoX = x2 > x1 ? 1 : -1
+    let passoY = y2 > y1 ? 1 : -1
+    let x = x1
+    let y = y1
+
+    while(x != x2 && y != y2){
+      console.log(x, y)
+      x += passoX
+      y += passoY
+    }    
+  }
 
   return false
 }
