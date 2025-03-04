@@ -73,16 +73,22 @@ function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmN
   console.log('direcao', direcao)
 
   if(direcao == "horizontal"){
-    let passo = x2 > x1 ? 1 : -1
-    for(let i = x1; i != x2; i += passo){
-      console.log('testandocasafor', x, y)
+    let passoX = x2 > x1 ? 1 : -1
+    let x = x1
+
+    while(x != x2){
+      console.log(x, y2)
+      x += passoX
     }
   }
 
   if(direcao == "vertical"){
-    let passo = y2 > y1 ? 1 : -1
-    for(let i = y1; i != y2; i += passo){
-      console.log('testandocasaforvertical')
+    let passoY = y2 > y1 ? 1 : -1
+    let y = y1
+
+    while(y != y2){
+      console.log(x2, y)
+      y += passoY
     }
   }
 
