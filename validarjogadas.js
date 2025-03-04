@@ -21,7 +21,6 @@ function ValidarJogadapeao(localizacaoclick, casaAtual, numerocasa, eixo_x_casaa
     : 'JogadaImpossivel';
   }
   if(peaoPrimeiraJogada == 'false') {
-    console.log('esta cainda aqui dentro')
     return (mesmaColuna && moverUmaCasa == proximaPosicaoEmNumeroPeao[1]) 
     ? 'JogadaPossivel' 
     : 'JogadaImpossivel';

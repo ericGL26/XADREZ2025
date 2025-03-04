@@ -70,6 +70,7 @@ function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmN
   : (x2 > x1 && y1 != y2) ? direcao = "diagonalDireita"
   : (x2 < x1 && y1 != y2) ? direcao = "diagonalEsquerda" : "MOVIMENTO-INVALIDO"
 
+  var casaEntrePontos = []
   console.log('direcao', direcao)
 
   if(direcao == "horizontal"){
@@ -77,7 +78,7 @@ function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmN
     let x = x1
 
     while(x != x2){
-      console.log(x, y2)
+      casaEntrePontos.push([eixo_y_2[x] + y2.toString()])
       x += passoX
     }
   }
@@ -87,7 +88,7 @@ function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmN
     let y = y1
 
     while(y != y2){
-      console.log(x2, y)
+      casaEntrePontos.push([eixo_y_2[x2] + y.toString()])
       y += passoY
     }
   }
@@ -99,11 +100,19 @@ function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmN
     let y = y1
 
     while(x != x2 && y != y2){
-      console.log(x, y)
+      casaEntrePontos.push([eixo_y_2[x] + y.toString()])
       x += passoX
       y += passoY
     }    
   }
 
+  var casaEntrePontosSemCasaInicial = casaEntrePontos.slice(1)
+  for(let u = 0; u < casaEntrePontosSemCasaInicial.length; u++){
+    const buscarCasas = document.getElementById(casaEntrePontosSemCasaInicial[u])
+    if(buscarCasas.getAttribute('pecadentro')){
+      return true
+    }
+  }
   return false
 }
+
