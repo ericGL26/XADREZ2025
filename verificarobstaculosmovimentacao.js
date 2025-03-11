@@ -113,11 +113,15 @@ function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmN
   let buscarPecaAtual = document.getElementById(casaEntrePontos[0])
   let corPecaAtual = (buscarPecaAtual.querySelector('img')).name
   const corPecaSeCapturar = (localizacaoclick.querySelector('img'))?.name || "semPeca" 
-
   for(let u = 0; u < casaEntrePontos.length; u++){
     const buscarCasas = document.getElementById(casaEntrePontos[u])
+    
+    //console.log('corpecasecapturar', corPecaSeCapturar)
+    //console.log('corPecaAtual', corPecaAtual)
 
-    if(corPecaSeCapturar == corPecaAtual || buscarCasas.getAttribute('pecadentro') == 'rainha'){
+    const pecaDentroCasa = (buscarCasas.getAttribute('pecadentro'))
+
+    if(corPecaSeCapturar == corPecaAtual || pecaDentroCasa != 'rainha' && pecaDentroCasa){
       return true
     }
   }
