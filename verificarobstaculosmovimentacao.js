@@ -110,22 +110,41 @@ function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmN
     }    
   }
 
-  let buscarPecaAtual = document.getElementById(casaEntrePontos[0])
-  let corPecaAtual = (buscarPecaAtual.querySelector('img')).name
-  const corPecaSeCapturar = (localizacaoclick.querySelector('img'))?.name || "semPeca" 
-  for(let u = 0; u < casaEntrePontos.length; u++){
-    const buscarCasas = document.getElementById(casaEntrePontos[u])
-    
-    //console.log('corpecasecapturar', corPecaSeCapturar)
-    //console.log('corPecaAtual', corPecaAtual)
-
-    const pecaDentroCasa = (buscarCasas.getAttribute('pecadentro'))
-
-    if(corPecaSeCapturar == corPecaAtual || pecaDentroCasa != 'rainha' && pecaDentroCasa){
-      return true
-    }
+  const casaEntrePontosSemCasaDestino = [...casaEntrePontos]; // Criamos uma cópia para manter a referência original
+  casaEntrePontos.push(localizacaoclick.id); // Adiciona a casa do destino ao array
+  
+  let buscarPecaAtual = document.getElementById(casaEntrePontos[0]);
+  let corPecaAtual = buscarPecaAtual.querySelector('img')?.name || "semPeca";
+  const corPecaSeCapturar = localizacaoclick.querySelector('img')?.name || "semPeca";
+  
+  // Remove a casa de origem do array para verificar somente as casas intermediárias
+  casaEntrePontos.shift();
+  
+  let encontrouPecaNoCaminho = false; // Flag para identificar se há uma peça bloqueando o caminho
+  
+  for (let u = 0; u < casaEntrePontos.length; u++) {
+      const buscarCasas = document.getElementById(casaEntrePontos[u]);
+      const pecaDentroCasa = buscarCasas.getAttribute('pecadentro');
+  
+      if (pecaDentroCasa) {
+          if (u === casaEntrePontos.length - 1) { 
+              // Se for a última casa (casa de destino)
+              if (corPecaSeCapturar === corPecaAtual) {
+                  return true; // Movimento inválido (não pode capturar peça da mesma cor)
+              }
+          } else {
+              encontrouPecaNoCaminho = true; // Marcamos que há uma peça bloqueando o caminho
+          }
+      }
   }
-  return false
+  
+  // Se encontrou uma peça no caminho e o destino tem uma peça inimiga, a captura não pode acontecer
+  if (encontrouPecaNoCaminho) {
+      return true;
+  }
+  
+  return false;
+  
 }
 
 function VerificarObstaculosRei(proximaPosicaoEmNumeroRei, posicaoAtualEmNumeroRei, localizacaoclick){
