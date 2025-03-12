@@ -121,7 +121,6 @@ function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmN
   casaEntrePontos.shift();
   
   let encontrouPecaNoCaminho = false; // Flag para identificar se há uma peça bloqueando o caminho
-  
   for (let u = 0; u < casaEntrePontos.length; u++) {
       const buscarCasas = document.getElementById(casaEntrePontos[u]);
       const pecaDentroCasa = buscarCasas.getAttribute('pecadentro');
@@ -137,14 +136,11 @@ function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmN
           }
       }
   }
-  
   // Se encontrou uma peça no caminho e o destino tem uma peça inimiga, a captura não pode acontecer
   if (encontrouPecaNoCaminho) {
       return true;
   }
-  
   return false;
-  
 }
 
 function VerificarObstaculosRei(proximaPosicaoEmNumeroRei, posicaoAtualEmNumeroRei, localizacaoclick){
