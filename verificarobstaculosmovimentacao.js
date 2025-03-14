@@ -144,16 +144,14 @@ function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmN
 }
 
 function VerificarObstaculosRei(proximaPosicaoEmNumeroRei, posicaoAtualEmNumeroRei, localizacaoclick){
-  const [x1, y1] = posicaoAtualEmNumeroRei
-  const [x2, y2] = proximaPosicaoEmNumeroRei
-  
-  var direcao = (y2 == y1 + 1) ? "cima"
- : ((x2 == x1 + 1 || x2 == x1 - 1) && y2 == y1) ? "mesmaLinha"
- : (y2 == y1 - 1) ? "baixo"
- : "JogadaImpossivel";
+  const pecaSeSelecionada = localizacaoclick.querySelector('img')
+  const corPecaSeSelecionada = (pecaSeSelecionada)?.name || "semPeca"
+  const pecaAtual = document.getElementById(eixo_y_2[posicaoAtualEmNumeroRei[0]] + posicaoAtualEmNumeroRei[1])
+  const corPecaAtual = pecaAtual.querySelector('img')?.name || "pecaAtualNaoSelecionada"
 
-  
-  console.log('DIRECAO REI', direcao)
+  if(corPecaAtual == corPecaSeSelecionada){
+    return true
+  }
 
   return false
 }

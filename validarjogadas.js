@@ -116,7 +116,7 @@ function ValidarJogadarei(localizacaoclick, casaAtual, numerocasa, eixo_x_casaat
   ]
 
   for (var v = 0; v < 8; v++){
-    if(JSON.stringify(PossibilidadesJogada[v]) == JSON.stringify(proximaPosicaoEmNumeroRei) && VerificarObstaculosRei(proximaPosicaoEmNumeroRei, posicaoAtualEmNumeroRei) == false){
+    if(JSON.stringify(PossibilidadesJogada[v]) == JSON.stringify(proximaPosicaoEmNumeroRei) && VerificarObstaculosRei(proximaPosicaoEmNumeroRei, posicaoAtualEmNumeroRei, localizacaoclick) == false){
       return 'JogadaPossivel'
     }
   }
