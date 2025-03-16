@@ -27,12 +27,13 @@ function VerificarObstaculosTorre(proximaPosicaoEmNumeroTorre, posicaoAtualEmNum
     casasEntrePontosFormatoPadrao.push([eixo_y_2[casasEntrePontos[x][0]] + casasEntrePontos[x][1]])
   }
 
-  let buscarPecaAtual = document.getElementById(casaEntrePontos[0])
+  let buscarPecaAtual = document.getElementById(casasEntrePontosFormatoPadrao[0])
   let corPecaAtual = (buscarPecaAtual.querySelector('img')).name
   let corPecaSeCapturar = (localizacaoclick.querySelector('img'))?.name || "semPeca" 
 
   for (let x = 0; x < casasEntrePontosFormatoPadrao.length; x++){
-    var buscarcasas = document.getElementById(casasEntrePontosFormatoPadrao[x])
+    //CONCERTAR ISSO
+    var buscarcasas = document.getElementById(casaEntrePontos[x])
     var pecadentro = buscarcasas.getAttribute('pecaDentro')
     if(pecadentro != null){
       return true

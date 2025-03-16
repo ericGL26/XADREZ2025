@@ -64,7 +64,8 @@ if (eval(chamarValidacao) == "JogadaPossivel") {
     buscarpecaDentroCasa.removeAttribute('pecadentro');
 
     MovimentarPecas();
-    verificarXequeMate();
+    //xequeMate.js
+    ArmazenarCasasReisDominam();
 
 }
 
