@@ -33,6 +33,8 @@ function ArmazenarCasasReisDominam(){
   console.log('casacontrelePRETO', casasControleReiPreto)
 }
 
+
+
 function AdicionarCasasPecasDominam(){
   const casasAdversarioDomina = []
   const casasJogadorDomina = []
@@ -49,5 +51,4 @@ function AdicionarCasasPecasDominam(){
   console.log('todascasastabuleiro', todasCasasTabuleiro)
 
 }
-
 AdicionarCasasPecasDominam()
