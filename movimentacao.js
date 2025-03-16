@@ -26,6 +26,13 @@ function MovimentarPecas() {
     if(imageRm){
       imageRm.remove()
     }
+    /*
+    //parte para enviar dados necessarios para xequeMate.js
+    if()
+    console.log('pecaremover', casaAdicionarPeca)
+    console.log('pecaremover', casaRemoverPeca.getAttribute('pecaDentro'))
+*/
+  
   casaAdicionarPeca.innerHTML += `<img id="${pecaRemover.id.slice(0, -2) + casaAdicionarPeca.id}" src="${ pecaRemover.id.slice(0, -2) + '.png'}" class="peca ${pecaRemover.name}" name="${pecaRemover.name}" primeiraJogada=${pecaRemover.getAttribute('primeiraJogada')}>`
   armazenarJogada = []
 }
@@ -42,7 +49,10 @@ function chamarValidacaoMovimentacao(localizacaoclick) {
     var adicionarAtributoPecaDentroProximaCasa = document.getElementById(armazenarJogada[1])
     const pecaDentro = buscarpecaDentroCasa.getAttribute('pecaDentro')
 
+
     MovimentarPecas();
+    verificarXequeMate();
+    
 
     adicionarAtributoPecaDentroProximaCasa.setAttribute('pecaDentro', pecaDentro)
     buscarpecaDentroCasa.removeAttribute('pecadentro')
@@ -50,8 +60,4 @@ function chamarValidacaoMovimentacao(localizacaoclick) {
     console.log("Jogada Impossivel");
     armazenarJogada = [];
   }
-}
-
-function verificarObstaculosMovimentacao() {
-  
 }

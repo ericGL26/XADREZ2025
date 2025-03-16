@@ -82,5 +82,6 @@ function ColocarPecasTabuleiro() {
     }" name="${last_digito == 1 || last_digito == 2 ? "pecabranca" : "pecapreta"}" primeiraJogada="true"/>
     `;
     casa.setAttribute('pecaDentro', value)
+    casa.setAttribute('reiDentro', value == "rei" && key == "e1" ? "reiBranco": (value == "rei" && key == "e8") ? "reiPreto" : "NAO-TEM-REI-DENTRO")
   }
 }
