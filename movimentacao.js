@@ -26,12 +26,7 @@ function MovimentarPecas() {
     if(imageRm){
       imageRm.remove()
     }
-    /*
-    //parte para enviar dados necessarios para xequeMate.js
-    if()
-    console.log('pecaremover', casaAdicionarPeca)
-    console.log('pecaremover', casaRemoverPeca.getAttribute('pecaDentro'))
-*/
+    
   
   casaAdicionarPeca.innerHTML += `<img id="${pecaRemover.id.slice(0, -2) + casaAdicionarPeca.id}" src="${ pecaRemover.id.slice(0, -2) + '.png'}" class="peca ${pecaRemover.name}" name="${pecaRemover.name}" primeiraJogada=${pecaRemover.getAttribute('primeiraJogada')}>`
   armazenarJogada = []
@@ -44,20 +39,33 @@ function chamarValidacaoMovimentacao(localizacaoclick) {
   var pecaEscolhida = armazenarJogada[0].slice(0, -2);
   var peaoSelecionado = armazenarJogada[0]
   var chamarValidacao = "ValidarJogada" + pecaEscolhida + "(localizacaoclick, casaAtual, numerocasa, eixo_x_casaatual_numero, peaoSelecionado)";
-  if (eval(chamarValidacao) == "JogadaPossivel") {
-    var buscarpecaDentroCasa = document.getElementById(casaAtual)
-    var adicionarAtributoPecaDentroProximaCasa = document.getElementById(armazenarJogada[1])
-    const pecaDentro = buscarpecaDentroCasa.getAttribute('pecaDentro')
 
+if (eval(chamarValidacao) == "JogadaPossivel") {
+    var buscarpecaDentroCasa = document.getElementById(casaAtual);
+    var adicionarAtributoPecaDentroProximaCasa = document.getElementById(armazenarJogada[1]);
+    const pecaDentro = buscarpecaDentroCasa.getAttribute('pecadentro');
+
+    // Alterar atributos antes de chamar outras funções
+    if (pecaEscolhida == 'rei') {
+        let ReiEscolhido = document.getElementById(armazenarJogada[0].slice(-2));
+        if (ReiEscolhido) {
+            let reiAtributo = ReiEscolhido.getAttribute('reidentro') || ""; // Evita valores nulos
+
+
+            adicionarAtributoPecaDentroProximaCasa.setAttribute('reidentro', reiAtributo);
+            adicionarAtributoPecaDentroProximaCasa.setAttribute('pecadentro', 'rei'); // Garante que o atributo seja mantido
+
+            buscarpecaDentroCasa.removeAttribute('reidentro');
+        }
+    } else {
+        adicionarAtributoPecaDentroProximaCasa.setAttribute('pecadentro', pecaDentro);
+    }
+    
+    buscarpecaDentroCasa.removeAttribute('pecadentro');
 
     MovimentarPecas();
     verificarXequeMate();
-    
 
-    adicionarAtributoPecaDentroProximaCasa.setAttribute('pecaDentro', pecaDentro)
-    buscarpecaDentroCasa.removeAttribute('pecadentro')
-  } else {
-    console.log("Jogada Impossivel");
-    armazenarJogada = [];
-  }
+}
+
 }

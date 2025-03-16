@@ -38,7 +38,6 @@ function VerificarObstaculosTorre(proximaPosicaoEmNumeroTorre, posicaoAtualEmNum
       return true
     }
   }
-  console.log('casaentrepontosformatopadrao', casasEntrePontosFormatoPadrao)
   return false
 }
 
@@ -75,7 +74,6 @@ function VerificarObstaculosRainha(proximaPosicaoEmNumeroRainha, posicaoAtualEmN
   : (x2 < x1 && y1 != y2) ? direcao = "diagonalEsquerda" : "MOVIMENTO-INVALIDO"
 
   var casaEntrePontos = []
-  console.log('direcao', direcao)
 
   if(direcao == "horizontal"){
     let passoX = x2 > x1 ? 1 : -1
