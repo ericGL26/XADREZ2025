@@ -11,7 +11,6 @@ function ArmazenarCasasReisDominam(){
 
   for(let contador = 0; contador < 2; contador++){
     if(contador == 0){
-      console.log(reiBranco)
       var posicaoEmNumeroRei = [eixo_x[reiBranco.id[0]], reiBranco.id[1]]
     }else{
       var posicaoEmNumeroRei = [eixo_x[reiPreto.id[0]], reiPreto.id[1]]
@@ -29,15 +28,14 @@ function ArmazenarCasasReisDominam(){
       [Math.abs(posicaoEmNumeroRei[0]) + 1, Math.abs(posicaoEmNumeroRei[1]) - 1],
     ) 
   }
-  console.log('casascontroleBRANCO', casasControleReiBranco)
-  console.log('casacontrelePRETO', casasControleReiPreto)
+
+  AdicionarArrayCasasSobreDominioBrancoPreto()
 }
 
 
 
-function AdicionarCasasPecasDominam(){
-  const casasAdversarioDomina = []
-  const casasJogadorDomina = []
+function AdicionarArrayCasasSobreDominioBrancoPreto(){
+  //adicionar o id de todas as casas do tabuleiro em uma variavel
   let numeros = ['1', '2', '3', '4', '5', '6', '7', '8']
   let letras = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
   var todasCasasTabuleiro = []
@@ -48,7 +46,23 @@ function AdicionarCasasPecasDominam(){
     }
   }
 
-  console.log('todascasastabuleiro', todasCasasTabuleiro)
+  //Seperar todas as pecas brancas em pretas em duas arrays separadas
+  //AS VARIAVEIS ABAIXO DEVEM SEGUIR O PADRAO ['TIPOPECA', 'LOCALIZACAO']
+  var pecasBrancas = []
+  var pecasPretas = []
 
+  for(let contador = 0; contador < 64; contador++){
+    var buscarTodasAsCasasTabuleiro = document.getElementById(todasCasasTabuleiro[contador])
+    var Peca = buscarTodasAsCasasTabuleiro ? buscarTodasAsCasasTabuleiro.querySelector('img') || "SemPecaDentro" : "SemPecaDentro";
+    console.log('peca', Peca.name)
+    if(Peca != "SemPecaDentro"){
+      if(Peca.name == 'pecabranca'){
+        pecasBrancas.push([Peca.id.slice(-2), Peca.id.slice(0, -2)])
+      }
+      if(Peca.name == 'pecapreta'){
+        pecasPretas.push([Peca.id.slice(-2), Peca.id.slice(0, -2)])
+      }
+    }
+  }
+  console.log('pecasbrancas', pecasBrancas, pecasPretas)
 }
-AdicionarCasasPecasDominam()
