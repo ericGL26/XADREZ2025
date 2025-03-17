@@ -29,12 +29,13 @@ function ArmazenarCasasReisDominam(){
     ) 
   }
 
-  AdicionarArrayCasasSobreDominioBrancoPreto()
+  let {pecasBrancas, pecasPretas} = AdicionarArrayCasasPecasBrancoPreto()
+  calcularDominiosDeCasas(reiBranco, reiPreto, pecasBrancas, pecasPretas)
 }
 
 
 
-function AdicionarArrayCasasSobreDominioBrancoPreto(){
+function AdicionarArrayCasasPecasBrancoPreto(){
   //adicionar o id de todas as casas do tabuleiro em uma variavel
   let numeros = ['1', '2', '3', '4', '5', '6', '7', '8']
   let letras = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
@@ -54,7 +55,6 @@ function AdicionarArrayCasasSobreDominioBrancoPreto(){
   for(let contador = 0; contador < 64; contador++){
     var buscarTodasAsCasasTabuleiro = document.getElementById(todasCasasTabuleiro[contador])
     var Peca = buscarTodasAsCasasTabuleiro ? buscarTodasAsCasasTabuleiro.querySelector('img') || "SemPecaDentro" : "SemPecaDentro";
-    console.log('peca', Peca.name)
     if(Peca != "SemPecaDentro"){
       if(Peca.name == 'pecabranca'){
         pecasBrancas.push([Peca.id.slice(-2), Peca.id.slice(0, -2)])
@@ -64,5 +64,10 @@ function AdicionarArrayCasasSobreDominioBrancoPreto(){
       }
     }
   }
+  return {pecasBrancas, pecasPretas}
   console.log('pecasbrancas', pecasBrancas, pecasPretas)
+}
+
+function calcularDominiosDeCasas(reiBranco, reiPreto, pecasBrancas, pecasPretas){
+  
 }
