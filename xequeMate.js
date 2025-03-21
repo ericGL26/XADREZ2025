@@ -29,8 +29,8 @@ function ArmazenarCasasReisDominam(){
     ) 
   }
 
-  let {pecasBrancas, pecasPretas} = AdicionarArrayCasasPecasBrancoPreto()
-  calcularDominiosDeCasas(reiBranco, reiPreto, pecasBrancas, pecasPretas)
+  let {pecasTabuleiro} = AdicionarArrayCasasPecasBrancoPreto()
+  calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro)
 }
 
 
@@ -49,25 +49,49 @@ function AdicionarArrayCasasPecasBrancoPreto(){
 
   //Seperar todas as pecas brancas em pretas em duas arrays separadas
   //AS VARIAVEIS ABAIXO DEVEM SEGUIR O PADRAO ['TIPOPECA', 'LOCALIZACAO']
-  var pecasBrancas = []
-  var pecasPretas = []
+  var pecasTabuleiro = []
 
   for(let contador = 0; contador < 64; contador++){
     var buscarTodasAsCasasTabuleiro = document.getElementById(todasCasasTabuleiro[contador])
     var Peca = buscarTodasAsCasasTabuleiro ? buscarTodasAsCasasTabuleiro.querySelector('img') || "SemPecaDentro" : "SemPecaDentro";
     if(Peca != "SemPecaDentro"){
-      if(Peca.name == 'pecabranca'){
-        pecasBrancas.push([Peca.id.slice(-2), Peca.id.slice(0, -2)])
-      }
-      if(Peca.name == 'pecapreta'){
-        pecasPretas.push([Peca.id.slice(-2), Peca.id.slice(0, -2)])
-      }
+      pecasTabuleiro.push([Peca.id.slice(-2), Peca.id.slice(0, -2)])
     }
   }
-  return {pecasBrancas, pecasPretas}
-  console.log('pecasbrancas', pecasBrancas, pecasPretas)
+  return {pecasTabuleiro}
 }
 
-function calcularDominiosDeCasas(reiBranco, reiPreto, pecasBrancas, pecasPretas){
-  
+function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro){
+  var casasPretasDominam = []
+  var casasBrancasDominam = []
+  console.log('pecastabuleiro', pecasTabuleiro)
+
+  //logica pra calcular quais casas cada peça dominam
+  for(let pecaVez = 0; pecaVez < pecasTabuleiro.length; pecaVez++){
+    switch(pecasTabuleiro[pecaVez][1]) {
+      case 'peao':
+        const localizacaoPeao = pecasTabuleiro[pecaVez][0]
+        var direcao = corPeao == 'pecabranca' ? 1 : -1;
+        var moverUmaCasa = posicaoAtualEmNumeroPeao[1] + direcao;
+        var moverDuasCasas = posicaoAtualEmNumeroPeao[1] + (2 * direcao);
+
+        break;
+      case 'torre':
+        
+        break;
+      case 'cavalo':
+        
+        break;
+      case 'bispo':
+        
+        break;
+      case 'rainha':
+        
+        break;
+      case 'rei':
+        
+        break;
+    }
+
+  }
 }
