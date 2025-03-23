@@ -74,7 +74,7 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro){
         var direcao = corPeao == 'pecabranca' ? 1 : -1;
         var moverUmaCasa = posicaoAtualEmNumeroPeao[1] + direcao;
         var moverDuasCasas = posicaoAtualEmNumeroPeao[1] + (2 * direcao);
-
+        
         break;
       case 'torre':
         
