@@ -1,4 +1,8 @@
 var eixo_x = {a: 1, b: 2, c:3, d:4, e:5, f:6, g:7, h:8}
+var transformarLetraEmNumero = { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8 };
+var numeroParaLetra = { 1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e', 6: 'f', 7: 'g', 8: 'h' };
+
+
 //ADICIONAR CASA EM QUE O REI ESTA PARA VALIDAR O XEQUE-MATE ALEM DA QUE ELE TEM DOMINIO SO ADICONAR LA NA PARTE QUE SO TEM DOIS NA ARRAY
 function ArmazenarCasasReisDominam(){
   const reiBranco = document.querySelector("[pecadentro='rei'][reidentro='reiBranco']");
@@ -62,27 +66,24 @@ function AdicionarArrayCasasPecasBrancoPreto(){
 }
 
 function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro){
-  var casasPretasDominam = []
-  var casasBrancasDominam = []
+  var casasControleBrancas = []
+  var casasControlePretas = []
+
   console.log('pecastabuleiro', pecasTabuleiro)
 
   //logica pra calcular quais casas cada peça dominam
-  for(let pecaVez = 0; pecaVez < pecasTabuleiro.length; pecaVez++){
-    switch(pecasTabuleiro[pecaVez][1]) {
+  for (let pecaVez = 0; pecaVez < pecasTabuleiro.length; pecaVez++) {
+    switch (pecasTabuleiro[pecaVez][1]) {
       case 'peao':
-        const localizacaoPeao = pecasTabuleiro[pecaVez][0]
-        var direcao = corPeao == 'pecabranca' ? 1 : -1;
-        var moverUmaCasa = posicaoAtualEmNumeroPeao[1] + direcao;
-        var moverDuasCasas = posicaoAtualEmNumeroPeao[1] + (2 * direcao);
-        
-        break;
+          break;
       case 'torre':
-        
         break;
       case 'cavalo':
-        
         break;
       case 'bispo':
+        const posicaoBispo = pecasTabuleiro[pecaVez][0]
+        const timeBispo = document.getElementById(posicaoBispo)?.querySelector('img')?.name || "semPeca";
+
         
         break;
       case 'rainha':
