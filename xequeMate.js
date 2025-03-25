@@ -69,6 +69,8 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro){
   var casasControleBrancas = []
   var casasControlePretas = []
 
+  var arrayCasaControleTeste = []
+
   console.log('pecastabuleiro', pecasTabuleiro)
 
   //logica pra calcular quais casas cada peça dominam
@@ -83,8 +85,14 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro){
       case 'bispo':
         const posicaoBispo = pecasTabuleiro[pecaVez][0]
         const timeBispo = document.getElementById(posicaoBispo)?.querySelector('img')?.name || "semPeca";
+        //calcular casas que o bispo domina
+        const [x1, y1] = [transformarLetraEmNumero[posicaoBispo[0]], posicaoBispo[1]];
+        for(let contador = 0; contador < 7; contador++){
+          let DiagonalSuperiorEsquerda = [x1 - contador, parseInt(y1) + contador]
+          cas
+          console.log('diagonalsuep', DiagonalSuperiorEsquerda)
+        } 
 
-        
         break;
       case 'rainha':
         
