@@ -26,6 +26,8 @@ function ArmazenarCasasReisDominam(){
 
       [Math.abs(posicaoEmNumeroRei[0]) - 1, Math.abs(posicaoEmNumeroRei[1])],
       [Math.abs(posicaoEmNumeroRei[0]) + 1, Math.abs(posicaoEmNumeroRei[1])],
+      //posicao atual rei
+      [Math.abs(posicaoEmNumeroRei[0]), Math.abs(posicaoEmNumeroRei[1])],
 
       [Math.abs(posicaoEmNumeroRei[0]) - 1, Math.abs(posicaoEmNumeroRei[1]) - 1],
       [Math.abs(posicaoEmNumeroRei[0]), Math.abs(posicaoEmNumeroRei[1]) - 1],
@@ -34,10 +36,8 @@ function ArmazenarCasasReisDominam(){
   }
 
   let {pecasTabuleiro} = AdicionarArrayCasasPecasBrancoPreto()
-  calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro)
+  calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasControleReiBranco, casasControleReiPreto)
 }
-
-
 
 function AdicionarArrayCasasPecasBrancoPreto(){
   //adicionar o id de todas as casas do tabuleiro em uma variavel
@@ -65,16 +65,16 @@ function AdicionarArrayCasasPecasBrancoPreto(){
   return {pecasTabuleiro}
 }
 
-function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro){
+function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasControleReiBranco, casasControleReiPreto){
   var casasControleBrancas = []
   var casasControlePretas = []
 
-  var arrayCasaControleTeste = []
-
-  console.log('pecastabuleiro', pecasTabuleiro)
 
   //logica pra calcular quais casas cada peça dominam
   for (let pecaVez = 0; pecaVez < pecasTabuleiro.length; pecaVez++) {
+    var [x1, y1] = [transformarLetraEmNumero[pecasTabuleiro[pecaVez][0][0]], pecasTabuleiro[pecaVez][0][1]];
+    console.log('TESTEEE', typeof(x1), typeof(y1))
+
     switch (pecasTabuleiro[pecaVez][1]) {
       case 'peao':
           break;
@@ -83,19 +83,17 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro){
       case 'cavalo':
         break;
       case 'bispo':
-        const posicaoBispo = pecasTabuleiro[pecaVez][0]
-        const timeBispo = document.getElementById(posicaoBispo)?.querySelector('img')?.name || "semPeca";
-        //calcular casas que o bispo domina
-        const [x1, y1] = [transformarLetraEmNumero[posicaoBispo[0]], posicaoBispo[1]];
-        for(let contador = 0; contador < 7; contador++){
-          let DiagonalSuperiorEsquerda = [x1 - contador, parseInt(y1) + contador]
-          cas
-          console.log('diagonalsuep', DiagonalSuperiorEsquerda)
-        } 
-
+      for(let repetidor = 1; repetidor < 9; repetidor++){
+        let diagonais = [
+          [x1 - repetidor, parseInt(y1) + repetidor], // diagonal superior esquerda
+          [x1 + repetidor, parseInt(y1) + repetidor],  // diagonal superior direita
+          [x1 - repetidor, parseInt(y1) - repetidor], // diagonal inferior esquerda
+          [x1 + repetidor, parseInt(y1) - repetidor],  // diagonal inferior direita
+        ]
+        diagonais = diagonais.filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8);
+      }
         break;
       case 'rainha':
-        
         break;
       case 'rei':
         
