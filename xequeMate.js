@@ -84,13 +84,17 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         break;
       case 'bispo':
       for(let repetidor = 1; repetidor < 9; repetidor++){
-        let diagonais = [
-          [x1 - repetidor, parseInt(y1) + repetidor], // diagonal superior esquerda
-          [x1 + repetidor, parseInt(y1) + repetidor],  // diagonal superior direita
-          [x1 - repetidor, parseInt(y1) - repetidor], // diagonal inferior esquerda
-          [x1 + repetidor, parseInt(y1) - repetidor],  // diagonal inferior direita
-        ]
-        diagonais = diagonais.filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8);
+         let diagonalSuperiorEsquerda =  [x1 - repetidor, parseInt(y1) + repetidor]
+         let diagonalSuperiorDireita = [x1 + repetidor, parseInt(y1) + repetidor]
+         let diagonalInferiorEsquerda = [x1 - repetidor, parseInt(y1) - repetidor]
+         let diagonalInferiorDireita =  [x1 + repetidor, parseInt(y1) - repetidor]
+         //filtros
+         diagonalSuperiorEsquerda = [diagonalSuperiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8);
+         diagonalSuperiorDireita = [diagonalSuperiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8);
+         diagonalInferiorEsquerda = [diagonalInferiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8);
+         diagonalInferiorDireita = [diagonalInferiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8);
+
+         if (diagonalSuperiorEsquerda.length > 0) console.log('diagonalSuperiorEsquerda', diagonalSuperiorEsquerda);
       }
         break;
       case 'rainha':
