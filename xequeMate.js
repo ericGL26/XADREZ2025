@@ -89,12 +89,12 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
          let diagonalInferiorEsquerda = [x1 - repetidor, parseInt(y1) - repetidor]
          let diagonalInferiorDireita =  [x1 + repetidor, parseInt(y1) - repetidor]
          //filtros
-         diagonalSuperiorEsquerda = [diagonalSuperiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8);
-         diagonalSuperiorDireita = [diagonalSuperiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8);
-         diagonalInferiorEsquerda = [diagonalInferiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8);
-         diagonalInferiorDireita = [diagonalInferiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8);
+         diagonalSuperiorEsquerda = [diagonalSuperiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+         diagonalSuperiorDireita = [diagonalSuperiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+         diagonalInferiorEsquerda = [diagonalInferiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+         diagonalInferiorDireita = [diagonalInferiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
 
-         if (diagonalSuperiorEsquerda.length > 0) console.log('diagonalSuperiorEsquerda', diagonalSuperiorEsquerda);
+         console.log('diagonalSuperiorEsquerda', diagonalSuperiorEsquerda)
       }
         break;
       case 'rainha':
