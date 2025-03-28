@@ -69,11 +69,9 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
   var casasControleBrancas = []
   var casasControlePretas = []
 
-
   //logica pra calcular quais casas cada peça dominam
   for (let pecaVez = 0; pecaVez < pecasTabuleiro.length; pecaVez++) {
     var [x1, y1] = [transformarLetraEmNumero[pecasTabuleiro[pecaVez][0][0]], pecasTabuleiro[pecaVez][0][1]];
-    console.log('TESTEEE', typeof(x1), typeof(y1))
 
     switch (pecasTabuleiro[pecaVez][1]) {
       case 'peao':
@@ -93,9 +91,23 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
          diagonalSuperiorDireita = [diagonalSuperiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
          diagonalInferiorEsquerda = [diagonalInferiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
          diagonalInferiorDireita = [diagonalInferiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+         //verificar time peça e adicionar corretamente a casa que cada time controla
+         const buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
+         const timePeca = buscarPeca.querySelector('img')?.name || "SemPeca"
 
-         console.log('diagonalSuperiorEsquerda', diagonalSuperiorEsquerda)
+         if(timePeca == 'pecabranca'){
+            if (diagonalSuperiorEsquerda !== null) casasControleBrancas.push(diagonalSuperiorEsquerda);
+            if (diagonalSuperiorDireita !== null) casasControleBrancas.push(diagonalSuperiorDireita);
+            if (diagonalInferiorEsquerda !== null) casasControleBrancas.push(diagonalInferiorEsquerda);
+            if (diagonalInferiorDireita !== null) casasControleBrancas.push(diagonalInferiorDireita);
+         }else if(timePeca == 'pecapreta'){
+            if (diagonalSuperiorEsquerda !== null) casasControlePretas.push(diagonalSuperiorEsquerda);
+            if (diagonalSuperiorDireita !== null) casasControlePretas.push(diagonalSuperiorDireita);
+            if (diagonalInferiorEsquerda !== null) casasControlePretas.push(diagonalInferiorEsquerda);
+            if (diagonalInferiorDireita !== null) casasControlePretas.push(diagonalInferiorDireita);
+         }
       }
+      console.log('casaCOntroleBrancas', casasControlePretas)
         break;
       case 'rainha':
         break;
