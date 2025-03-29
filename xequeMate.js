@@ -74,13 +74,39 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
     var [x1, y1] = [transformarLetraEmNumero[pecasTabuleiro[pecaVez][0][0]], pecasTabuleiro[pecaVez][0][1]];
 
     switch (pecasTabuleiro[pecaVez][1]) {
-      case 'peao':
+      case 'peao': //CASE PEAO
           break;
-      case 'torre':
+      case 'torre': //CASE TORRE
+      for(let repetidor = 1; repetidor < 9; repetidor++){
+        let horizontalEsquerda = [x1 - repetidor, parseInt(y1)]
+        let horizontalDireita = [x1 + repetidor, parseInt(y1)]
+        let verticalCima = [x1, parseInt(y1) + repetidor]
+        let verticalBaixo = [x1, parseInt(y1) + repetidor]
+        //filtros
+        horizontalEsquerda = [horizontalEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        horizontalDireita = [horizontalDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        verticalCima = [verticalCima].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        verticalBaixo = [verticalBaixo].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        //verificar time peça e adicionar corretamente a casa que cada time domina
+        let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
+        let timePeca = buscarPeca.querySelector('img')?.name || "semPeca"
+
+        if(timePeca == 'pecabranca'){
+          if (horizontalEsquerda !== null) casasControleBrancas.push(horizontalEsquerda);
+          if (horizontalDireita !== null) casasControleBrancas.push(horizontalDireita);
+          if (verticalCima !== null) casasControleBrancas.push(verticalCima);
+          if (verticalBaixo !== null) casasControleBrancas.push(verticalBaixo);
+       }else if(timePeca == 'pecapreta'){
+          if (horizontalEsquerda !== null) casasControlePretas.push(horizontalEsquerda);
+          if (horizontalDireita !== null) casasControlePretas.push(horizontalDireita);
+          if (verticalCima !== null) casasControlePretas.push(verticalCima);
+          if (verticalBaixo !== null) casasControlePretas.push(verticalBaixo);
+       }
+      }
         break;
-      case 'cavalo':
+      case 'cavalo': //CASE CAVALO
         break;
-      case 'bispo':
+      case 'bispo': //CASE BISPO
       for(let repetidor = 1; repetidor < 9; repetidor++){
          let diagonalSuperiorEsquerda =  [x1 - repetidor, parseInt(y1) + repetidor]
          let diagonalSuperiorDireita = [x1 + repetidor, parseInt(y1) + repetidor]
@@ -92,8 +118,8 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
          diagonalInferiorEsquerda = [diagonalInferiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
          diagonalInferiorDireita = [diagonalInferiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
          //verificar time peça e adicionar corretamente a casa que cada time controla
-         const buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
-         const timePeca = buscarPeca.querySelector('img')?.name || "SemPeca"
+         let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
+         let timePeca = buscarPeca.querySelector('img')?.name || "SemPeca"
 
          if(timePeca == 'pecabranca'){
             if (diagonalSuperiorEsquerda !== null) casasControleBrancas.push(diagonalSuperiorEsquerda);
@@ -107,14 +133,19 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
             if (diagonalInferiorDireita !== null) casasControlePretas.push(diagonalInferiorDireita);
          }
       }
-      console.log('casaCOntroleBrancas', casasControlePretas)
         break;
-      case 'rainha':
+      case 'rainha': //CASE RAINHA
         break;
-      case 'rei':
+      case 'rei': //CASE REI
         
         break;
     }
 
   }
+  //colorir casas sobre dominio de vermelho
+  for(let cor = 0; cor < 70; cor++){
+    console.log('casaCOntroleBrancas', casasControleBrancas[cor].length)
+    let casa = document.getElementById(numeroParaLetra[casasControleBrancas[cor][0]] + casasControleBrancas[cor][1])
+    casa.style.backgroundColor = "red"
+   }
 }
