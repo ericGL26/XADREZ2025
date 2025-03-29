@@ -135,6 +135,48 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
       }
         break;
       case 'rainha': //CASE RAINHA
+        for(let repetidor = 1; repetidor < 9; repetidor++){
+          let diagonalSuperiorEsquerda = [x1 - repetidor, parseInt(y1) + repetidor];
+          let diagonalSuperiorDireita = [x1 + repetidor, parseInt(y1) + repetidor];
+          let diagonalInferiorEsquerda = [x1 - repetidor, parseInt(y1) - repetidor];
+          let diagonalInferiorDireita = [x1 + repetidor, parseInt(y1) - repetidor];
+          let horizontalEsquerda = [x1 - repetidor, parseInt(y1)];
+          let horizontalDireita = [x1 + repetidor, parseInt(y1)];
+          let verticalCima = [x1, parseInt(y1) + repetidor];
+          let verticalBaixo = [x1, parseInt(y1) - repetidor];
+          // Filtros
+          diagonalSuperiorEsquerda = [diagonalSuperiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+          diagonalSuperiorDireita = [diagonalSuperiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+          diagonalInferiorEsquerda = [diagonalInferiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+          diagonalInferiorDireita = [diagonalInferiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+          horizontalEsquerda = [horizontalEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+          horizontalDireita = [horizontalDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+          verticalCima = [verticalCima].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+          verticalBaixo = [verticalBaixo].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+
+          let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
+          let timePeca = buscarPeca.querySelector('img')?.name || "SemPeca"
+
+          if(timePeca == 'pecabranca'){
+            if (diagonalSuperiorEsquerda !== null) casasControleBrancas.push(diagonalSuperiorEsquerda);
+            if (diagonalSuperiorDireita !== null) casasControleBrancas.push(diagonalSuperiorDireita);
+            if (diagonalInferiorEsquerda !== null) casasControleBrancas.push(diagonalInferiorEsquerda);
+            if (diagonalInferiorDireita !== null) casasControleBrancas.push(diagonalInferiorDireita);
+            if (horizontalEsquerda !== null) casasControleBrancas.push(horizontalEsquerda);
+            if (horizontalDireita !== null) casasControleBrancas.push(horizontalDireita);
+            if (verticalCima !== null) casasControleBrancas.push(verticalCima);
+            if (verticalBaixo !== null) casasControleBrancas.push(verticalBaixo);
+         }else if(timePeca == 'pecapreta'){
+            if (diagonalSuperiorEsquerda !== null) casasControlePretas.push(diagonalSuperiorEsquerda);
+            if (diagonalSuperiorDireita !== null) casasControlePretas.push(diagonalSuperiorDireita);
+            if (diagonalInferiorEsquerda !== null) casasControlePretas.push(diagonalInferiorEsquerda);
+            if (diagonalInferiorDireita !== null) casasControlePretas.push(diagonalInferiorDireita);
+            if (horizontalEsquerda !== null) casasControlePretas.push(horizontalEsquerda);
+            if (horizontalDireita !== null) casasControlePretas.push(horizontalDireita);
+            if (verticalCima !== null) casasControlePretas.push(verticalCima);
+            if (verticalBaixo !== null) casasControlePretas.push(verticalBaixo);
+         }
+        }
         break;
       case 'rei': //CASE REI
         
@@ -143,8 +185,8 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
 
   }
   //colorir casas sobre dominio de vermelho
-  for(let cor = 0; cor < 70; cor++){
-    console.log('casaCOntroleBrancas', casasControleBrancas[cor].length)
+  console.log('casaCOntroleBrancas', casasControleBrancas)
+  for(let cor = 0; cor < casasControleBrancas.length; cor++){
     let casa = document.getElementById(numeroParaLetra[casasControleBrancas[cor][0]] + casasControleBrancas[cor][1])
     casa.style.backgroundColor = "red"
    }
