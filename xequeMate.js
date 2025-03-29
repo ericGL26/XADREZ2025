@@ -81,7 +81,7 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         let horizontalEsquerda = [x1 - repetidor, parseInt(y1)]
         let horizontalDireita = [x1 + repetidor, parseInt(y1)]
         let verticalCima = [x1, parseInt(y1) + repetidor]
-        let verticalBaixo = [x1, parseInt(y1) + repetidor]
+        let verticalBaixo = [x1, parseInt(y1) - repetidor] // se começar a dar erro na lista de dominio brancas ou pretas talvez seja porque eu modifiquei, ao inves de somar troquei para subtração
         //filtros
         horizontalEsquerda = [horizontalEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
         horizontalDireita = [horizontalDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
@@ -90,13 +90,13 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         //verificar time peça e adicionar corretamente a casa que cada time domina
         let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
         let timePeca = buscarPeca.querySelector('img')?.name || "semPeca"
-
         if(timePeca == 'pecabranca'){
           if (horizontalEsquerda !== null) casasControleBrancas.push(horizontalEsquerda);
           if (horizontalDireita !== null) casasControleBrancas.push(horizontalDireita);
           if (verticalCima !== null) casasControleBrancas.push(verticalCima);
           if (verticalBaixo !== null) casasControleBrancas.push(verticalBaixo);
        }else if(timePeca == 'pecapreta'){
+        console.log('timePeca', )
           if (horizontalEsquerda !== null) casasControlePretas.push(horizontalEsquerda);
           if (horizontalDireita !== null) casasControlePretas.push(horizontalDireita);
           if (verticalCima !== null) casasControlePretas.push(verticalCima);
