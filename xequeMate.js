@@ -105,6 +105,48 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
       }
         break;
       case 'cavalo': //CASE CAVALO
+      for(let repetidor = 1; repetidor < 9; repetidor++){
+        let lateralSuperiorEsquerda = [x1 - 1, parseInt(y1) + 2]
+        let lateralSuperiorDireita = [x1 + 1, parseInt(y1) + 2]
+        let lateralInferiorEsquerda = [x1 - 1, parseInt(y1) - 2]
+        let lateralInferiorDireita = [x1 + 1, parseInt(y1) - 2]
+        let lateralHorizontalEsquerdaCima = [x1 - 2, parseInt(y1) + 1]
+        let lateralHorizontalEsquerdaBaixo = [x1 - 2, parseInt(y1) - 1]
+        let lateralHorizontalDireitaCima = [x1 + 2, parseInt(y1) + 1]
+        let lateralHorizontalDireitaBaixo = [x1 + 2, parseInt(y1) - 1]
+        //filtros
+        lateralSuperiorEsquerda = [lateralSuperiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        lateralSuperiorDireita = [lateralSuperiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        lateralInferiorEsquerda = [lateralInferiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        lateralInferiorDireita = [lateralInferiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        lateralHorizontalEsquerdaCima = [lateralHorizontalEsquerdaCima].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        lateralHorizontalEsquerdaBaixo = [lateralHorizontalEsquerdaBaixo].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        lateralHorizontalDireitaCima = [lateralHorizontalDireitaCima].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        lateralHorizontalDireitaBaixo = [lateralHorizontalDireitaBaixo].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+
+        let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
+        let timePeca = buscarPeca.querySelector('img')?.name || "SemPeca"
+
+        if(timePeca == 'pecabranca'){
+           if (lateralSuperiorEsquerda !== null) casasControleBrancas.push(lateralSuperiorEsquerda);
+           if (lateralSuperiorDireita !== null) casasControleBrancas.push(lateralSuperiorDireita);
+           if (lateralInferiorEsquerda !== null) casasControleBrancas.push(lateralInferiorEsquerda);
+           if (lateralInferiorDireita !== null) casasControleBrancas.push(lateralInferiorDireita);
+           if (lateralHorizontalEsquerdaCima !== null) casasControleBrancas.push(lateralHorizontalEsquerdaCima);
+           if (lateralHorizontalEsquerdaBaixo !== null) casasControleBrancas.push(lateralHorizontalEsquerdaBaixo);
+           if (lateralHorizontalDireitaCima !== null) casasControleBrancas.push(lateralHorizontalDireitaCima);
+           if (lateralHorizontalDireitaBaixo !== null) casasControleBrancas.push(lateralHorizontalDireitaBaixo);
+        }else if(timePeca == 'pecapreta'){
+          if (lateralSuperiorEsquerda !== null) casasControlePretas.push(lateralSuperiorEsquerda);
+          if (lateralSuperiorDireita !== null) casasControlePretas.push(lateralSuperiorDireita);
+          if (lateralInferiorEsquerda !== null) casasControlePretas.push(lateralInferiorEsquerda);
+          if (lateralInferiorDireita !== null) casasControlePretas.push(lateralInferiorDireita);
+          if (lateralHorizontalEsquerdaCima !== null) casasControlePretas.push(lateralHorizontalEsquerdaCima);
+           if (lateralHorizontalEsquerdaBaixo !== null) casasControlePretas.push(lateralHorizontalEsquerdaBaixo);
+           if (lateralHorizontalDireitaCima !== null) casasControlePretas.push(lateralHorizontalDireitaCima);
+           if (lateralHorizontalDireitaBaixo !== null) casasControlePretas.push(lateralHorizontalDireitaBaixo);
+        }
+      }
         break;
       case 'bispo': //CASE BISPO
       for(let repetidor = 1; repetidor < 9; repetidor++){
@@ -179,7 +221,48 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         }
         break;
       case 'rei': //CASE REI
+      for(let contador = 1; contador < 9; contador++){
+        let horizontalEsquerda = [x1 - 1, parseInt(y1)]
+        let horizontalDireita = [x1 + 1, parseInt(y1)]
+        let verticalCima = [x1, parseInt(y1) + 1]
+        let verticalBaixo = [x1, parseInt(y1) - 1]
+        let diagonalSuperiorEsquerda = [x1 - 1, parseInt(y1) + 1]
+        let diagonalSuperiorDireita = [x1 + 1, parseInt(y1) + 1]
+        let diagonalInferiorEsquerda = [x1 - 1, parseInt(y1) - 1]
+        let diagonalInferiorDireita = [x1 + 1, parseInt(y1) - 1]
+        //filtros
+        horizontalEsquerda = [horizontalEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        horizontalDireita = [horizontalDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        verticalCima = [verticalCima].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        verticalBaixo = [verticalBaixo].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        diagonalSuperiorEsquerda = [diagonalSuperiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        diagonalSuperiorDireita = [diagonalSuperiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        diagonalInferiorEsquerda = [diagonalInferiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        diagonalInferiorDireita = [diagonalInferiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
         
+        let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
+        let timePeca = buscarPeca.querySelector('img')?.name || "SemPeca"
+
+        if(timePeca == 'pecabranca'){
+            if (horizontalEsquerda !== null) casasControleBrancas.push(horizontalEsquerda);
+            if (horizontalDireita !== null) casasControleBrancas.push(horizontalDireita);
+            if (verticalCima !== null) casasControleBrancas.push(verticalCima);
+            if (verticalBaixo !== null) casasControleBrancas.push(verticalBaixo);
+            if (diagonalSuperiorEsquerda !== null) casasControleBrancas.push(diagonalSuperiorEsquerda);
+            if (diagonalSuperiorDireita !== null) casasControleBrancas.push(diagonalSuperiorDireita);
+            if (diagonalInferiorEsquerda !== null) casasControleBrancas.push(diagonalInferiorEsquerda);
+            if (diagonalInferiorDireita !== null) casasControleBrancas.push(diagonalInferiorDireita);
+         }else if(timePeca == 'pecapreta'){
+            if (horizontalEsquerda !== null) casasControlePretas.push(horizontalEsquerda);
+            if (horizontalDireita !== null) casasControlePretas.push(horizontalDireita);
+            if (verticalCima !== null) casasControlePretas.push(verticalCima);
+            if (verticalBaixo !== null) casasControlePretas.push(verticalBaixo);
+            if (diagonalSuperiorEsquerda !== null) casasControlePretas.push(diagonalSuperiorEsquerda);
+            if (diagonalSuperiorDireita !== null) casasControlePretas.push(diagonalSuperiorDireita);
+            if (diagonalInferiorEsquerda !== null) casasControlePretas.push(diagonalInferiorEsquerda);
+            if (diagonalInferiorDireita !== null) casasControlePretas.push(diagonalInferiorDireita);
+         }
+        }
         break;
     }
 
