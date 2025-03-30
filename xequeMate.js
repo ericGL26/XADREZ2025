@@ -73,7 +73,7 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
   for (let cor = 1; cor < 9; cor++) {
     for (let cordois = 1; cordois < 9; cordois++) { // Agora cordois está sendo corretamente incrementado
         let casa = document.getElementById(numeroParaLetra[cor] + cordois);
-        console.log('casas', casa)
+        //console.log('casas', casa)
         casa.style.backgroundColor = "green";
     }
 }
@@ -101,13 +101,25 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
         let timePeca = buscarPeca.querySelector('img')?.name || "semPeca"
 
+        //VERIFICAR SE TEM PECA IMPEDINDO O DOMINIO DA OUTRA
+        let VerificarImpedimentoNaHorizontalEsquerda = (horizontalEsquerda !== null)? numeroParaLetra[horizontalEsquerda[0]] + horizontalEsquerda[1] : "ValorIndefinido"
+        let VerificarImpedimentoNaHorizontalDireita = (horizontalDireita !== null)? numeroParaLetra[horizontalDireita[0]] + horizontalDireita[1] : "ValorIndefinido"
+        let VerificarImpedimentoNaVerticalCima = (verticalCima !== null)? numeroParaLetra[verticalCima[0]] + verticalCima[1] : "ValorIndefinido"
+        let VerificarImpedimentoNaVerticalBaixo = (verticalBaixo !== null)? numeroParaLetra[verticalBaixo[0]] + verticalBaixo[1] : "ValorIndefinido"
+
+        let buscarCasaHorizontalEsquerda = document.getElementById(VerificarImpedimentoNaHorizontalEsquerda)
+        let buscarCasaHorizontalDireita = document.getElementById(VerificarImpedimentoNaHorizontalDireita)
+        let buscarCasaVerticalCima = document.getElementById(VerificarImpedimentoNaVerticalCima)
+        let buscarCasaVerticalBaixo = document.getElementById(VerificarImpedimentoNaVerticalBaixo)
+
+        console.log(buscarCasaHorizontalEsquerda)
+
         if(timePeca == 'pecabranca'){
           if (horizontalEsquerda !== null) casasControleBrancas.push(horizontalEsquerda);
           if (horizontalDireita !== null) casasControleBrancas.push(horizontalDireita);
           if (verticalCima !== null) casasControleBrancas.push(verticalCima);
           if (verticalBaixo !== null) casasControleBrancas.push(verticalBaixo);
        }else if(timePeca == 'pecapreta'){
-        console.log('timePeca', )
           if (horizontalEsquerda !== null) casasControlePretas.push(horizontalEsquerda);
           if (horizontalDireita !== null) casasControlePretas.push(horizontalDireita);
           if (verticalCima !== null) casasControlePretas.push(verticalCima);
@@ -289,6 +301,6 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
 
 
 function CalcularXequeMate(casasControleBrancas, casasControlePretas){
-  console.log('TESTEBRANCAS', casasControleBrancas)
-  console.log('TESTEPRETAS', casasControlePretas)
+  //console.log('TESTEBRANCAS', casasControleBrancas)
+  //console.log('TESTEPRETAS', casasControlePretas)
 }
