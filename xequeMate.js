@@ -69,6 +69,16 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
   var casasControleBrancas = []
   var casasControlePretas = []
 
+
+  for (let cor = 1; cor < 9; cor++) {
+    for (let cordois = 1; cordois < 9; cordois++) { // Agora cordois está sendo corretamente incrementado
+        let casa = document.getElementById(numeroParaLetra[cor] + cordois);
+        console.log('casas', casa)
+        casa.style.backgroundColor = "green";
+    }
+}
+
+
   //logica pra calcular quais casas cada peça dominam
   for (let pecaVez = 0; pecaVez < pecasTabuleiro.length; pecaVez++) {
     var [x1, y1] = [transformarLetraEmNumero[pecasTabuleiro[pecaVez][0][0]], pecasTabuleiro[pecaVez][0][1]];
@@ -90,6 +100,7 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         //verificar time peça e adicionar corretamente a casa que cada time domina
         let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
         let timePeca = buscarPeca.querySelector('img')?.name || "semPeca"
+
         if(timePeca == 'pecabranca'){
           if (horizontalEsquerda !== null) casasControleBrancas.push(horizontalEsquerda);
           if (horizontalDireita !== null) casasControleBrancas.push(horizontalDireita);
@@ -267,4 +278,17 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
     }
 
   }
+  CalcularXequeMate(casasControleBrancas, casasControlePretas)
+
+
+  for(let cor = 0; cor < casasControleBrancas.length; cor++){
+    let casa = document.getElementById(numeroParaLetra[casasControleBrancas[cor][0]] + casasControleBrancas[cor][1])
+    casa.style.backgroundColor = "red"
+   }
 }//fim da funcao calculardominiocasas
+
+
+function CalcularXequeMate(casasControleBrancas, casasControlePretas){
+  console.log('TESTEBRANCAS', casasControleBrancas)
+  console.log('TESTEPRETAS', casasControlePretas)
+}
