@@ -267,10 +267,4 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
     }
 
   }
-  //colorir casas sobre dominio de vermelho
-  console.log('casaCOntroleBrancas', casasControleBrancas)
-  for(let cor = 0; cor < casasControleBrancas.length; cor++){
-    let casa = document.getElementById(numeroParaLetra[casasControleBrancas[cor][0]] + casasControleBrancas[cor][1])
-    casa.style.backgroundColor = "red"
-   }
-}
+}//fim da funcao calculardominiocasas
