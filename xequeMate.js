@@ -97,25 +97,22 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         horizontalDireita = [horizontalDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
         verticalCima = [verticalCima].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
         verticalBaixo = [verticalBaixo].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        //verificar se tem peça impedindo o dominio da outra
+        let transformaHorizontalEsquerdaFormatoId = (horizontalEsquerda !== null)? numeroParaLetra[horizontalEsquerda[0]] + horizontalEsquerda[1] : "ValorIndefinido"
+        let buscarTodasCasasHorizontalEsquerda = document.getElementById(transformaHorizontalEsquerdaFormatoId)
+        let verificarPresencaPecaHorizontalEsquerda = (buscarTodasCasasHorizontalEsquerda != null)? buscarTodasCasasHorizontalEsquerda.getAttribute('pecadentro') : "semPeca"
+        console.log('buscartodasCasasHorizontalEsquerda', verificarPresencaPecaHorizontalEsquerda)
+
         //verificar time peça e adicionar corretamente a casa que cada time domina
         let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
         let timePeca = buscarPeca.querySelector('img')?.name || "semPeca"
 
-        //VERIFICAR SE TEM PECA IMPEDINDO O DOMINIO DA OUTRA
-        let VerificarImpedimentoNaHorizontalEsquerda = (horizontalEsquerda !== null)? numeroParaLetra[horizontalEsquerda[0]] + horizontalEsquerda[1] : "ValorIndefinido"
-        let VerificarImpedimentoNaHorizontalDireita = (horizontalDireita !== null)? numeroParaLetra[horizontalDireita[0]] + horizontalDireita[1] : "ValorIndefinido"
-        let VerificarImpedimentoNaVerticalCima = (verticalCima !== null)? numeroParaLetra[verticalCima[0]] + verticalCima[1] : "ValorIndefinido"
-        let VerificarImpedimentoNaVerticalBaixo = (verticalBaixo !== null)? numeroParaLetra[verticalBaixo[0]] + verticalBaixo[1] : "ValorIndefinido"
-
-        let buscarCasaHorizontalEsquerda = document.getElementById(VerificarImpedimentoNaHorizontalEsquerda)
-        let buscarCasaHorizontalDireita = document.getElementById(VerificarImpedimentoNaHorizontalDireita)
-        let buscarCasaVerticalCima = document.getElementById(VerificarImpedimentoNaVerticalCima)
-        let buscarCasaVerticalBaixo = document.getElementById(VerificarImpedimentoNaVerticalBaixo)
-
-        console.log(buscarCasaHorizontalEsquerda)
-
         if(timePeca == 'pecabranca'){
-          if (horizontalEsquerda !== null) casasControleBrancas.push(horizontalEsquerda);
+          if(verificarPresencaPecaHorizontalEsquerda == null){
+            if (horizontalEsquerda !== null) casasControleBrancas.push(horizontalEsquerda);
+          }else{
+            break;
+          }
           if (horizontalDireita !== null) casasControleBrancas.push(horizontalDireita);
           if (verticalCima !== null) casasControleBrancas.push(verticalCima);
           if (verticalBaixo !== null) casasControleBrancas.push(verticalBaixo);
@@ -293,10 +290,12 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
   CalcularXequeMate(casasControleBrancas, casasControlePretas)
 
 
-  for(let cor = 0; cor < casasControleBrancas.length; cor++){
-    let casa = document.getElementById(numeroParaLetra[casasControleBrancas[cor][0]] + casasControleBrancas[cor][1])
-    casa.style.backgroundColor = "red"
-   }
+for (let cor = 0; cor < casasControleBrancas.length; cor++) {
+    let [letraIndex, numero] = casasControleBrancas[cor] || []; // Desestruturação segura
+    let casa = document.getElementById(numeroParaLetra[letraIndex] + numero);
+
+    if (casa) casa.style.backgroundColor = "red";
+}
 }//fim da funcao calculardominiocasas
 
 
