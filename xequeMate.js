@@ -101,7 +101,6 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         let transformaHorizontalEsquerdaFormatoId = (horizontalEsquerda !== null)? numeroParaLetra[horizontalEsquerda[0]] + horizontalEsquerda[1] : "ValorIndefinido"
         let buscarTodasCasasHorizontalEsquerda = document.getElementById(transformaHorizontalEsquerdaFormatoId)
         let verificarPresencaPecaHorizontalEsquerda = (buscarTodasCasasHorizontalEsquerda != null)? buscarTodasCasasHorizontalEsquerda.getAttribute('pecadentro') : "semPeca"
-        console.log('buscartodasCasasHorizontalEsquerda', verificarPresencaPecaHorizontalEsquerda)
 
         //verificar time peça e adicionar corretamente a casa que cada time domina
         let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
