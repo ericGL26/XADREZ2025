@@ -100,18 +100,15 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         //verificar se tem peça impedindo o dominio da outra
         let transformaHorizontalEsquerdaFormatoId = (horizontalEsquerda !== null)? numeroParaLetra[horizontalEsquerda[0]] + horizontalEsquerda[1] : "ValorIndefinido"
         let buscarTodasCasasHorizontalEsquerda = document.getElementById(transformaHorizontalEsquerdaFormatoId)
-        let verificarPresencaPecaHorizontalEsquerda = (buscarTodasCasasHorizontalEsquerda != null)? buscarTodasCasasHorizontalEsquerda.getAttribute('pecadentro') : "semPeca"
+        let verificarPresencaPecaHorizontalEsquerda = (buscarTodasCasasHorizontalEsquerda != null)? buscarTodasCasasHorizontalEsquerda.getAttribute('pecadentro') : null
+        console.log('transformahefi', verificarPresencaPecaHorizontalEsquerda)
 
         //verificar time peça e adicionar corretamente a casa que cada time domina
         let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
         let timePeca = buscarPeca.querySelector('img')?.name || "semPeca"
 
         if(timePeca == 'pecabranca'){
-          if(verificarPresencaPecaHorizontalEsquerda == null){
-            if (horizontalEsquerda !== null) casasControleBrancas.push(horizontalEsquerda);
-          }else{
-            break;
-          }
+          if (horizontalEsquerda !== null) casasControleBrancas.push(horizontalEsquerda);
           if (horizontalDireita !== null) casasControleBrancas.push(horizontalDireita);
           if (verticalCima !== null) casasControleBrancas.push(verticalCima);
           if (verticalBaixo !== null) casasControleBrancas.push(verticalBaixo);
