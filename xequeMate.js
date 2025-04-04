@@ -101,9 +101,9 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         let transformaHorizontalEsquerdaFormatoId = (horizontalEsquerda !== null)? numeroParaLetra[horizontalEsquerda[0]] + horizontalEsquerda[1] : "ValorIndefinido"
         let buscarTodasCasasHorizontalEsquerda = document.getElementById(transformaHorizontalEsquerdaFormatoId)
         let horizontalEsquerdaImpedimento = []
-        horizontalEsquerdaImpedimento.push(buscarTodasCasasHorizontalEsquerda?.getAttribute('pecadentro') ? "impedimento"  : horizontalEsquerda);
-        console.log('horizontalEsquerdaImpedimento', horizontalEsquerdaImpedimento)        
-        
+        const resultado = buscarTodasCasasHorizontalEsquerda?.getAttribute('pecadentro') ? "impedimento" : horizontalEsquerda;    
+
+        //horizontalEsquerda && horizontalEsquerdaImpedimento.push(buscarTodasCasasHorizontalEsquerda?.getAttribute('pecadentro') ? "impedimento" : horizontalEsquerda);        
         //verificar time peça e adicionar corretamente a casa que cada time domina
         let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
         let timePeca = buscarPeca.querySelector('img')?.name || "semPeca"
