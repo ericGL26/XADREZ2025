@@ -68,7 +68,7 @@ function AdicionarArrayCasasPecasBrancoPreto(){
 function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasControleReiBranco, casasControleReiPreto){
   var casasControleBrancas = []
   var casasControlePretas = []
-
+  let horizontalEsquerdaImpedimento = []
 
   for (let cor = 1; cor < 9; cor++) {
     for (let cordois = 1; cordois < 9; cordois++) { // Agora cordois está sendo corretamente incrementado
@@ -77,8 +77,6 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         casa.style.backgroundColor = "green";
     }
 }
-
-
   //logica pra calcular quais casas cada peça dominam
   for (let pecaVez = 0; pecaVez < pecasTabuleiro.length; pecaVez++) {
     var [x1, y1] = [transformarLetraEmNumero[pecasTabuleiro[pecaVez][0][0]], pecasTabuleiro[pecaVez][0][1]];
@@ -98,16 +96,19 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         verticalCima = [verticalCima].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
         verticalBaixo = [verticalBaixo].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
         //verificar se tem peça impedindo o dominio da outra
-        let transformaHorizontalEsquerdaFormatoId = (horizontalEsquerda !== null)? numeroParaLetra[horizontalEsquerda[0]] + horizontalEsquerda[1] : "ValorIndefinido"
-        let buscarTodasCasasHorizontalEsquerda = document.getElementById(transformaHorizontalEsquerdaFormatoId)
-        let horizontalEsquerdaImpedimento = []
-        const resultado = buscarTodasCasasHorizontalEsquerda?.getAttribute('pecadentro') ? "impedimento" : horizontalEsquerda;    
-
-        //horizontalEsquerda && horizontalEsquerdaImpedimento.push(buscarTodasCasasHorizontalEsquerda?.getAttribute('pecadentro') ? "impedimento" : horizontalEsquerda);        
-        //verificar time peça e adicionar corretamente a casa que cada time domina
         let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
         let timePeca = buscarPeca.querySelector('img')?.name || "semPeca"
 
+        let transformaHorizontalEsquerdaFormatoId = (horizontalEsquerda !== null)? numeroParaLetra[horizontalEsquerda[0]] + horizontalEsquerda[1] : "ValorIndefinido"
+        let buscarTodasCasasHorizontalEsquerda = document.getElementById(transformaHorizontalEsquerdaFormatoId)
+        const resultadoHorizontalEsquerda = buscarTodasCasasHorizontalEsquerda && horizontalEsquerdaImpedimento.push(buscarTodasCasasHorizontalEsquerda?.getAttribute('pecadentro') ? "impedimento" : horizontalEsquerda)
+
+        let dominioHorizontalEsquerdoBrancas = horizontalEsquerdaImpedimento.slice(0, 6)
+        let dominioHorizontalEsquerdoPretas = horizontalEsquerdaImpedimento.slice(6, 13)
+
+          console.log('teste', dominioHorizontalEsquerdoBrancas)
+        //horizontalEsquerda && horizontalEsquerdaImpedimento.push(buscarTodasCasasHorizontalEsquerda?.getAttribute('pecadentro') ? "impedimento" : horizontalEsquerda);        
+        //verificar time peça e adicionar corretamente a casa que cada time domina
         if(timePeca == 'pecabranca'){
           if (horizontalEsquerda !== null) casasControleBrancas.push(horizontalEsquerda);
           if (horizontalDireita !== null) casasControleBrancas.push(horizontalDireita);
