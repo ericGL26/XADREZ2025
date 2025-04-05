@@ -103,10 +103,11 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         let buscarTodasCasasHorizontalEsquerda = document.getElementById(transformaHorizontalEsquerdaFormatoId)
         const resultadoHorizontalEsquerda = buscarTodasCasasHorizontalEsquerda && horizontalEsquerdaImpedimento.push(buscarTodasCasasHorizontalEsquerda?.getAttribute('pecadentro') ? "impedimento" : horizontalEsquerda)
 
-        var dominioHorizontalEsquerdoBrancas = horizontalEsquerdaImpedimento.slice(0, 6)
-        var dominioHorizontalEsquerdoPretas = horizontalEsquerdaImpedimento.slice(6, 13)
-        
-        console.log('domini', dominioHorizontalEsquerdoBrancas)
+        var dominioHorizontalEsquerdoBrancas = horizontalEsquerdaImpedimento.slice(0, 7);
+        var dominioHorizontalEsquerdoPretas = horizontalEsquerdaImpedimento.slice(7, 14);
+        console.log('teste', dominioHorizontalEsquerdoBrancas)
+
+
 
         //horizontalEsquerda && horizontalEsquerdaImpedimento.push(buscarTodasCasasHorizontalEsquerda?.getAttribute('pecadentro') ? "impedimento" : horizontalEsquerda);        
         //verificar time peça e adicionar corretamente a casa que cada time domina
