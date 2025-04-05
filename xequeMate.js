@@ -68,7 +68,7 @@ function AdicionarArrayCasasPecasBrancoPreto(){
 function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasControleReiBranco, casasControleReiPreto){
   var casasControleBrancas = []
   var casasControlePretas = []
-  let horizontalEsquerdaImpedimento = []
+  var horizontalEsquerdaImpedimento = []
 
   for (let cor = 1; cor < 9; cor++) {
     for (let cordois = 1; cordois < 9; cordois++) { // Agora cordois está sendo corretamente incrementado
@@ -103,10 +103,11 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         let buscarTodasCasasHorizontalEsquerda = document.getElementById(transformaHorizontalEsquerdaFormatoId)
         const resultadoHorizontalEsquerda = buscarTodasCasasHorizontalEsquerda && horizontalEsquerdaImpedimento.push(buscarTodasCasasHorizontalEsquerda?.getAttribute('pecadentro') ? "impedimento" : horizontalEsquerda)
 
-        let dominioHorizontalEsquerdoBrancas = horizontalEsquerdaImpedimento.slice(0, 6)
-        let dominioHorizontalEsquerdoPretas = horizontalEsquerdaImpedimento.slice(6, 13)
+        var dominioHorizontalEsquerdoBrancas = horizontalEsquerdaImpedimento.slice(0, 6)
+        var dominioHorizontalEsquerdoPretas = horizontalEsquerdaImpedimento.slice(6, 13)
+        
+        console.log('domini', dominioHorizontalEsquerdoBrancas)
 
-          console.log('teste', dominioHorizontalEsquerdoBrancas)
         //horizontalEsquerda && horizontalEsquerdaImpedimento.push(buscarTodasCasasHorizontalEsquerda?.getAttribute('pecadentro') ? "impedimento" : horizontalEsquerda);        
         //verificar time peça e adicionar corretamente a casa que cada time domina
         if(timePeca == 'pecabranca'){
