@@ -78,21 +78,19 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
     }
 }
 
-  function VerificaImpedimento(casas_a_analisar){
-  let  temp_casas_a_analisar = [];
+    function VerificaImpedimento(casas_a_analisar){
+      let  temp_casas_a_analisar = [];
 
-  casas_a_analisar.some((item, index) => {
-    if (item == "impedimento") {
-      return true; 
-    }
-    temp_casas_a_analisar.push(item)
-    return false;
-  });
+      casas_a_analisar.some((item, index) => {
+      if (item == "impedimento") {
+        return true; 
+      }
+      temp_casas_a_analisar.push(item)
+      return false;
+    });
   
   return temp_casas_a_analisar;
-  }
-
-  
+    }
   //logica pra calcular quais casas cada peça dominam
   for (let pecaVez = 0; pecaVez < pecasTabuleiro.length; pecaVez++) {
     var [x1, y1] = [transformarLetraEmNumero[pecasTabuleiro[pecaVez][0][0]], pecasTabuleiro[pecaVez][0][1]];
@@ -122,12 +120,11 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         var dominioHorizontalEsquerdoBrancas = horizontalEsquerdaImpedimento.slice(0, 7);
         var dominioHorizontalEsquerdoPretas = horizontalEsquerdaImpedimento.slice(7, 14);
 
-        console.log("valor novo", VerificaImpedimento(dominioHorizontalEsquerdoBrancas))
-
+        console.log('verificarimpedimento', VerificaImpedimento(dominioHorizontalEsquerdoBrancas))
         //horizontalEsquerda && horizontalEsquerdaImpedimento.push(buscarTodasCasasHorizontalEsquerda?.getAttribute('pecadentro') ? "impedimento" : horizontalEsquerda);        
         //verificar time peça e adicionar corretamente a casa que cada time domina
         if(timePeca == 'pecabranca'){
-          if (horizontalEsquerda !== null) casasControleBrancas.push(horizontalEsquerda);
+          if (horizontalEsquerda !== null) casasControleBrancas.push(...VerificaImpedimento(dominioHorizontalEsquerdoBrancas));
           if (horizontalDireita !== null) casasControleBrancas.push(horizontalDireita);
           if (verticalCima !== null) casasControleBrancas.push(verticalCima);
           if (verticalBaixo !== null) casasControleBrancas.push(verticalBaixo);
