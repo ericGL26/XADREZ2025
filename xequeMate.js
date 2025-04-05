@@ -77,6 +77,22 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         casa.style.backgroundColor = "green";
     }
 }
+
+  function VerificaImpedimento(casas_a_analisar){
+  let  temp_casas_a_analisar = [];
+
+  casas_a_analisar.some((item, index) => {
+    if (item == "impedimento") {
+      return true; 
+    }
+    temp_casas_a_analisar.push(item)
+    return false;
+  });
+  
+  return temp_casas_a_analisar;
+  }
+
+  
   //logica pra calcular quais casas cada peça dominam
   for (let pecaVez = 0; pecaVez < pecasTabuleiro.length; pecaVez++) {
     var [x1, y1] = [transformarLetraEmNumero[pecasTabuleiro[pecaVez][0][0]], pecasTabuleiro[pecaVez][0][1]];
@@ -105,9 +121,8 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
 
         var dominioHorizontalEsquerdoBrancas = horizontalEsquerdaImpedimento.slice(0, 7);
         var dominioHorizontalEsquerdoPretas = horizontalEsquerdaImpedimento.slice(7, 14);
-        console.log('teste', dominioHorizontalEsquerdoBrancas)
 
-
+        console.log("valor novo", VerificaImpedimento(dominioHorizontalEsquerdoBrancas))
 
         //horizontalEsquerda && horizontalEsquerdaImpedimento.push(buscarTodasCasasHorizontalEsquerda?.getAttribute('pecadentro') ? "impedimento" : horizontalEsquerda);        
         //verificar time peça e adicionar corretamente a casa que cada time domina
