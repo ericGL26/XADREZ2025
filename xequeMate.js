@@ -126,7 +126,7 @@ function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasContr
         var dominioHorizontalEsquerdoBrancas = ImpedimentoOuCasa(horizontalEsquerda).slice(0, 7)
         var dominioHorizontalEsquerdoPretas = ImpedimentoOuCasa(horizontalEsquerda).slice(7, 14)
         //var dominioVerticalCima = ImpedimentoOuCasa(verticalCima).slice(0, 7)
-        console.log(dominioHorizontalEsquerdoBrancas)
+        console.log(horizontalDireita)
 
         //verificar time peça e adicionar corretamente a casa que cada time domina
         if(timePeca == 'pecabranca'){
