@@ -36,7 +36,7 @@ function ArmazenarCasasReisDominam(){
   }
 
   let {pecasTabuleiro} = AdicionarArrayCasasPecasBrancoPreto()
-  CalcularXequeMate(pecasTabuleiro) //toda vez que o jogador mover uma peça essa funcao vai ser chamada
+  CalcularDominioPecas(pecasTabuleiro) //toda vez que o jogador mover uma peça essa funcao vai ser chamada
 }
 
 function AdicionarArrayCasasPecasBrancoPreto(){
@@ -73,12 +73,26 @@ function VerificarImpedimento(direcao){
   let casasLivres = (buscarCasa != "NaoFoiPossivelEncontrarACasa")
   ? (buscarCasa.getAttribute('pecadentro') ? listaCasas.push("impedimento") : listaCasas.push(direcao[0], direcao[1])) // adicionando direcao[0] e 1 para evitar array de arrays ja que direcao é uma array, desse jeito é evitado a formaçao de arrays de arrays
   : "NaoFoiPossivelEncontrarACasa";
-
-  console.log(listaCasas)
+  return listaCasas
 }
 
-function CalcularXequeMate(pecasTabuleiro){
+function CalcularDominioPecas(pecasTabuleiro){
+  //PINTAR CASAS SEM DOMINIO PARA CINZA (TEMPORARIO)
+  for (let cor = 1; cor < 9; cor++) {
+    for (let cordois = 1; cordois < 9; cordois++) { // Agora cordois está sendo corretamente incrementado
+        let casa = document.getElementById(numeroParaLetra[cor] + cordois);
+        //console.log('casas', casa)
+        casa.style.backgroundColor = "gray";
+    }
+}
+
+
+
   console.clear()
+  var casasControleBrancas = []
+  var casasContreolePretas = []
+  
+
  for(let pecaVez = 0; pecaVez < 32; pecaVez++){ //quantidade de peças original no tabuleiro
   var [x1, y1] = [transformarLetraEmNumero[pecasTabuleiro[pecaVez][0][0]], pecasTabuleiro[pecaVez][0][1]]; //transforma o id do bispo:a1 em 1,1. para poder calcular as casas que ele domina e entre outras coisas
 
@@ -86,6 +100,13 @@ function CalcularXequeMate(pecasTabuleiro){
     case 'peao':
       break;
     case 'torre':
+      // Flags que controlam o push de casas livres ou impedidas; ao encontrar um impedimento, param a adição sem precisar de vários ifs ou loops. false = nao bloqueia
+      var bloqueiaEsquerda = false
+      var bloqueiaDireita = false
+      var bloqueiaCima = false
+      var bloqueiaBaixo = false
+
+      //tenho que lembrar que isso roda 4 vezes printado as 4 vezes separadamente mas no console ficam juntas oque pode gerar confusao
       for(let repetidor = 1; repetidor < 9; repetidor++){ //calcula as casas que as direcoes da torre tem 'dominio'
         let horizontalEsquerda = [x1 - repetidor, parseInt(y1)]
         let horizontalDireita = [x1 + repetidor, parseInt(y1)]
@@ -97,7 +118,41 @@ function CalcularXequeMate(pecasTabuleiro){
         verticalCima = [verticalCima].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
         verticalBaixo = [verticalBaixo].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
 
-        VerificarImpedimento(horizontalEsquerda)
+        horizontalEsquerda = VerificarImpedimento(horizontalEsquerda)
+        horizontalDireita = VerificarImpedimento(horizontalDireita)
+        verticalCima = VerificarImpedimento(verticalCima)
+        verticalBaixo = VerificarImpedimento(verticalBaixo)
+
+        //adicionar casas que a torre domina na lista de acordo com a cor
+        let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0]) //pode estar causando problema pois roda 32 vezes 16 para cada cor
+        const timePeca = buscarPeca.querySelector('img')?.name || "semPeca"
+
+        if(timePeca == 'pecabranca'){
+
+          if(horizontalEsquerda[0] == "impedimento"){bloqueiaEsquerda = true}
+           if(bloqueiaEsquerda != true){
+            casasControleBrancas.push(horizontalEsquerda)
+          }
+
+          if(horizontalDireita[0] == "impedimento"){bloqueiaDireita = true}
+           if(bloqueiaDireita != true){
+            casasControleBrancas.push(horizontalDireita)
+          }
+
+          if(verticalCima[0] == "impedimento"){bloqueiaCima = true}
+          if(bloqueiaCima != true){
+            casasControleBrancas.push(verticalCima)
+          }
+
+          if(verticalBaixo[0] == "impedimento"){bloqueiaBaixo = true}
+          if(bloqueiaBaixo != true){
+            casasControleBrancas.push(verticalBaixo)
+          }
+         
+        }
+        if(timePeca == 'pecapreta'){
+
+        }
       }
       break;
     case 'cavalo':
@@ -110,4 +165,12 @@ function CalcularXequeMate(pecasTabuleiro){
       break;
   }
  }
+
+ //PINTAR CASAS QUE ESTAO SOBRE DOMINIO (brancas ou pretas) TEMPORARIO
+ for (let cor = 0; cor < casasControleBrancas.length; cor++) {
+  let [letraIndex, numero] = casasControleBrancas[cor] || []; // Desestruturação segura
+  let casa = document.getElementById(numeroParaLetra[letraIndex] + numero);
+  if (casa) casa.style.backgroundColor = "red";
+}
+
 }
