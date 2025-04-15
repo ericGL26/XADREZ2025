@@ -100,13 +100,13 @@ function CalcularDominioPecas(pecasTabuleiro){
     case 'peao':
       break;
     case 'torre':
-      // Flags que controlam o push de casas livres ou impedidas; ao encontrar um impedimento, param a adição sem precisar de vários ifs ou loops. false = nao bloqueia
-      var bloqueiaEsquerda = false
-      var bloqueiaDireita = false
-      var bloqueiaCima = false
-      var bloqueiaBaixo = false
+      // Flags que controlam o push de casas livres ou impedidas; ao encontrar um impedimento, param a adição sem precisar de vários ifs ou loops. false = nao bloqueia, mudei para let antes era var se der erro provavelmente é por isso
+      let bloqueiaEsquerda = false
+      let bloqueiaDireita = false
+      let bloqueiaCima = false
+      let bloqueiaBaixo = false
 
-      //tenho que lembrar que isso roda 4 vezes printado as 4 vezes separadamente mas no console ficam juntas oque pode gerar confusao
+      //tenho que lembrar que isso roda 4 vezes printado as 4 vezes separadamente mas no console ficam juntas oque pode gerar confusao: isso vale para todas as cases
       for(let repetidor = 1; repetidor < 9; repetidor++){ //calcula as casas que as direcoes da torre tem 'dominio'
         let horizontalEsquerda = [x1 - repetidor, parseInt(y1)]
         let horizontalDireita = [x1 + repetidor, parseInt(y1)]
@@ -152,14 +152,109 @@ function CalcularDominioPecas(pecasTabuleiro){
         }
         if(timePeca == 'pecapreta'){
 
+          if(horizontalEsquerda[0] == "impedimento"){bloqueiaEsquerda = true}
+           if(bloqueiaEsquerda != true){
+            casasContreolePretas.push(horizontalEsquerda)
+          }
+
+          if(horizontalDireita[0] == "impedimento"){bloqueiaDireita = true}
+           if(bloqueiaDireita != true){
+            casasContreolePretas.push(horizontalDireita)
+          }
+
+          if(verticalCima[0] == "impedimento"){bloqueiaCima = true}
+          if(bloqueiaCima != true){
+            casasContreolePretas.push(verticalCima)
+          }
+
+          if(verticalBaixo[0] == "impedimento"){bloqueiaBaixo = true}
+          if(bloqueiaBaixo != true){
+            casasContreolePretas.push(verticalBaixo)
+          }
+
         }
       }
       break;
     case 'cavalo':
       break;
     case 'bispo':
+      // Flags que controlam o push de casas livres ou impedidas; ao encontrar um impedimento, param a adição sem precisar de vários ifs ou loops. false = nao bloqueia, mudei para let antes era var se der erro provavelmente é por isso
+      let bloqueiaDiagonalSuperiorEsquerda = false
+      let bloqueiaDiagonalSuperiorDireita = false
+      let bloqueiaDiagonalInferiorEsquerda = false
+      let bloqueiaDiagonalInferiorDireita = false
+      for(let repetidor = 1; repetidor < 9; repetidor++){
+        let diagonalSuperiorEsquerda =  [x1 - repetidor, parseInt(y1) + repetidor];
+        let diagonalSuperiorDireita  =  [x1 + repetidor, parseInt(y1) + repetidor];
+        let diagonalInferiorEsquerda =  [x1 - repetidor, parseInt(y1) - repetidor];
+        let diagonalInferiorDireita  =  [x1 + repetidor, parseInt(y1) - repetidor];
+        //filtros
+        diagonalSuperiorEsquerda = [diagonalSuperiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        diagonalSuperiorDireita = [diagonalSuperiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        diagonalInferiorEsquerda = [diagonalInferiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        diagonalInferiorDireita = [diagonalInferiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+
+        diagonalSuperiorEsquerda = VerificarImpedimento(diagonalSuperiorEsquerda)
+        diagonalSuperiorDireita = VerificarImpedimento(diagonalSuperiorDireita)
+        diagonalInferiorEsquerda = VerificarImpedimento(diagonalInferiorEsquerda)
+        diagonalInferiorDireita = VerificarImpedimento(diagonalInferiorDireita)
+
+        let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
+        const timePeca = buscarPeca.querySelector('img')?.name || "semPeca"    
+        
+        if(timePeca == 'pecabranca'){
+
+          if(diagonalSuperiorEsquerda[0] == "impedimento"){bloqueiaDiagonalSuperiorEsquerda = true}
+           if(bloqueiaDiagonalSuperiorEsquerda != true){
+            casasControleBrancas.push(diagonalSuperiorEsquerda)
+          }
+
+          if(diagonalSuperiorDireita[0] == "impedimento"){bloqueiaDiagonalSuperiorDireita = true}
+           if(bloqueiaDiagonalSuperiorDireita != true){
+            casasControleBrancas.push(diagonalSuperiorDireita)
+          }
+
+          if(diagonalInferiorEsquerda[0] == "impedimento"){bloqueiaDiagonalInferiorEsquerda = true}
+          if(bloqueiaDiagonalInferiorEsquerda != true){
+            casasControleBrancas.push(diagonalInferiorEsquerda)
+          }
+
+          if(diagonalInferiorDireita[0] == "impedimento"){bloqueiaDiagonalInferiorDireita = true}
+          if(bloqueiaDiagonalInferiorDireita != true){
+            casasControleBrancas.push(diagonalInferiorDireita)
+          }
+         
+        }
+        if(timePeca == 'pecapreta'){
+
+          if(diagonalSuperiorEsquerda[0] == "impedimento"){bloqueiaDiagonalSuperiorEsquerda = true}
+          if(bloqueiaDiagonalSuperiorEsquerda != true){
+           casasContreolePretas.push(diagonalSuperiorEsquerda)
+         }
+
+         if(diagonalSuperiorDireita[0] == "impedimento"){bloqueiaDiagonalSuperiorDireita = true}
+          if(bloqueiaDiagonalSuperiorDireita != true){
+            casasContreolePretas.push(diagonalSuperiorDireita)
+         }
+
+         if(diagonalInferiorEsquerda[0] == "impedimento"){bloqueiaDiagonalInferiorEsquerda = true}
+         if(bloqueiaDiagonalInferiorEsquerda != true){
+          casasContreolePretas.push(diagonalInferiorEsquerda)
+         }
+
+         if(diagonalInferiorDireita[0] == "impedimento"){bloqueiaDiagonalInferiorDireita = true}
+         if(bloqueiaDiagonalInferiorDireita != true){
+          casasContreolePretas.push(diagonalInferiorDireita)
+         }
+
+        }
+      }
+
       break;
     case 'rainha':
+
+      
+
       break;
     case 'rei':
       break;
