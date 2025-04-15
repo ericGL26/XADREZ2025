@@ -36,7 +36,7 @@ function ArmazenarCasasReisDominam(){
   }
 
   let {pecasTabuleiro} = AdicionarArrayCasasPecasBrancoPreto()
-  calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasControleReiBranco, casasControleReiPreto)
+  CalcularXequeMate(pecasTabuleiro) //toda vez que o jogador mover uma peça essa funcao vai ser chamada
 }
 
 function AdicionarArrayCasasPecasBrancoPreto(){
@@ -63,261 +63,51 @@ function AdicionarArrayCasasPecasBrancoPreto(){
     }
   }
   return {pecasTabuleiro}
+};
+
+function VerificarImpedimento(direcao){
+  var listaCasas = []
+  let converterFormatoId = (direcao != null) ? numeroParaLetra[direcao[0]] + direcao[1] : "NaoFoiPossivelConverterId"
+  let buscarCasa = (converterFormatoId != "NaoFoiPossivelConverterId") ? document.getElementById(converterFormatoId) : "NaoFoiPossivelEncontrarACasa"
+
+  let casasLivres = (buscarCasa != "NaoFoiPossivelEncontrarACasa")
+  ? (buscarCasa.getAttribute('pecadentro') ? listaCasas.push("impedimento") : listaCasas.push(direcao[0], direcao[1])) // adicionando direcao[0] e 1 para evitar array de arrays ja que direcao é uma array, desse jeito é evitado a formaçao de arrays de arrays
+  : "NaoFoiPossivelEncontrarACasa";
+
+  console.log(listaCasas)
 }
 
-function calcularDominiosDeCasas(reiBranco, reiPreto, pecasTabuleiro, casasControleReiBranco, casasControleReiPreto){
-  var casasControleBrancas = []
-  var casasControlePretas = []
-  var horizontalEsquerdaImpedimento = []
-  direcaoLivreOuImpedimentoLista = []
+function CalcularXequeMate(pecasTabuleiro){
+  console.clear()
+ for(let pecaVez = 0; pecaVez < 32; pecaVez++){ //quantidade de peças original no tabuleiro
+  var [x1, y1] = [transformarLetraEmNumero[pecasTabuleiro[pecaVez][0][0]], pecasTabuleiro[pecaVez][0][1]]; //transforma o id do bispo:a1 em 1,1. para poder calcular as casas que ele domina e entre outras coisas
 
-
-  for (let cor = 1; cor < 9; cor++) {
-    for (let cordois = 1; cordois < 9; cordois++) { // Agora cordois está sendo corretamente incrementado
-        let casa = document.getElementById(numeroParaLetra[cor] + cordois);
-        //console.log('casas', casa)
-        casa.style.backgroundColor = "green";
-    }
-}
-
-    function VerificaImpedimento(casas_a_analisar){
-      let  temp_casas_a_analisar = [];
-
-      casas_a_analisar.some((item, index) => {
-      if (item == "impedimento") {
-        return true; 
-      }
-      temp_casas_a_analisar.push(item)
-      return false;
-    });
-  
-  return temp_casas_a_analisar;
-    }
-
-    function ImpedimentoOuCasa(direcao){
-      let transformaDirecaoEmId = (direcao !== null)? numeroParaLetra[direcao[0]] + direcao[1] : "ValorIndefinido"
-      let buscarCasasDirecao = document.getElementById(transformaDirecaoEmId)
-      let AdicionarDirecaoOuImpedimentoLista = buscarCasasDirecao && direcaoLivreOuImpedimentoLista.push(buscarCasasDirecao?.getAttribute('pecadentro') ? "impedimento" : direcao)
-      return direcaoLivreOuImpedimentoLista
-    }
-
-  //logica pra calcular quais casas cada peça dominam
-  for (let pecaVez = 0; pecaVez < pecasTabuleiro.length; pecaVez++) {
-    var [x1, y1] = [transformarLetraEmNumero[pecasTabuleiro[pecaVez][0][0]], pecasTabuleiro[pecaVez][0][1]];
-
-    switch (pecasTabuleiro[pecaVez][1]) {
-      case 'peao': //CASE PEAO
-          break;
-      case 'torre': //CASE TORRE
-      for(let repetidor = 1; repetidor < 9; repetidor++){
+  switch(pecasTabuleiro[pecaVez][1]){
+    case 'peao':
+      break;
+    case 'torre':
+      for(let repetidor = 1; repetidor < 9; repetidor++){ //calcula as casas que as direcoes da torre tem 'dominio'
         let horizontalEsquerda = [x1 - repetidor, parseInt(y1)]
         let horizontalDireita = [x1 + repetidor, parseInt(y1)]
         let verticalCima = [x1, parseInt(y1) + repetidor]
-        let verticalBaixo = [x1, parseInt(y1) - repetidor] // se começar a dar erro na lista de dominio brancas ou pretas talvez seja porque eu modifiquei, ao inves de somar troquei para subtração
+        let verticalBaixo = [x1, parseInt(y1) - repetidor]
         //filtros
-        horizontalEsquerda = [horizontalEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
+        horizontalEsquerda = [horizontalEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null; //filtra os valores exemplo se horizontalEsquerda for igual a [8, 15] ele tira esse dado para tirar casas que nao existem e deixar apenas as que a torre tem 'dominio'
         horizontalDireita = [horizontalDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
         verticalCima = [verticalCima].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
         verticalBaixo = [verticalBaixo].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        //verificar se tem peça impedindo o dominio da outra
-        let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
-        let timePeca = buscarPeca.querySelector('img')?.name || "semPeca"
 
-        var dominioHorizontalEsquerdoBrancas = ImpedimentoOuCasa(horizontalEsquerda).slice(0, 7)
-        var dominioHorizontalEsquerdoPretas = ImpedimentoOuCasa(horizontalEsquerda).slice(7, 14)
-        //var dominioVerticalCima = ImpedimentoOuCasa(verticalCima).slice(0, 7)
-        console.log(horizontalDireita)
-
-        //verificar time peça e adicionar corretamente a casa que cada time domina
-        if(timePeca == 'pecabranca'){
-          if (horizontalEsquerda !== null) casasControleBrancas.push(...VerificaImpedimento(dominioHorizontalEsquerdoBrancas));
-          if (horizontalDireita !== null) casasControleBrancas.push(horizontalDireita);
-          if (verticalCima !== null) casasControleBrancas.push(verticalCima);
-          if (verticalBaixo !== null) casasControleBrancas.push(verticalBaixo);
-       }else if(timePeca == 'pecapreta'){
-          if (horizontalEsquerda !== null) casasControlePretas.push(horizontalEsquerda);
-          if (horizontalDireita !== null) casasControlePretas.push(horizontalDireita);
-          if (verticalCima !== null) casasControlePretas.push(verticalCima);
-          if (verticalBaixo !== null) casasControlePretas.push(verticalBaixo);
-       }
+        VerificarImpedimento(horizontalEsquerda)
       }
-        break;
-      case 'cavalo': //CASE CAVALO
-      for(let repetidor = 1; repetidor < 9; repetidor++){
-        let lateralSuperiorEsquerda = [x1 - 1, parseInt(y1) + 2]
-        let lateralSuperiorDireita = [x1 + 1, parseInt(y1) + 2]
-        let lateralInferiorEsquerda = [x1 - 1, parseInt(y1) - 2]
-        let lateralInferiorDireita = [x1 + 1, parseInt(y1) - 2]
-        let lateralHorizontalEsquerdaCima = [x1 - 2, parseInt(y1) + 1]
-        let lateralHorizontalEsquerdaBaixo = [x1 - 2, parseInt(y1) - 1]
-        let lateralHorizontalDireitaCima = [x1 + 2, parseInt(y1) + 1]
-        let lateralHorizontalDireitaBaixo = [x1 + 2, parseInt(y1) - 1]
-        //filtros
-        lateralSuperiorEsquerda = [lateralSuperiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        lateralSuperiorDireita = [lateralSuperiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        lateralInferiorEsquerda = [lateralInferiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        lateralInferiorDireita = [lateralInferiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        lateralHorizontalEsquerdaCima = [lateralHorizontalEsquerdaCima].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        lateralHorizontalEsquerdaBaixo = [lateralHorizontalEsquerdaBaixo].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        lateralHorizontalDireitaCima = [lateralHorizontalDireitaCima].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        lateralHorizontalDireitaBaixo = [lateralHorizontalDireitaBaixo].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-
-        let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
-        let timePeca = buscarPeca.querySelector('img')?.name || "SemPeca"
-
-        if(timePeca == 'pecabranca'){
-           if (lateralSuperiorEsquerda !== null) casasControleBrancas.push(lateralSuperiorEsquerda);
-           if (lateralSuperiorDireita !== null) casasControleBrancas.push(lateralSuperiorDireita);
-           if (lateralInferiorEsquerda !== null) casasControleBrancas.push(lateralInferiorEsquerda);
-           if (lateralInferiorDireita !== null) casasControleBrancas.push(lateralInferiorDireita);
-           if (lateralHorizontalEsquerdaCima !== null) casasControleBrancas.push(lateralHorizontalEsquerdaCima);
-           if (lateralHorizontalEsquerdaBaixo !== null) casasControleBrancas.push(lateralHorizontalEsquerdaBaixo);
-           if (lateralHorizontalDireitaCima !== null) casasControleBrancas.push(lateralHorizontalDireitaCima);
-           if (lateralHorizontalDireitaBaixo !== null) casasControleBrancas.push(lateralHorizontalDireitaBaixo);
-        }else if(timePeca == 'pecapreta'){
-          if (lateralSuperiorEsquerda !== null) casasControlePretas.push(lateralSuperiorEsquerda);
-          if (lateralSuperiorDireita !== null) casasControlePretas.push(lateralSuperiorDireita);
-          if (lateralInferiorEsquerda !== null) casasControlePretas.push(lateralInferiorEsquerda);
-          if (lateralInferiorDireita !== null) casasControlePretas.push(lateralInferiorDireita);
-          if (lateralHorizontalEsquerdaCima !== null) casasControlePretas.push(lateralHorizontalEsquerdaCima);
-           if (lateralHorizontalEsquerdaBaixo !== null) casasControlePretas.push(lateralHorizontalEsquerdaBaixo);
-           if (lateralHorizontalDireitaCima !== null) casasControlePretas.push(lateralHorizontalDireitaCima);
-           if (lateralHorizontalDireitaBaixo !== null) casasControlePretas.push(lateralHorizontalDireitaBaixo);
-        }
-      }
-        break;
-      case 'bispo': //CASE BISPO
-      for(let repetidor = 1; repetidor < 9; repetidor++){
-         let diagonalSuperiorEsquerda =  [x1 - repetidor, parseInt(y1) + repetidor]
-         let diagonalSuperiorDireita = [x1 + repetidor, parseInt(y1) + repetidor]
-         let diagonalInferiorEsquerda = [x1 - repetidor, parseInt(y1) - repetidor]
-         let diagonalInferiorDireita =  [x1 + repetidor, parseInt(y1) - repetidor]
-         //filtros
-         diagonalSuperiorEsquerda = [diagonalSuperiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-         diagonalSuperiorDireita = [diagonalSuperiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-         diagonalInferiorEsquerda = [diagonalInferiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-         diagonalInferiorDireita = [diagonalInferiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-         //verificar time peça e adicionar corretamente a casa que cada time controla
-         let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
-         let timePeca = buscarPeca.querySelector('img')?.name || "SemPeca"
-
-         if(timePeca == 'pecabranca'){
-            if (diagonalSuperiorEsquerda !== null) casasControleBrancas.push(diagonalSuperiorEsquerda);
-            if (diagonalSuperiorDireita !== null) casasControleBrancas.push(diagonalSuperiorDireita);
-            if (diagonalInferiorEsquerda !== null) casasControleBrancas.push(diagonalInferiorEsquerda);
-            if (diagonalInferiorDireita !== null) casasControleBrancas.push(diagonalInferiorDireita);
-         }else if(timePeca == 'pecapreta'){
-            if (diagonalSuperiorEsquerda !== null) casasControlePretas.push(diagonalSuperiorEsquerda);
-            if (diagonalSuperiorDireita !== null) casasControlePretas.push(diagonalSuperiorDireita);
-            if (diagonalInferiorEsquerda !== null) casasControlePretas.push(diagonalInferiorEsquerda);
-            if (diagonalInferiorDireita !== null) casasControlePretas.push(diagonalInferiorDireita);
-         }
-      }
-        break;
-      case 'rainha': //CASE RAINHA
-        for(let repetidor = 1; repetidor < 9; repetidor++){
-          let diagonalSuperiorEsquerda = [x1 - repetidor, parseInt(y1) + repetidor];
-          let diagonalSuperiorDireita = [x1 + repetidor, parseInt(y1) + repetidor];
-          let diagonalInferiorEsquerda = [x1 - repetidor, parseInt(y1) - repetidor];
-          let diagonalInferiorDireita = [x1 + repetidor, parseInt(y1) - repetidor];
-          let horizontalEsquerda = [x1 - repetidor, parseInt(y1)];
-          let horizontalDireita = [x1 + repetidor, parseInt(y1)];
-          let verticalCima = [x1, parseInt(y1) + repetidor];
-          let verticalBaixo = [x1, parseInt(y1) - repetidor];
-          // Filtros
-          diagonalSuperiorEsquerda = [diagonalSuperiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-          diagonalSuperiorDireita = [diagonalSuperiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-          diagonalInferiorEsquerda = [diagonalInferiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-          diagonalInferiorDireita = [diagonalInferiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-          horizontalEsquerda = [horizontalEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-          horizontalDireita = [horizontalDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-          verticalCima = [verticalCima].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-          verticalBaixo = [verticalBaixo].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-
-          let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
-          let timePeca = buscarPeca.querySelector('img')?.name || "SemPeca"
-
-          if(timePeca == 'pecabranca'){
-            if (diagonalSuperiorEsquerda !== null) casasControleBrancas.push(diagonalSuperiorEsquerda);
-            if (diagonalSuperiorDireita !== null) casasControleBrancas.push(diagonalSuperiorDireita);
-            if (diagonalInferiorEsquerda !== null) casasControleBrancas.push(diagonalInferiorEsquerda);
-            if (diagonalInferiorDireita !== null) casasControleBrancas.push(diagonalInferiorDireita);
-            if (horizontalEsquerda !== null) casasControleBrancas.push(horizontalEsquerda);
-            if (horizontalDireita !== null) casasControleBrancas.push(horizontalDireita);
-            if (verticalCima !== null) casasControleBrancas.push(verticalCima);
-            if (verticalBaixo !== null) casasControleBrancas.push(verticalBaixo);
-         }else if(timePeca == 'pecapreta'){
-            if (diagonalSuperiorEsquerda !== null) casasControlePretas.push(diagonalSuperiorEsquerda);
-            if (diagonalSuperiorDireita !== null) casasControlePretas.push(diagonalSuperiorDireita);
-            if (diagonalInferiorEsquerda !== null) casasControlePretas.push(diagonalInferiorEsquerda);
-            if (diagonalInferiorDireita !== null) casasControlePretas.push(diagonalInferiorDireita);
-            if (horizontalEsquerda !== null) casasControlePretas.push(horizontalEsquerda);
-            if (horizontalDireita !== null) casasControlePretas.push(horizontalDireita);
-            if (verticalCima !== null) casasControlePretas.push(verticalCima);
-            if (verticalBaixo !== null) casasControlePretas.push(verticalBaixo);
-         }
-        }
-        break;
-      case 'rei': //CASE REI
-      for(let contador = 1; contador < 9; contador++){
-        let horizontalEsquerda = [x1 - 1, parseInt(y1)]
-        let horizontalDireita = [x1 + 1, parseInt(y1)]
-        let verticalCima = [x1, parseInt(y1) + 1]
-        let verticalBaixo = [x1, parseInt(y1) - 1]
-        let diagonalSuperiorEsquerda = [x1 - 1, parseInt(y1) + 1]
-        let diagonalSuperiorDireita = [x1 + 1, parseInt(y1) + 1]
-        let diagonalInferiorEsquerda = [x1 - 1, parseInt(y1) - 1]
-        let diagonalInferiorDireita = [x1 + 1, parseInt(y1) - 1]
-        //filtros
-        horizontalEsquerda = [horizontalEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        horizontalDireita = [horizontalDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        verticalCima = [verticalCima].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        verticalBaixo = [verticalBaixo].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        diagonalSuperiorEsquerda = [diagonalSuperiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        diagonalSuperiorDireita = [diagonalSuperiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        diagonalInferiorEsquerda = [diagonalInferiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        diagonalInferiorDireita = [diagonalInferiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        
-        let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
-        let timePeca = buscarPeca.querySelector('img')?.name || "SemPeca"
-
-        if(timePeca == 'pecabranca'){
-            if (horizontalEsquerda !== null) casasControleBrancas.push(horizontalEsquerda);
-            if (horizontalDireita !== null) casasControleBrancas.push(horizontalDireita);
-            if (verticalCima !== null) casasControleBrancas.push(verticalCima);
-            if (verticalBaixo !== null) casasControleBrancas.push(verticalBaixo);
-            if (diagonalSuperiorEsquerda !== null) casasControleBrancas.push(diagonalSuperiorEsquerda);
-            if (diagonalSuperiorDireita !== null) casasControleBrancas.push(diagonalSuperiorDireita);
-            if (diagonalInferiorEsquerda !== null) casasControleBrancas.push(diagonalInferiorEsquerda);
-            if (diagonalInferiorDireita !== null) casasControleBrancas.push(diagonalInferiorDireita);
-         }else if(timePeca == 'pecapreta'){
-            if (horizontalEsquerda !== null) casasControlePretas.push(horizontalEsquerda);
-            if (horizontalDireita !== null) casasControlePretas.push(horizontalDireita);
-            if (verticalCima !== null) casasControlePretas.push(verticalCima);
-            if (verticalBaixo !== null) casasControlePretas.push(verticalBaixo);
-            if (diagonalSuperiorEsquerda !== null) casasControlePretas.push(diagonalSuperiorEsquerda);
-            if (diagonalSuperiorDireita !== null) casasControlePretas.push(diagonalSuperiorDireita);
-            if (diagonalInferiorEsquerda !== null) casasControlePretas.push(diagonalInferiorEsquerda);
-            if (diagonalInferiorDireita !== null) casasControlePretas.push(diagonalInferiorDireita);
-         }
-        }
-        break;
-    }
-
+      break;
+    case 'cavalo':
+      break;
+    case 'bispo':
+      break;
+    case 'rainha':
+      break;
+    case 'rei':
+      break;
   }
-  CalcularXequeMate(casasControleBrancas, casasControlePretas)
-
-
-for (let cor = 0; cor < casasControleBrancas.length; cor++) {
-    let [letraIndex, numero] = casasControleBrancas[cor] || []; // Desestruturação segura
-    let casa = document.getElementById(numeroParaLetra[letraIndex] + numero);
-
-    if (casa) casa.style.backgroundColor = "red";
-}
-}//fim da funcao calculardominiocasas
-
-
-function CalcularXequeMate(casasControleBrancas, casasControlePretas){
-  //console.log('TESTEBRANCAS', casasControleBrancas)
-  //console.log('TESTEPRETAS', casasControlePretas)
+ }
 }
