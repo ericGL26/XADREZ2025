@@ -201,7 +201,7 @@ function CalcularDominioPecas(pecasTabuleiro){
 
         let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
         const timePeca = buscarPeca.querySelector('img')?.name || "semPeca"    
-        
+      
         if(timePeca == 'pecabranca'){
 
           if(diagonalSuperiorEsquerda[0] == "impedimento"){bloqueiaDiagonalSuperiorEsquerda = true}
@@ -252,9 +252,100 @@ function CalcularDominioPecas(pecasTabuleiro){
 
       break;
     case 'rainha':
+      let bloqueiaDiagonalSuperiorEsquerdaRainha = false
+      let bloqueiaDiagonalSuperiorDireitaRainha = false
+      let bloqueiaDiagonalInferiorEsquerdaRainha = false
+      let bloqueiaDiagonalInferiorDireitaRainha = false
+      let bloqueiaEsquerdaRainha = false
+      let bloqueiaDireitaRainha = false
+      let bloqueiaCimaRainha = false
+      let bloqueiaBaixoRainha = false      
+      for(let repetidor = 1; repetidor < 9; repetidor++){
 
-      
+        let diagonalSuperiorEsquerdaRainha = [x1 - repetidor, parseInt(y1) + repetidor];
+        let diagonalSuperiorDireitaRainha = [x1 + repetidor, parseInt(y1) + repetidor];
+        let diagonalInferiorEsquerdaRainha = [x1 - repetidor, parseInt(y1) - repetidor];
+        let diagonalInferiorDireitaRainha = [x1 + repetidor, parseInt(y1) - repetidor];
 
+        let horizontalEsquerdaRainha = [x1 - repetidor, parseInt(y1)];
+        let horizontalDireitaRainha = [x1 + repetidor, parseInt(y1)];
+        let verticalCimaRainha = [x1, parseInt(y1) + repetidor];
+        let verticalBaixoRainha = [x1, parseInt(y1) - repetidor];
+        // Filtros
+        diagonalSuperiorEsquerdaRainha = [diagonalSuperiorEsquerdaRainha].filter(([x, y])=>x > 0 && x <= 8 && y > 0 && y <= 8)[0]||null;
+        diagonalSuperiorDireitaRainha = [diagonalSuperiorDireitaRainha].filter(([x, y])=>x > 0 && x <= 8 && y > 0 && y <= 8)[0]||null;
+        diagonalInferiorEsquerdaRainha = [diagonalInferiorEsquerdaRainha].filter(([x, y])=>x > 0 && x <= 8 && y > 0 && y <= 8)[0]||null;
+        diagonalInferiorDireitaRainha = [diagonalInferiorDireitaRainha].filter(([x, y])=>x > 0 && x <= 8 && y > 0 && y <= 8)[0]||null;
+        horizontalEsquerdaRainha = [horizontalEsquerdaRainha].filter(([x, y])=>x > 0 && x <= 8 && y > 0 && y <= 8)[0]||null;
+        horizontalDireitaRainha = [horizontalDireitaRainha].filter(([x, y])=>x > 0 && x <= 8 && y > 0 && y <= 8)[0]||null;
+        verticalCimaRainha = [verticalCimaRainha].filter(([x, y])=>x > 0 && x <= 8 && y > 0 && y <= 8)[0]||null;
+        verticalBaixoRainha = [verticalBaixoRainha].filter(([x, y])=>x > 0 && x <= 8 && y > 0 && y <= 8)[0]||null;
+        
+        diagonalSuperiorEsquerdaRainha = VerificarImpedimento(diagonalSuperiorEsquerdaRainha)
+        diagonalSuperiorDireitaRainha = VerificarImpedimento(diagonalSuperiorDireitaRainha)
+        diagonalInferiorEsquerdaRainha = VerificarImpedimento(diagonalInferiorEsquerdaRainha)
+        diagonalInferiorDireitaRainha = VerificarImpedimento(diagonalInferiorDireitaRainha)
+        horizontalEsquerdaRainha = VerificarImpedimento(horizontalEsquerdaRainha)
+        horizontalDireitaRainha = VerificarImpedimento(horizontalDireitaRainha)
+        verticalCimaRainha = VerificarImpedimento(verticalCimaRainha)
+        verticalBaixoRainha = VerificarImpedimento(verticalBaixoRainha)
+
+
+        let buscarPeca = document.getElementById(pecasTabuleiro[pecaVez][0])
+        const timePeca = buscarPeca.querySelector('img')?.name || "semPeca"
+
+        //AQUI SEU CEGO
+        //console.log(diagonalInferiorEsquerdaRainha)
+
+        if(timePeca == 'pecabranca'){
+          
+          if(diagonalSuperiorEsquerdaRainha[0] == "impedimento"){bloqueiaDiagonalSuperiorEsquerdaRainha = true}
+          if(bloqueiaDiagonalSuperiorEsquerdaRainha != true){
+           casasControleBrancas.push(diagonalSuperiorEsquerdaRainha)
+         }
+
+         if(diagonalSuperiorDireitaRainha[0] == "impedimento"){bloqueiaDiagonalSuperiorDireitaRainha = true}
+          if(bloqueiaDiagonalSuperiorDireitaRainha != true){
+           casasControleBrancas.push(diagonalSuperiorDireitaRainha)
+         }
+
+         if(diagonalInferiorEsquerdaRainha[0] == "impedimento") {bloqueiaDiagonalInferiorEsquerdaRainha = true}
+        if(bloqueiaDiagonalInferiorEsquerdaRainha != true) {
+          casasControleBrancas.push(diagonalInferiorEsquerdaRainha);
+        }
+
+         if(diagonalInferiorDireitaRainha[0] == "impedimento"){bloqueiaDiagonalInferiorDireitaRainha = true}
+         if(bloqueiaDiagonalInferiorDireitaRainha != true){
+           casasControleBrancas.push(diagonalInferiorDireitaRainha)
+         }
+        
+         //VERTICAL E HORIZONTAL:
+
+         if(horizontalEsquerdaRainha[0] == "impedimento"){bloqueiaEsquerdaRainha = true}
+           if(bloqueiaEsquerdaRainha != true){
+            casasControleBrancas.push(horizontalEsquerdaRainha)
+          }
+
+          if(horizontalDireitaRainha[0] == "impedimento"){bloqueiaDireitaRainha = true}
+           if(bloqueiaDireitaRainha != true){
+            casasControleBrancas.push(horizontalDireitaRainha)
+          }
+
+          if(verticalCimaRainha[0] == "impedimento"){bloqueiaCimaRainha = true}
+          if(bloqueiaCimaRainha != true){
+            casasControleBrancas.push(verticalCimaRainha)
+          }
+
+          if(verticalBaixoRainha[0] == "impedimento"){bloqueiaBaixoRainha = true}
+          if(bloqueiaBaixoRainha != true){
+            casasControleBrancas.push(verticalBaixoRainha)
+          }
+
+        }
+        if(timePeca == 'pecapreta'){
+
+        }
+      }
       break;
     case 'rei':
       break;
