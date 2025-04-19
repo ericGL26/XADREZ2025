@@ -66,6 +66,7 @@ if (eval(chamarValidacao) == "JogadaPossivel") {
     MovimentarPecas();
     //Requisitosxequemate.js
     ArmazenarCasasReisDominam();
+    CalcularCasasSobreDominioDePecas()
 }
 
 }
