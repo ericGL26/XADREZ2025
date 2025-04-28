@@ -36,6 +36,7 @@ function ArmazenarCasasReisDominam(){
   }
 
   let {pecasTabuleiro} = AdicionarArrayCasasPecasBrancoPreto()
+  CalcularDominioPecas(pecasTabuleiro)
 }
 
 function AdicionarArrayCasasPecasBrancoPreto(){
@@ -53,6 +54,7 @@ function AdicionarArrayCasasPecasBrancoPreto(){
   //Seperar todas as pecas brancas em pretas em duas arrays separadas
   //AS VARIAVEIS ABAIXO DEVEM SEGUIR O PADRAO ['TIPOPECA', 'LOCALIZACAO']
   var pecasTabuleiro = []
+
   for(let contador = 0; contador < 64; contador++){
     var buscarTodasAsCasasTabuleiro = document.getElementById(todasCasasTabuleiro[contador])
     var Peca = buscarTodasAsCasasTabuleiro ? buscarTodasAsCasasTabuleiro.querySelector('img') || "SemPecaDentro" : "SemPecaDentro";
@@ -60,42 +62,106 @@ function AdicionarArrayCasasPecasBrancoPreto(){
       pecasTabuleiro.push([Peca.id.slice(-2), Peca.id.slice(0, -2)])
     }
   }
-  return pecasTabuleiro
-};
+  return {pecasTabuleiro}
+}
+//CALCULAR DOMINIO DE CADA PEÇA
 
+function CalcularImpedimentoNoDominioTorre(){
 
-function CalcularCasasSobreDominioDePecas(){ //"Essa é uma função auxiliar usada por CalcularImpedimentosNoDominio()."
-  var todasPecasTabuleiro = AdicionarArrayCasasPecasBrancoPreto()
+}
 
-  for(let pecaVez = 0; pecaVez < todasPecasTabuleiro.length; pecaVez++){ //Roda de acordo com a quantidade de peças que tem no tabuleiro
-    var [x1, y1] = [transformarLetraEmNumero[todasPecasTabuleiro[pecaVez][0][0]], todasPecasTabuleiro[pecaVez][0][1]]; //transforma o id do bispo:a1 em 1,1. para poder calcular as casas que ele domina e entre outras coisas
-    var peca = todasPecasTabuleiro[pecaVez][1]
-
-    switch(todasPecasTabuleiro[pecaVez][1]){
-      case 'bispo':
-      var listaDominioBispoSemImpedimentos = []
-      for(let repetidor = 1; repetidor < 9; repetidor++){
-        let diagonalSuperiorEsquerda =  [x1 - repetidor, parseInt(y1) + repetidor];
-        let diagonalSuperiorDireita  =  [x1 + repetidor, parseInt(y1) + repetidor];
-        let diagonalInferiorEsquerda =  [x1 - repetidor, parseInt(y1) - repetidor];
-        let diagonalInferiorDireita  =  [x1 + repetidor, parseInt(y1) - repetidor];
-        //filtros
-        diagonalSuperiorEsquerda = [diagonalSuperiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        diagonalSuperiorDireita = [diagonalSuperiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        diagonalInferiorEsquerda = [diagonalInferiorEsquerda].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        diagonalInferiorDireita = [diagonalInferiorDireita].filter(([x, y]) => x > 0 && x <= 8 && y > 0 && y <= 8)[0] || null;
-        listaDominioBispoSemImpedimentos.push(diagonalSuperiorEsquerda, diagonalSuperiorDireita, diagonalInferiorEsquerda, diagonalInferiorDireita)
+function calcularDominiosLinearesEDiagonaisTorre(x1, y1) {
+  const dominios = [];
+  for (let repetidor = 1; repetidor < 9; repetidor++) {
+    let movimentos = [
+      [x1 - repetidor, parseInt(y1)],
+      [x1 + repetidor, parseInt(y1)],
+      [x1, parseInt(y1) + repetidor],
+      [x1, parseInt(y1) - repetidor]
+    ];
+    //filtrar casas que ultrapassam limites do tabuleiro
+    movimentos.forEach(([x, y]) => {
+      if (x > 0 && x <= 8 && y > 0 && y <= 8) {
+        console.log(x, y)
+        dominios.push([x, y]);
       }
-      console.log('TESTEA', listaDominioBispoSemImpedimentos)
-      break;
-    }
+    });
   }
 
-  //ESTA FUNCAO E CHAMADA TODA VEZ QUE UMA PECA SE MOVIMENTA
-  CalcularImpedimentosNoDominio(todasPecasTabuleiro)
+  return dominios;
+}
+
+function CalcularDominioPecas(pecasTabuleiro){
+  //SOMENTE PARA PINTAR AS CASAS SOBRE DOMINIO(TEMPORARIO)
+  for (let cor = 1; cor < 9; cor++) {
+    for (let cordois = 1; cordois < 9; cordois++) { // Agora cordois está sendo corretamente incrementado
+        let casa = document.getElementById(numeroParaLetra[cor] + cordois);
+        //console.log('casas', casa)
+        casa.style.backgroundColor = "gray";
+    }
 }
 
 
-function CalcularImpedimentosNoDominio(todasPecasTabuleiro){
-  console.log('teste', todasPecasTabuleiro)
+  const todasPecasTabuleiro = pecasTabuleiro
+  var casasControleBrancas = []
+  var casasControlePretas = []
+
+  for(let contador = 0; contador < todasPecasTabuleiro.length; contador++){
+    var pecaVez = todasPecasTabuleiro[contador][1]
+    var [x1, y1] = [transformarLetraEmNumero[todasPecasTabuleiro[contador][0][0]], todasPecasTabuleiro[contador][0][1]];
+
+    switch (pecaVez) {
+      case 'peao':
+        // Lógica para o peão
+        break;
+    
+      case 'torre':
+        // Lógica para a torre
+        var dominios = calcularDominiosLinearesEDiagonaisTorre(x1, y1)
+        var buscarPeca = document.getElementById(todasPecasTabuleiro[contador][0])
+        var timePeca = buscarPeca.querySelector('img')?.name || "semPeca"
+        if(timePeca == 'pecabranca'){
+          casasControleBrancas.push(...dominios)
+        }
+        if(timePeca == 'pecapreta'){
+          casasControlePretas.push(...dominios)
+        }
+        break;
+    
+      case 'cavalo':
+        // Lógica para o cavalo
+        break;
+    
+      case 'bispo':
+        // Lógica para o bispo
+        break;
+    
+      case 'rainha':
+        // Lógica para a rainha
+        break;
+    
+      case 'rei':
+        // Lógica para o rei
+        break;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+//SOMENTE PARA PINTAR AS CASAS SOBRE DOMINIO DE VERMELHO (TEMPORARIO)
+
+  for (let cor = 0; cor < casasControleBrancas.length; cor++) {
+    let [letraIndex, numero] = casasControleBrancas[cor] || []; // Desestruturação segura
+    let casa = document.getElementById(numeroParaLetra[letraIndex] + numero);
+
+    if (casa) casa.style.backgroundColor = "red";
+}
 }

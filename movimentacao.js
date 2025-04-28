@@ -27,7 +27,6 @@ function MovimentarPecas() {
       imageRm.remove()
     }
     
-  
   casaAdicionarPeca.innerHTML += `<img id="${pecaRemover.id.slice(0, -2) + casaAdicionarPeca.id}" src="${ pecaRemover.id.slice(0, -2) + '.png'}" class="peca ${pecaRemover.name}" name="${pecaRemover.name}" primeiraJogada=${pecaRemover.getAttribute('primeiraJogada')}>`
   armazenarJogada = []
 }
@@ -50,23 +49,19 @@ if (eval(chamarValidacao) == "JogadaPossivel") {
         let ReiEscolhido = document.getElementById(armazenarJogada[0].slice(-2));
         if (ReiEscolhido) {
             let reiAtributo = ReiEscolhido.getAttribute('reidentro') || ""; // Evita valores nulos
-
-
             adicionarAtributoPecaDentroProximaCasa.setAttribute('reidentro', reiAtributo);
             adicionarAtributoPecaDentroProximaCasa.setAttribute('pecadentro', 'rei'); // Garante que o atributo seja mantido
-
             buscarpecaDentroCasa.removeAttribute('reidentro');
         }
     } else {
         adicionarAtributoPecaDentroProximaCasa.setAttribute('pecadentro', pecaDentro);
     }
-    
     buscarpecaDentroCasa.removeAttribute('pecadentro');
 
     MovimentarPecas();
     //Requisitosxequemate.js
     ArmazenarCasasReisDominam();
-    CalcularCasasSobreDominioDePecas()
+    //CalcularDominioPecas()
 }
 
 }
